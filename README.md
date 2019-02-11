@@ -1,2 +1,2 @@
-# calendar
+# planner
 Computer Science Project
