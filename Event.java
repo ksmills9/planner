@@ -1,12 +1,5 @@
 import java.time.LocalDateTime;
 import java.time.format.*;
-import java.util.*;
-
-
-/**
- * The Event class contains information and methods on all events of a paticular user.
- * @author Nandy
- */
 
 public class Event  {
     private int ID; // will be assigned
@@ -14,13 +7,13 @@ public class Event  {
     private String description;
     private LocalDateTime startTime; // needed
     private LocalDateTime endTime; // default: +1 hour
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-    private String location;
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"); //formats String time to LocalDateTime
+    private String location; // location of the event
     private boolean isBusy = true;
     
     
     /**
-     *default constructor which takes no arguments 
+     *default constructor with no arguments 
      */
     Event(){
     	
@@ -28,12 +21,42 @@ public class Event  {
     
     /**
      * constructor that takes in a ID
-     * @param id
+     * @param id Unique id associated with event
      */
     Event(int id){
     	ID = id;
     }
     
+    
+    /**
+     * 
+     * @param id Unique id associated with event
+     * @param name The name of the event
+     * @param description Details about the event
+     * @param start When event will start (default one hour end time)
+     */
+    Event(int id, String name, String description, String start){
+    	ID = id;
+    	eventName = name;
+    	this.description = description;
+    	setDateTime(start);
+    }
+    
+    /**
+     * 
+     * @param id Unique to event 
+     * @param name Name of the event
+     * @param description details about the event
+     * @param start the start time of event
+     * @param end end time of the event
+     */
+    Event(int id, String name, String description, String start, String end){
+    	ID = id;
+    	eventName = name;
+    	this.description = description;
+    	setDateTime(start, end);
+    	
+    }
     
     /**
      * change or create the event name
@@ -53,7 +76,7 @@ public class Event  {
     
     
     /**
-     * This method converts a start and end time of type String of the event
+     * This method converts a start and end time of type String of the event time
      * to a LocalDateTime type.
      * @param start the start time of the event
      * @param end end time of the event
@@ -105,8 +128,4 @@ public class Event  {
     	return location;
     }
     
-    
-    
-    
-
 }
