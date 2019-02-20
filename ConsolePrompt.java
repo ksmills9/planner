@@ -1,4 +1,5 @@
 import java.time.LocalDateTime;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.TimeZone;
 
@@ -26,9 +27,9 @@ public class ConsolePrompt {
             try {
                 retval = input.nextShort();
                 if(retval == 1 || retval == 2) validCMD = true;
-                else System.out.println("Please Enter 1 or 2");
+                else throw new InputMismatchException();
             } catch (Exception ex){
-                System.out.println("Please Enter 1 or 2"); retval = 0;
+                System.out.println("Please enter 1 or 2"); retval = 0;
                 input.next();
             }
         }
@@ -55,60 +56,79 @@ public class ConsolePrompt {
     }
 
     public void consoleMainMenu(){
+        printCalender(LocalDateTime.now());
         System.out.println("Main Menu");
         int cmd = 0;
-        String[] mainmenu = {"My Events", "My To-Do List", "My Profile", "LogOut"};
+        String[] mainmenu = {"My Events", "My Tasks", "My Profile", "Others", "LogOut"};
         for(int i = 0; i < mainmenu.length; i++) System.out.print("["+i+"] "+mainmenu[i]+ " \t");
         System.out.println();
-        try {
-            cmd = input.nextShort();
-            if(cmd < 0 || cmd >= mainmenu.length) throw new IndexOutOfBoundsException();
-        } catch (Exception ex){
-            System.out.println("Invalid Input, Try again!");
-            input.next(); consoleMainMenu();
+        boolean vaildCMD = false;
+        while (!vaildCMD){
+            try {
+                cmd = input.nextShort();
+                if(cmd < 0 || cmd >= mainmenu.length) throw new InputMismatchException();
+                else vaildCMD = true;
+            } catch (InputMismatchException ex){
+                System.out.println("Invalid Input, Try again!");
+                cmd = 0; input.next();
+            }
         }
-        switch (cmd){
-            case 0:
-                consoleEventMenu(); break;
-            case 1:
-                consoleToDoListMenu(); break;
-            case 2:
-                consoleProfileMenu(); break;
-            case 3:
-                logout(); break;
-        }
-    }
 
-    void setUserAccount(Account account){
-        userAccount = account;
-    }
+        if(cmd == 0) consoleEventMenu();
+        else if(cmd == 1) consoleTasksMenu();
+        else if(cmd == 2) consoleProfileMenu();
+        else if(cmd == 3) consoleOthersMenu();
+        else if(cmd == mainmenu.length - 1) logout();
 
-    void logout(){
-        setUserAccount(null); start();
     }
 
     public void consoleProfileMenu(){
-        System.out.println("Profile Menu");
-        int cmd = 0;
-        String[] mainmenu = {"Change Name", "Change Password", "Change TimeZone", "Main Menu", "LogOut"};
-        for(int i = 0; i < mainmenu.length; i++) System.out.print("["+i+"] "+mainmenu[i]+ " \t");
+        System.out.println("My Profile");
+        int cmd = 0; boolean validCMD = false;
+        String[] profileMenu = {"Change Name", "Change Password", "Change TimeZone", "Main Menu"};
+        for(int i = 0; i < profileMenu.length; i++) System.out.print("["+i+"] "+profileMenu[i]+ " \t");
         System.out.println();
-        try {
-            cmd = input.nextShort();
-            if(cmd < 0 || cmd >= mainmenu.length) throw new IndexOutOfBoundsException();
-        } catch (Exception ex){
-            System.out.println("Invalid Input, Try again!");
-            input.next(); consoleMainMenu();
+        while (!validCMD){
+            try {
+                cmd = input.nextShort();
+                if(cmd < 0 || cmd >= profileMenu.length) throw new IndexOutOfBoundsException();
+                else validCMD = true;
+            } catch (Exception ex){
+                System.out.println("Invalid Input, Try again!");
+                input.next(); cmd = 0;
+            }
         }
+        if(cmd == 0){
+            System.out.print("Enter new name: ");
+            String newName = input.next();
+            userAccount.setName(newName);
+        }
+        else if(cmd == 1){
+
+        }
+        else if(cmd == 2){
+            System.out.print("Enter new timezone: ");
+            String newTZ = input.next();
+            if(!isValidTimeZone(newTZ)) System.out.println("Invalid input, unable to change TimeZone");
+            else userAccount.setTimeZone(newTZ);
+        }
+        else if(cmd == profileMenu.length-1) consoleMainMenu();
+    }
+
+    public void consoleTasksMenu(){
 
     }
 
-    public void consoleToDoListMenu(){
+    public void consoleOthersMenu(){
 
     }
 
     public void consoleEventMenu(){
         String[] eventMenu = {"Create Event","Upcoming Event", "All Events", "Main Menu", "LogOut"};
+    }
+
+    void logout(){
+        setUserAccount(null); start();
     }
 
     public void accountSignUp(){
@@ -133,12 +153,7 @@ public class ConsolePrompt {
 
         System.out.print("Enter TimeZone: ");
         timezone = input.next();
-        String[] validIDs = TimeZone.getAvailableIDs();
-        for(int i = 0; i < validIDs.length && notValidZone; i++) if(timezone.equals(validIDs[i])) notValidZone = false;
-        if(!notValidZone) newAccount = new Account(accountName, timezone);
-        else if (timezone.length() == 0) {
-            newAccount = new Account(accountName);
-        }
+        if(isValidTimeZone(timezone)) newAccount = new Account(accountName, timezone);
         else {
             System.out.println("Invalid input, local TimeZone used");
             newAccount = new Account(accountName);
@@ -175,5 +190,16 @@ public class ConsolePrompt {
             }
             System.out.println();
         }
+    }
+
+    public void setUserAccount(Account account){
+        userAccount = account;
+    }
+
+    boolean isValidTimeZone(String stingTZ){
+        String[] validIDs = TimeZone.getAvailableIDs();
+        boolean validZone = false;
+        for(int i = 0; i < validIDs.length && !validZone; i++) if(stingTZ.equals(validIDs[i])) validZone = true;
+        return validZone;
     }
 }
