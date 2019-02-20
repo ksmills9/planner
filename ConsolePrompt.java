@@ -147,6 +147,8 @@ public class ConsolePrompt {
         if(conn.addAccount(newAccount, password)) {
             System.out.println("Account created Successfully!");
             setUserAccount(newAccount);
+            printCalender(LocalDateTime.now());
+            consoleMainMenu();
         }
         else {
             System.out.println("An error occurred. Please try again!");
