@@ -96,35 +96,69 @@ public class DatabaseConn {
         }
     }
 
+    public boolean changeUser(String accName, String newStr, String field){
+        String update = "UPDATE accounts SET "+ field +" = ? WHERE account_name = ?";
+        try {
+            PreparedStatement preStat = connection.prepareStatement(update);
+            preStat.setString(1, newStr);
+            preStat.setString(2, accName);
+            int rs = insertInDB(preStat);
+            if(rs == 1) return true;
+            else throw new SQLException();
+        } catch (SQLException ex){
+            return false;
+        }
+    }
+
+    public boolean changeUserPass(String accName, String oldPass, String newpass) throws SQLException{
+        PreparedStatement preStat;
+        String initialQuery = "SELECT login.account_ID, login.password, login.salt FROM login JOIN accounts on " +
+                "accounts.ID = login.account_ID WHERE accounts.account_name = ?";
+        try {
+            preStat = connection.prepareStatement(initialQuery);
+            preStat.setString(1, accName);
+
+            ResultSet rs = queryFromDB(preStat);
+            rs.next();
+            if(Arrays.equals(rs.getBytes("password"), verifyHash(oldPass, rs.getBytes("salt")))){
+                ArrayList<byte[]> newPassHash = hashPass(newpass);
+                String updateDB = "UPDATE login SET password = ?, salt = ?, WHERE account_ID = ?";
+                PreparedStatement preStat2 = connection.prepareStatement(updateDB);
+                preStat2.setBytes(1, newPassHash.get(1));
+                preStat2.setBytes(2, newPassHash.get(0));
+                preStat2.setInt(3, rs.getInt("account_ID"));
+                insertInDB(preStat2); return true;
+            }
+
+        } catch (SQLException ex){
+            throw ex;
+        }
+        return false;
+    }
+
     public Account login(String accName, String password){
-        PreparedStatement preStat1, preStat2, preStat3;
-        String initialQuery = "SELECT `ID` FROM `accounts` WHERE `account_name`=?";
-        String query = "SELECT * FROM `login` WHERE `account_ID` = ?";
+        PreparedStatement preStat1, preStat3;
+        String initialQuery = "SELECT login.password, login.salt FROM login JOIN accounts on " +
+                "accounts.ID = login.account_ID WHERE accounts.account_name = ?";
         try {
             preStat1 = connection.prepareStatement(initialQuery);
             preStat1.setString(1, accName);
             ResultSet rs1 = queryFromDB(preStat1);
-
-            preStat2 = connection.prepareStatement(query);
             if(rs1.next()){
-                preStat2.setString(1, rs1.getString("ID"));
-
-                ResultSet rs2 = queryFromDB(preStat2);
-                rs2.next();
-                if(Arrays.equals(rs2.getBytes("password"), verifyHash(password, rs2.getBytes("salt")))){
+                if(Arrays.equals(rs1.getBytes("password"), verifyHash(password, rs1.getBytes("salt")))){
                     String loadQuery = "SELECT * FROM `accounts` WHERE `account_name`= ?";
                     preStat3 = connection.prepareStatement(loadQuery);
                     preStat3.setString(1,accName);
                     ResultSet rs3 = queryFromDB(preStat3); rs3.next();
-                    Account retval = new Account(rs3.getInt("ID"), rs3.getString("account_name"),
+                    return new Account(rs3.getInt("ID"), rs3.getString("account_name"),
                             rs3.getString("account_timezone"), rs3.getString("account_events"));
-                    return retval;
                 }
             }
         } catch (SQLException ex){
             ex.printStackTrace();
         }
         return null;
+
     }
 
     byte[] verifyHash(String givenPassword, byte[] givenSalt){

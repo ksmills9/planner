@@ -1,3 +1,4 @@
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -17,6 +18,7 @@ public class ConsolePrompt {
         short startChoice = loginPrompt();
         if(startChoice == 1) accountLogin();
         else if (startChoice == 2) accountSignUp();
+        else if (startChoice == 3) System.exit(0);
     }
 
     public short loginPrompt(){
@@ -26,10 +28,10 @@ public class ConsolePrompt {
             System.out.println("Login [1] | Signup [2]");
             try {
                 retval = input.nextShort();
-                if(retval == 1 || retval == 2) validCMD = true;
+                if(retval == 1 || retval == 2 || retval == 3) validCMD = true;
                 else throw new InputMismatchException();
             } catch (Exception ex){
-                System.out.println("Please enter 1 or 2"); retval = 0;
+                System.out.println("Invalid command!"); retval = 0;
                 input.next();
             }
         }
@@ -45,6 +47,7 @@ public class ConsolePrompt {
         Account userAccount = conn.login(accountName, password);
         if(userAccount != null) {
             System.out.println("Login Successful!");
+            setUserAccount(userAccount);
             consoleMainMenu();
         }
         else {
@@ -83,6 +86,7 @@ public class ConsolePrompt {
     }
 
     public void consoleProfileMenu(){
+        viewProfile();
         System.out.println("My Profile");
         int cmd = 0; boolean validCMD = false;
         String[] profileMenu = {"Change Name", "Change Password", "Change TimeZone", "Main Menu"};
@@ -99,20 +103,61 @@ public class ConsolePrompt {
             }
         }
         if(cmd == 0){
-            System.out.print("Enter new name: ");
-            String newName = input.next();
-            userAccount.setName(newName);
+            changeAccountName();
         }
         else if(cmd == 1){
-
+            changeAccountPassword();
         }
         else if(cmd == 2){
-            System.out.print("Enter new timezone: ");
-            String newTZ = input.next();
-            if(!isValidTimeZone(newTZ)) System.out.println("Invalid input, unable to change TimeZone");
-            else userAccount.setTimeZone(newTZ);
+            changeAccountTimeZone();
         }
         else if(cmd == profileMenu.length-1) consoleMainMenu();
+    }
+
+    void changeAccountPassword(){
+        System.out.print("Enter old password: ");
+        String oldPW = input.next();
+        System.out.print("Enter new password: ");
+        String newPW = input.next();
+        System.out.print("Confirm new password: ");
+        String confirmPW = input.next();
+        if(!newPW.equals(confirmPW)) {
+            System.out.println("Passwords do not match");
+        }
+        else {
+            try {
+                if (conn.changeUserPass(userAccount.getName(), oldPW, newPW)) System.out.println("Password changed successfully!");
+                else System.out.println("Incorrect password, Try again.");
+            } catch (SQLException ex){
+                System.out.println("An error occurred, please try again");
+            }
+        }
+        consoleProfileMenu();
+    }
+
+    void changeAccountName(){
+        System.out.print("Enter new name: ");
+        String newName = input.next();
+        conn.changeUser(userAccount.getName(), newName, "account_name");
+        System.out.println("Name changed successfully!");
+        userAccount.setName(newName);
+        consoleProfileMenu();
+    }
+
+    void changeAccountTimeZone(){
+        System.out.print("Enter new timezone: ");
+        String newTZ = input.next();
+        if(!isValidTimeZone(newTZ)) System.out.println("Invalid input, unable to change TimeZone");
+        else {
+            userAccount.setTimeZone(newTZ);
+            conn.changeUser(userAccount.getName(), newTZ, "account_timezone");
+        }
+        consoleProfileMenu();
+    }
+
+    void viewProfile(){
+        System.out.println("My Name: " + userAccount.getName()+
+                "\nMy TimeZone: " + userAccount.getTimeZone());
     }
 
     public void consoleTasksMenu(){
