@@ -5,6 +5,7 @@ import java.util.TimeZone;
 public class ConsolePrompt {
     private DatabaseConn conn;
     private Scanner input = new Scanner(System.in);
+    private Account userAccount;
     private final String[] DaysofWeek = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
 
     ConsolePrompt(DatabaseConn conn){
@@ -74,8 +75,16 @@ public class ConsolePrompt {
             case 2:
                 consoleProfileMenu(); break;
             case 3:
-                start(); break;
+                logout(); break;
         }
+    }
+
+    void setUserAccount(Account account){
+        userAccount = account;
+    }
+
+    void logout(){
+        setUserAccount(null); start();
     }
 
     public void consoleProfileMenu(){
@@ -99,7 +108,7 @@ public class ConsolePrompt {
     }
 
     public void consoleEventMenu(){
-
+        String[] eventMenu = {"Create Event","Upcoming Event", "All Events", "Main Menu", "LogOut"};
     }
 
     public void accountSignUp(){
@@ -122,7 +131,7 @@ public class ConsolePrompt {
             else notValidPass = false;
         }
 
-        System.out.print("Enter TimeZone): ");
+        System.out.print("Enter TimeZone: ");
         timezone = input.next();
         String[] validIDs = TimeZone.getAvailableIDs();
         for(int i = 0; i < validIDs.length && notValidZone; i++) if(timezone.equals(validIDs[i])) notValidZone = false;
@@ -135,9 +144,12 @@ public class ConsolePrompt {
             newAccount = new Account(accountName);
         }
 
-        if(conn.addAccount(newAccount, password)) System.out.println("Account created Successfully!");
+        if(conn.addAccount(newAccount, password)) {
+            System.out.println("Account created Successfully!");
+            setUserAccount(newAccount);
+        }
         else {
-            System.out.println("An error occured. Please try again!");
+            System.out.println("An error occurred. Please try again!");
             start();
         }
     }
