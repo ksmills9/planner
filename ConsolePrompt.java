@@ -15,27 +15,19 @@ public class ConsolePrompt {
     }
 
     public void start(){
-        short startChoice = loginPrompt();
-        if(startChoice == 1) accountLogin();
-        else if (startChoice == 2) accountSignUp();
-        else if (startChoice == 3) System.exit(0);
-    }
-
-    public short loginPrompt(){
-        short retval = 0;
-        boolean validCMD = false;
-        while (!validCMD){
-            System.out.println("Login [1] | Signup [2]");
+        System.out.println("Welcome to your personal Planner!");
+        String[] startMenu = {"Login", "Signup", "Exit"};
+        short startChoice = validCMDLoop(startMenu);
+        if(startChoice == 0) accountLogin();
+        else if (startChoice == 1) accountSignUp();
+        else if (startChoice == 2) {
             try {
-                retval = input.nextShort();
-                if(retval == 1 || retval == 2 || retval == 3) validCMD = true;
-                else throw new InputMismatchException();
-            } catch (Exception ex){
-                System.out.println("Invalid command!"); retval = 0;
-                input.next();
+                conn.closeConnection();
+            } catch (SQLException ex){
+                ex.printStackTrace();
             }
+            System.exit(0);
         }
-        return retval;
     }
 
     public void accountLogin(){
@@ -44,7 +36,13 @@ public class ConsolePrompt {
         accountName = input.next();
         System.out.print("Enter password: ");
         password = input.next();
-        Account userAccount = conn.login(accountName, password);
+        Account userAccount = null;
+        try {
+            userAccount = conn.login(accountName, password);
+        } catch (SQLException ex){
+            ex.printStackTrace();
+        }
+
         if(userAccount != null) {
             System.out.println("Login Successful!");
             setUserAccount(userAccount);
@@ -59,59 +57,26 @@ public class ConsolePrompt {
     }
 
     public void consoleMainMenu(){
-        printCalender(LocalDateTime.now());
         System.out.println("Main Menu");
-        int cmd = 0;
         String[] mainmenu = {"My Events", "My Tasks", "My Profile", "Others", "LogOut"};
-        for(int i = 0; i < mainmenu.length; i++) System.out.print("["+i+"] "+mainmenu[i]+ " \t");
-        System.out.println();
-        boolean vaildCMD = false;
-        while (!vaildCMD){
-            try {
-                cmd = input.nextShort();
-                if(cmd < 0 || cmd >= mainmenu.length) throw new InputMismatchException();
-                else vaildCMD = true;
-            } catch (InputMismatchException ex){
-                System.out.println("Invalid Input, Try again!");
-                cmd = 0; input.next();
-            }
-        }
+        short userInp = validCMDLoop(mainmenu);
 
-        if(cmd == 0) consoleEventMenu();
-        else if(cmd == 1) consoleTasksMenu();
-        else if(cmd == 2) consoleProfileMenu();
-        else if(cmd == 3) consoleOthersMenu();
-        else if(cmd == mainmenu.length - 1) logout();
-
+        if(userInp == 0) consoleEventMenu();
+        else if(userInp == 1) consoleTasksMenu();
+        else if(userInp == 2) consoleProfileMenu();
+        else if(userInp == 3) consoleOthersMenu();
+        else if(userInp == mainmenu.length - 1) logout();
     }
 
     public void consoleProfileMenu(){
-        viewProfile();
         System.out.println("My Profile");
-        int cmd = 0; boolean validCMD = false;
+        viewProfile();
         String[] profileMenu = {"Change Name", "Change Password", "Change TimeZone", "Main Menu"};
-        for(int i = 0; i < profileMenu.length; i++) System.out.print("["+i+"] "+profileMenu[i]+ " \t");
-        System.out.println();
-        while (!validCMD){
-            try {
-                cmd = input.nextShort();
-                if(cmd < 0 || cmd >= profileMenu.length) throw new IndexOutOfBoundsException();
-                else validCMD = true;
-            } catch (Exception ex){
-                System.out.println("Invalid Input, Try again!");
-                input.next(); cmd = 0;
-            }
-        }
-        if(cmd == 0){
-            changeAccountName();
-        }
-        else if(cmd == 1){
-            changeAccountPassword();
-        }
-        else if(cmd == 2){
-            changeAccountTimeZone();
-        }
-        else if(cmd == profileMenu.length-1) consoleMainMenu();
+        short userInp = validCMDLoop(profileMenu);
+        if(userInp == 0)changeAccountName();
+        else if(userInp == 1) changeAccountPassword();
+        else if(userInp == 2) changeAccountTimeZone();
+        else if(userInp == profileMenu.length-1) consoleMainMenu();
     }
 
     void changeAccountPassword(){
@@ -138,7 +103,11 @@ public class ConsolePrompt {
     void changeAccountName(){
         System.out.print("Enter new name: ");
         String newName = input.next();
-        conn.changeUser(userAccount.getName(), newName, "account_name");
+        try {
+            conn.changeUser(userAccount.getName(), newName, "account_name");
+        } catch (SQLException ex){
+            ex.printStackTrace();
+        }
         System.out.println("Name changed successfully!");
         userAccount.setName(newName);
         consoleProfileMenu();
@@ -150,7 +119,12 @@ public class ConsolePrompt {
         if(!isValidTimeZone(newTZ)) System.out.println("Invalid input, unable to change TimeZone");
         else {
             userAccount.setTimeZone(newTZ);
-            conn.changeUser(userAccount.getName(), newTZ, "account_timezone");
+            try {
+                conn.changeUser(userAccount.getName(), newTZ, "account_timezone");
+            } catch (SQLException ex){
+                ex.printStackTrace();
+            }
+            System.out.println("Successfully changed TimeZone!");
         }
         consoleProfileMenu();
     }
@@ -169,7 +143,33 @@ public class ConsolePrompt {
     }
 
     public void consoleEventMenu(){
-        String[] eventMenu = {"Create Event","Upcoming Event", "All Events", "Main Menu", "LogOut"};
+        System.out.println("My Events");
+        String[] eventMenu = {"Upcoming Events", "All Events", "Create Event", "Main Menu"};
+        short userInp = validCMDLoop(eventMenu);
+        if(userInp == 0) upcomingEvents();
+        else if(userInp == 2) createEvent();
+    }
+
+    void upcomingEvents(){
+
+    }
+
+    void createEvent(){
+        System.out.print("Enter the name of the event: ");
+        String eventName = input.next();
+        System.out.println("Enter a small description of the event: ");
+        String eventDesc = input.nextLine();
+        System.out.print("Enter the start date of the event (yyyy-mm-dd): ");
+        String eventStartDate = input.next();
+        System.out.print("Enter the start date of the event (HH:mm): ");
+        String eventStartTime = input.next();
+        System.out.print("Enter the start date of the event (yyyy-mm-dd): ");
+        String eventEndDate = input.next();
+        System.out.print("Enter the start date of the event (HH:mm): ");
+        String eventEndTime = input.next();
+        System.out.print("Enter the location of the event: ");
+        String eventLocation = input.next();
+        System.out.print("Will you be busy? [Y]/[N]");
     }
 
     void logout(){
@@ -217,7 +217,7 @@ public class ConsolePrompt {
     }
 
     void printCalender(LocalDateTime dateTime) {
-        System.out.format("%20s\n", dateTime.getMonth());
+        System.out.format("%22s\n", dateTime.getMonth());
         for (String day2 : DaysofWeek) System.out.format("%5s", day2);
         System.out.println();
         LocalDateTime curMonth = LocalDateTime.of(dateTime.getYear(), dateTime.getMonth(), 1, 0, 0);
@@ -225,7 +225,6 @@ public class ConsolePrompt {
         nextMonth = nextMonth.minusDays(1);
         int DaysInMonth = nextMonth.compareTo(curMonth) + 1;
         int padding = curMonth.getDayOfWeek().getValue();
-        boolean endPad = false;
         for (int i = 0; i < Math.ceil((DaysInMonth + padding) / 7.0); i++) {
             for (int j = 1; j < 8; j++) {
                 int count = i * 7 + j - padding;
@@ -239,6 +238,25 @@ public class ConsolePrompt {
 
     public void setUserAccount(Account account){
         userAccount = account;
+    }
+
+    short validCMDLoop(String[] menuList){
+        boolean validCMD = false;
+        short cmd = 0;
+        for(int i = 0; i < menuList.length; i++) System.out.print("["+i+"] "+ menuList[i]+ " \t");
+        System.out.println();
+
+        while (!validCMD){
+            try {
+                cmd = input.nextShort();
+                if(cmd < 0 || cmd >= menuList.length) throw new InputMismatchException();
+                else validCMD = true;
+            } catch (Exception ex){
+                System.out.println("Invalid Input, Try again!");
+                input.next(); cmd = 0;
+            }
+        }
+        return cmd;
     }
 
     boolean isValidTimeZone(String stingTZ){
