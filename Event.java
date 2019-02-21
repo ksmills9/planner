@@ -58,6 +58,15 @@ public class Event  {
     	
     }
     
+    Event(Event event){
+    	this.ID = event.getID();
+    	this.eventName = event.getName();
+    	this.description = event.description;
+    	this.startTime = event.getStartTime();
+    	this.endTime = event.getEndTime();
+    }
+    
+    
     /**
      * change or create the event name
      * @param name The name of the event
@@ -106,6 +115,9 @@ public class Event  {
     	this.location = location;
     }
     
+    public int getID() {
+    	return ID;
+    }
     
     /**
      * @return eventName 
@@ -126,6 +138,14 @@ public class Event  {
      * @return location     */
     public String getLocation() {
     	return location;
+    }
+    
+    public LocalDateTime getStartTime() {
+    	return startTime;
+    }
+    
+    public LocalDateTime getEndTime() {
+    	return endTime;
     }
     
 }
