@@ -1,5 +1,4 @@
 public class Main {
-    private Account myAccount;
 
     public static void main(String[] args){
         DatabaseConn conn = new DatabaseConn();

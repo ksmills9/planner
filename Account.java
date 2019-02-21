@@ -29,4 +29,11 @@ public class Account {
         return timeZone.toZoneId().toString();
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setTimeZone(String timeZone) {
+        this.timeZone = TimeZone.getTimeZone(timeZone);
+    }
 }
