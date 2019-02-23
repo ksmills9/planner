@@ -40,23 +40,30 @@ public class AllEvents {
     	return new ArrayList<Event>(eventByLocation);
     }
     
-    public boolean addEvent(Event event){
-    	boolean isAvailable = true;
-    	for (Event e : eventList) {
-    		if (event.getStartTime().equals(e.getStartTime()) || event.getEndTime().isAfter(e.getStartTime())) {
-    			isAvailable = false;
-    		}
-    	}
-    	
-    	if (isAvailable) {
-    		eventList.add(event);
-    		return true;
-    	}
-    	else {
-    		return false;
-    	}
+    public void addEvent(Event event){
+    	eventList.add(event);
     }
-    
+
+    public boolean isAvailable(Event event){
+		boolean retval = true;
+		for (Event e : eventList) {
+			if (event.getStartTime().isAfter(e.getStartTime()) && event.getEndTime().isBefore(e.getStartTime())) {
+				retval = false;
+			}
+		}
+		return retval;
+	}
+
+	public ArrayList<Event> upcomingEvents(){
+    	ArrayList<Event> retval = new ArrayList<>();
+    	for(Event e : eventList){
+    		if (e.getStartTime().isAfter(LocalDateTime.now())){
+    			retval.add(e);
+			}
+		}
+    	return retval;
+	}
+
     public boolean removeEvent(Event event) {
     	if (eventList.contains(event)) {
     		eventList.remove(event);
@@ -65,10 +72,5 @@ public class AllEvents {
     	else {
     		return false;
     	}
-    	
     }
-    
-    
-    
-    
 }

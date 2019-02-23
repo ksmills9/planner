@@ -4,7 +4,7 @@ import java.util.TimeZone;
 public class Account {
     private int ID;
     private String name;
-    private TimeZone timeZone;
+    private TimeZone timeZone = TimeZone.getDefault();
     private AllEvents allEvents;
 
     Account(String name){
@@ -15,7 +15,7 @@ public class Account {
         this.timeZone = TimeZone.getTimeZone(timezone);
     }
 
-    Account(int ID, String name, String timezone, String events){
+    Account(int ID, String name, String timezone){
         this.name = name;
         this.timeZone = TimeZone.getTimeZone(timezone);
         this.ID = ID;
@@ -35,5 +35,21 @@ public class Account {
 
     public void setTimeZone(String timeZone) {
         this.timeZone = TimeZone.getTimeZone(timeZone);
+    }
+
+    public void setID(int ID){
+        this.ID = ID;
+    }
+
+    public int getID(){
+        return ID;
+    }
+
+    public AllEvents getAllEvents() {
+        return allEvents;
+    }
+
+    public void setAllEvents(AllEvents allEvents) {
+        this.allEvents = allEvents;
     }
 }

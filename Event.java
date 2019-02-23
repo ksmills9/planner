@@ -3,15 +3,14 @@ import java.time.format.*;
 
 public class Event  {
     private int ID; // will be assigned
+    private int userID;
     private String eventName; // needed
     private String description;
     private LocalDateTime startTime; // needed
     private LocalDateTime endTime; // default: +1 hour
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"); //formats String time to LocalDateTime
     private String location; // location of the event
-    private boolean isBusy = true;
-    
-    
+
     /**
      *default constructor with no arguments 
      */
@@ -50,20 +49,21 @@ public class Event  {
      * @param start the start time of event
      * @param end end time of the event
      */
-    Event(int id, String name, String description, String start, String end){
+    Event(int id, int userID, String name, String description, String start, String end, String location){
     	ID = id;
+    	this.userID = userID;
     	eventName = name;
     	this.description = description;
     	setDateTime(start, end);
-    	
+    	this.location = location;
     }
     
     Event(Event event){
     	this.ID = event.getID();
     	this.eventName = event.getName();
     	this.description = event.description;
-    	this.startTime = event.getStartTime();
-    	this.endTime = event.getEndTime();
+    	this.startTime = event.startTime;
+    	this.endTime = event.endTime;
     }
     
     
@@ -106,8 +106,11 @@ public class Event  {
     	startTime = LocalDateTime.parse(start,formatter);
     	endTime = startTime.plusHours(1);
     }
-    
-    
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
     /**
      * @param location The location of the event
      */
@@ -122,6 +125,7 @@ public class Event  {
     /**
      * @return eventName 
      */
+
     public String getName() {
     	return eventName;
     }
@@ -139,13 +143,24 @@ public class Event  {
     public String getLocation() {
     	return location;
     }
-    
-    public LocalDateTime getStartTime() {
-    	return startTime;
+
+    public LocalDateTime getStartTime(){
+        return startTime;
+    }
+
+    public LocalDateTime getEndTime(){
+        return endTime;
+    }
+
+    public String getStartTimeString() {
+        return formatter.format(startTime);
     }
     
-    public LocalDateTime getEndTime() {
-    	return endTime;
+    public String getEndTimeString() {
+        return formatter.format(endTime);
     }
-    
+
+    public boolean isValidInterval(){
+        return startTime.isBefore(endTime);
+    }
 }

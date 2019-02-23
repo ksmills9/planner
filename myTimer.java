@@ -6,7 +6,7 @@ import java.util.TimerTask;
 * has instance variables secondsPassed which is integer to keep track of the seconds passed
 *  and timeInSeconds which is an integer showing how long the timer should run for
 */
-public class myTimer extends Account{
+public class myTimer{
 
 	/**
 	* instance variables
@@ -22,7 +22,9 @@ public class myTimer extends Account{
 		//method to start the timer and increment the secondsPassed variable everytime, checks for finishing as well
 		public void run() {
 			secondsPassed++;
-			System.out.println("Seconds passed "+ secondsPassed);
+			int temp = timeInSeconds - secondsPassed;
+			String make = "Time remaining: " + temp/3600 + ":" + (temp%3600)/60 + ":" + (temp%3600)%60+"\r";
+			System.out.print(make);
 			stopCheck(timeInSeconds);
 		}
 	};
@@ -33,7 +35,7 @@ public class myTimer extends Account{
 	private void stopCheck(int end) {
 		if(secondsPassed == end) {
 			timer.cancel();
-			System.out.println("stopped");
+			System.out.println("Timer finished!");
 		}
 	}
 
