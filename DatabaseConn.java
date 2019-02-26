@@ -3,14 +3,8 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import java.security.SecureRandom;
 import java.security.spec.KeySpec;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.TimeZone;
-
 
 public class DatabaseConn {
     private Connection connection;
@@ -27,10 +21,12 @@ public class DatabaseConn {
         Connection ret = null;
         try
         {
-            String mysqlUserName = "root";
+            System.out.println("Trying to connect to the database...");
+            String PUBLIC_DNS = "ec2-52-14-15-164.us-east-2.compute.amazonaws.com";
+            String mysqlUserName = "planner_admin";
             String mysqlPassword = "";
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String mysqlConnUrl = "jdbc:mysql://localhost:3306/planner";
+            String mysqlConnUrl = "jdbc:mysql://"+PUBLIC_DNS+":3306/planner";
 
             ret = DriverManager.getConnection(mysqlConnUrl, mysqlUserName , mysqlPassword);
 

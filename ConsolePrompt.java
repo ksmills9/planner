@@ -226,6 +226,7 @@ public class ConsolePrompt {
                 "Name: " + event.getName() + "\nDescription: " + event.getDescription() +
                 "\nLocation: " + event.getLocation() + "\nStarts at: " + event.getStartTimeString() +
                 "\nEnds At: " + event.getEndTimeString());
+        consoleEventMenu();
     }
 
     void createEvent(){
@@ -252,8 +253,10 @@ public class ConsolePrompt {
                 int event_ID = conn.addEvent(newEvent, userAccount);
                 newEvent.setID(event_ID);
                 userAccount.getAllEvents().addEvent(newEvent);
+                System.out.println("Event created successfully!");
             } else System.out.println("Unfortunately you are not available at that time!");
         } else System.out.println("Invalid start and end time");
+        consoleEventMenu();
     }
 
     void logout(){
