@@ -46,5 +46,14 @@ public class myTimer{
 		this.timeInSeconds = seconds +(minutes*60) + (hours*60*60);
 		timer.scheduleAtFixedRate(task,1000,1000);
 	}
+	
+	/**
+	* method to stop the timer
+	*/
+	public void cancel(){
+		timer.cancel();
+		System.out.println("Timer stopped");
+		this.secondsPassed =0;
+	}	
 
 }
