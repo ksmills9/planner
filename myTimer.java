@@ -47,6 +47,9 @@ public class myTimer{
 		timer.scheduleAtFixedRate(task,1000,1000);
 	}
 	
+	/**
+	* method to stop the timer
+	*/
 	public void cancel(){
 		timer.cancel();
 		System.out.println("Timer stopped");
