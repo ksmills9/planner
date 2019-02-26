@@ -11,13 +11,13 @@ public class AlarmTest {
     /*
     * creating a new Alarm object
     */
-		Alarm a = new Alarm();
+	Alarm a = new Alarm();
     
     /*
     * calling the checkAlarm function to start the alarm
+    * takes 3 paramaeters, hours, minutes and a message for the alarm
     */
-		a.checkAlarm(12,48);
-		
+	a.start(9,18,"Work Time");
 	}
 
 }
