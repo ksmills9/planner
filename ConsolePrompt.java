@@ -237,11 +237,11 @@ public class ConsolePrompt {
         eventDesc = input.next();
         System.out.print("Enter the start date of the event (yyyy-mm-dd): ");
         String eventStartDate = input.next();
-        System.out.print("Enter the start date of the event (HH:mm): ");
+        System.out.print("Enter the start time of the event (HH:mm): ");
         String eventStartTime = input.next();
         System.out.print("Enter the end date of the event (yyyy-mm-dd): ");
         String eventEndDate = input.next();
-        System.out.print("Enter the end date of the event (HH:mm): ");
+        System.out.print("Enter the end time of the event (HH:mm): ");
         String eventEndTime = input.next();
         System.out.print("Enter the location of the event: ");
         String eventLocation = input.next();
