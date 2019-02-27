@@ -1,3 +1,4 @@
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
 /**
@@ -60,7 +61,7 @@ public class AllEvents {
     
     /**
 	* adds an event to the eventList.
-	* @param the event to be added to the eventList 
+	* @param event the event to be added to the eventList
 	 */
     public void addEvent(Event event){
     	eventList.add(event);
@@ -86,7 +87,7 @@ public class AllEvents {
      * Get events that are upcoming.
      * @return ArrayList of events that are upcoming.
      */
-    public ArrayList<Event> upcomingEvents(){
+    public ArrayList<Event> getEvents(LocalDateTime start, LocalDateTime end){
     	ArrayList<Event> retval = new ArrayList<>();
     	for(Event e : eventList){
     		if (e.getStartTime().isAfter(LocalDateTime.now())){
@@ -95,8 +96,27 @@ public class AllEvents {
 		}
     	return retval;
 	}
-    
-    /**
+
+	public ArrayList<Event> getEvents(LocalDateTime start){
+		ArrayList<Event> retval = new ArrayList<>();
+		for(Event e : eventList){
+			if (e.getStartTime().isAfter(LocalDateTime.now())){
+				retval.add(e);
+			}
+		}
+		return retval;
+	}
+
+	public ArrayList<Event> getEvents(){
+		ArrayList<Event> retval = new ArrayList<>();
+		for(Event e : eventList){
+				retval.add(e);
+		}
+		return retval;
+	}
+
+
+	/**
      * Removes event from the eventList
      * @param event The event to be removed.
      * @return true if the event was remoed and false otherwise.

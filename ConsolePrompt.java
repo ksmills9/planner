@@ -7,7 +7,6 @@ import java.util.TimeZone;
 
 public class ConsolePrompt {
     private DatabaseConn conn;
-    private Scanner input = new Scanner(System.in);
     private Account userAccount;
     private final String[] DaysofWeek = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
 
@@ -32,6 +31,7 @@ public class ConsolePrompt {
     }
 
     public void accountLogin(){
+        Scanner input = new Scanner(System.in);
         String accountName = "", password = "";
         System.out.print("Enter your Name: ");
         accountName = input.next();
@@ -81,6 +81,7 @@ public class ConsolePrompt {
     }
 
     void changeAccountPassword(){
+        Scanner input = new Scanner(System.in);
         System.out.print("Enter old password: ");
         String oldPW = input.next();
         System.out.print("Enter new password: ");
@@ -102,6 +103,7 @@ public class ConsolePrompt {
     }
 
     void changeAccountName(){
+        Scanner input = new Scanner(System.in);
         System.out.print("Enter new name: ");
         String newName = input.next();
         try {
@@ -115,6 +117,7 @@ public class ConsolePrompt {
     }
 
     void changeAccountTimeZone(){
+        Scanner input = new Scanner(System.in);
         System.out.print("Enter new timezone: ");
         String newTZ = input.next();
         if(!isValidTimeZone(newTZ)) System.out.println("Invalid input, unable to change TimeZone");
@@ -159,6 +162,7 @@ public class ConsolePrompt {
     }
 
     void startTimer(){
+        Scanner input = new Scanner(System.in);
         System.out.print("Enter hour: ");
         int hour = 0, min = 0, sec = 0;
         try {
@@ -181,6 +185,8 @@ public class ConsolePrompt {
 
         myTimer timer = new myTimer();
         timer.start(hour, min, sec);
+        if (input.next().equals("0")) timer.cancel();
+        else System.out.println("didn't work");
         consoleOthersMenu();
     }
 
@@ -194,34 +200,58 @@ public class ConsolePrompt {
         String[] eventMenu = {"Upcoming Events", "All Events", "Create Event", "Main Menu"};
         short userInp = validCMDLoop(eventMenu);
         if(userInp == 0) upcomingEvents();
+        if(userInp == 1) allEvents();
         else if(userInp == 2) createEvent();
+        else if(userInp == eventMenu.length-1) consoleMainMenu();
     }
 
     void upcomingEvents(){
-        ArrayList<Event> events = userAccount.getAllEvents().upcomingEvents();
-        for(int i = 0; i < events.size(); i++){
-            System.out.println("["+i+"]"+ events.get(i).getName() + " at " + events.get(i).getStartTimeString());
+        ArrayList<Event> events = userAccount.getAllEvents().getEvents(LocalDateTime.now());
+        if (events.size() == 0) {
+            System.out.println("You have no upcoming events!");
+            consoleEventMenu();
         }
+        else {
+            eventCMDTemplate(events);
+        }
+    }
+
+    int eventCMDTemplate(ArrayList<Event> events){
+        Scanner input = new Scanner(System.in);
+        int cmd = events.size();
+        for(int i = 0; i < events.size(); i++) System.out.println("["+i+"] "+ events.get(i).getName() + " at " + events.get(i).getStartTimeString());
         System.out.println("To view an event, enter the corresponding number.");
         System.out.println("Enter [" + events.size() + "] to return to My Events");
         boolean validCMD = false;
         while (!validCMD){
             try {
-                short cmd = input.nextShort();
+                cmd = input.nextShort();
                 if(cmd == events.size()){
                     validCMD = true; consoleEventMenu();
                 } else if(cmd < events.size() && cmd >= 0){
-                    validCMD =true; eventView(events.get(cmd));
+                    validCMD = true; eventView(events.get(cmd));
                 }
                 else throw new InputMismatchException();
             } catch (InputMismatchException ex){
                 System.out.println("Invalid Input Try again");
             }
         }
+        return cmd;
+    }
+
+    void allEvents(){
+        Scanner input = new Scanner(System.in);
+        ArrayList<Event> events = userAccount.getAllEvents().getEvents(LocalDateTime.now());
+        if (events.size() == 0) {
+            System.out.println("You have no events!");
+            consoleEventMenu();
+        } else {
+            eventCMDTemplate(events);
+        }
     }
 
     void eventView(Event event){
-        String[] eventViewMenu = {"Name", "Description", "Location", };
+        String[] eventViewMenu = {"Name", "Description", "Location"};
         System.out.println(
                 "Name: " + event.getName() + "\nDescription: " + event.getDescription() +
                 "\nLocation: " + event.getLocation() + "\nStarts at: " + event.getStartTimeString() +
@@ -230,21 +260,21 @@ public class ConsolePrompt {
     }
 
     void createEvent(){
+        Scanner input = new Scanner(System.in);
         System.out.print("Enter the name of the event: ");
-        String eventName = input.next();
+        String eventName = input.nextLine();
         System.out.print("Enter a small description of the event: ");
-        String eventDesc = "";
-        eventDesc = input.next();
+        String eventDesc = input.nextLine();
         System.out.print("Enter the start date of the event (yyyy-mm-dd): ");
-        String eventStartDate = input.next();
+        String eventStartDate = input.next(); input.nextLine();
         System.out.print("Enter the start time of the event (HH:mm): ");
-        String eventStartTime = input.next();
+        String eventStartTime = input.next(); input.nextLine();
         System.out.print("Enter the end date of the event (yyyy-mm-dd): ");
-        String eventEndDate = input.next();
+        String eventEndDate = input.next(); input.nextLine();
         System.out.print("Enter the end time of the event (HH:mm): ");
-        String eventEndTime = input.next();
+        String eventEndTime = input.next(); input.nextLine();
         System.out.print("Enter the location of the event: ");
-        String eventLocation = input.next();
+        String eventLocation = input.nextLine();
 
         Event newEvent = new Event(0, userAccount.getID(), eventName, eventDesc,
                 eventStartDate + " " + eventStartTime, eventEndDate + " " + eventEndTime, eventLocation);
@@ -264,6 +294,7 @@ public class ConsolePrompt {
     }
 
     public void accountSignUp(){
+        Scanner input = new Scanner(System.in);
         String accountName = "", password = "", timezone=""; Account newAccount;
 
         boolean notValideName = true, notValidPass = true;
@@ -331,6 +362,7 @@ public class ConsolePrompt {
     }
 
     short validCMDLoop(String[] menuList){
+        Scanner input = new Scanner(System.in);
         boolean validCMD = false;
         short cmd = 0;
         for(int i = 0; i < menuList.length; i++) System.out.print("["+i+"] "+ menuList[i]+ " \t");

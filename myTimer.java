@@ -23,7 +23,7 @@ public class myTimer{
 		public void run() {
 			secondsPassed++;
 			int temp = timeInSeconds - secondsPassed;
-			String make = "Time remaining: " + temp/3600 + ":" + (temp%3600)/60 + ":" + (temp%3600)%60+"\r";
+			String make = "Time remaining: " + temp/3600 + ":" + (temp%3600)/60 + ":" + (temp%3600)%60+" [Enter 0 to cancel] \r";
 			System.out.print(make);
 			stopCheck(timeInSeconds);
 		}

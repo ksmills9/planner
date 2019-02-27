@@ -11,10 +11,14 @@ public class DatabaseConn {
 
     public void startConnection(){
         try {
-            this.connection = new DatabaseConn().getMySqlConnection();
+            this.connection = getMySqlConnection();
         } catch (Exception ex){
             ex.printStackTrace();
         }
+    }
+
+    public boolean connected(){
+        return connection != null;
     }
 
     public Connection getMySqlConnection() {
