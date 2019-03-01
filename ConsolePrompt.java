@@ -184,7 +184,7 @@ public class ConsolePrompt {
      */
     public void consoleOthersMenu(){
         System.out.println("Others Menu");
-        String[] otherMenu = {"Timer", "View Calendar", "Main Menu"};
+        String[] otherMenu = {"Timer", "View Calendar", "Alarm", "Main Menu"};
         short cmd = validCMDLoop(otherMenu);
         if(cmd == 0) startTimer();
         else if(cmd == 1) viewCalendar();

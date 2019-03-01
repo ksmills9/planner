@@ -28,7 +28,6 @@ For now, only a console version of the program is available. In future, we will 
     java -cp .;"path\to\mysql-connector-java-X.X.XX.jar" Main console
   ```
   - Make sure to add `console` at the end.
-  - If you have Connector/J installed, you can omit `-cp .;"path\to\mysql-connector-java-X.X.XX.jar"`
 - **Linux/MacOS**
   - Open command prompt and move to the same directory where you kept the `.java` files.
   - Type in the following command 
@@ -40,7 +39,6 @@ For now, only a console version of the program is available. In future, we will 
       java -cp .:"path\to\mysql-connector-java-X.X.XX.jar" Main console
     ```
   - Make sure to add `console` at the end.
-  - If you have Connector/J installed, you can omit `-cp .;"path\to\mysql-connector-java-X.X.XX.jar"`
 
 - **Eclipse/IntelliJ**
   - Add `mysql-connector-java-X.X.XX.jar` to your project's External/Referenced Library.
