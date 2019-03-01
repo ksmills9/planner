@@ -8,7 +8,6 @@ public class Main {
 
     public static void main(String[] args){
         Main main = new Main();
-        main.conn.startConnection();
         if (main.conn.connected()){
             if(args.length > 0) {
                 if(args[0].equals("console")){

@@ -280,7 +280,7 @@ public class ConsolePrompt {
                 eventStartDate + " " + eventStartTime, eventEndDate + " " + eventEndTime, eventLocation);
         if (newEvent.isValidInterval()){
             if (userAccount.getAllEvents().isAvailable(newEvent)){
-                int event_ID = conn.addEvent(newEvent, userAccount);
+                int event_ID = conn.addEvent(newEvent);
                 newEvent.setID(event_ID);
                 userAccount.getAllEvents().addEvent(newEvent);
                 System.out.println("Event created successfully!");

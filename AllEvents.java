@@ -1,15 +1,31 @@
-import java.time.ZoneOffset;
-import java.util.ArrayList;
-import java.time.LocalDateTime;
 /**
- * The Allevents class represents all events asociatiated with a user.
+ * The Allevents class represents all events associated with a user.
  * @author Nandy
  *
  */
+
+import java.time.ZoneOffset;
+import java.util.ArrayList;
+import java.time.LocalDateTime;
+
 public class AllEvents {
     private ArrayList<Event> eventList  = new ArrayList<Event>();
-    
-    //getters
+
+	/**
+	 * Default constructor
+	 */
+	AllEvents(){}
+
+	/**
+	 * Copy constructor
+	 * @param allEvents instance to copy
+	 */
+	AllEvents (AllEvents allEvents){
+		for(Event event : allEvents.getEvents()){
+			eventList.add(new Event(event));
+		}
+	}
+
     /**
      * get an event object by its name 
      * @param name In string format
@@ -97,6 +113,11 @@ public class AllEvents {
     	return retval;
 	}
 
+	/**
+	 * Get a list of all events starting after a given time
+	 * @param start the start time of the query
+	 * @return a list of all events after the given time
+	 */
 	public ArrayList<Event> getEvents(LocalDateTime start){
 		ArrayList<Event> retval = new ArrayList<>();
 		for(Event e : eventList){
@@ -107,11 +128,13 @@ public class AllEvents {
 		return retval;
 	}
 
+	/**
+	 * Get a list of all events
+	 * @return a list containing all events
+	 */
 	public ArrayList<Event> getEvents(){
 		ArrayList<Event> retval = new ArrayList<>();
-		for(Event e : eventList){
-				retval.add(e);
-		}
+		for(Event e : eventList) retval.add(new Event(e));
 		return retval;
 	}
 

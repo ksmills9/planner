@@ -1,4 +1,3 @@
-
 import java.util.TimeZone;
 
 public class Account {
@@ -19,6 +18,16 @@ public class Account {
         this.name = name;
         this.timeZone = TimeZone.getTimeZone(timezone);
         this.ID = ID;
+    }
+
+    /**
+     * Copy constructor
+     * @param toCopy the account to copy
+     */
+    Account(Account toCopy){
+        this.name = toCopy.name;
+        this.ID = toCopy.ID;
+        this.timeZone = toCopy.timeZone;
     }
 
     public String getName() {
@@ -46,10 +55,10 @@ public class Account {
     }
 
     public AllEvents getAllEvents() {
-        return allEvents;
+        return new AllEvents(allEvents);
     }
 
     public void setAllEvents(AllEvents allEvents) {
-        this.allEvents = allEvents;
+        this.allEvents = new AllEvents(allEvents);
     }
 }
