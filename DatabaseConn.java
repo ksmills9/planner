@@ -1,7 +1,3 @@
-/**
- * DatabaseConn class manages all connection with the externally hosted database
- */
-
 import java.sql.*;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -9,6 +5,11 @@ import java.security.SecureRandom;
 import java.security.spec.KeySpec;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+/**
+ * DatabaseConn class manages all connection with the externally hosted database.
+ *
+ */
 
 public class DatabaseConn {
     private Connection connection;

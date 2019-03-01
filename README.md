@@ -1,6 +1,8 @@
 # Planner
 Manage your daily events with this program. Create an account, add events, set a timer or an alarm.
 
+Download Repository from: [GitHub](https://github.com/ksmills9/planner)
+
 ## About
 The program connects you to a MySQL database hosted on an AWS EC2 server. For Java to connect to the database, you need the JDBC driver for MySQL, [Connector/J](https://dev.mysql.com/downloads/connector/j/).
 
@@ -40,3 +42,7 @@ For now, only a console version of the program is available. In future, we will 
   - Make sure to add `console` at the end.
   - If you have Connector/J installed, you can omit `-cp .;"path\to\mysql-connector-java-X.X.XX.jar"`
 
+- **Eclipse/IntelliJ**
+  - Add `mysql-connector-java-X.X.XX.jar` to your project's External/Referenced Library.
+  - Go to Build → Edit Configurations and type `console` in 'Program arguments' field. (IntelliJ)
+  - Go to Run → Run Configurations tab and type `console` in 'Program arguments' section. (Eclipse)

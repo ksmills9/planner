@@ -1,6 +1,3 @@
-/**
- * imports of needed libraries
- */
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Timer;
@@ -72,7 +69,7 @@ public class Alarm {
 	 * cancel method to cancel a running alarm
 	 */
 	public void cancel() {
-		if(hasStarted == true) {
+		if(hasStarted) {
 			timer.cancel();
 		}
 		else {

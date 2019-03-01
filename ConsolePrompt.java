@@ -5,15 +5,27 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.TimeZone;
 
+/**
+ * ConsolePrompt class manages all prompts and inputs from user and calls necessary methods to carry out the expected
+ * functionality
+ */
+
 public class ConsolePrompt {
     private DatabaseConn conn;
     private Account userAccount;
     private final String[] DaysofWeek = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
 
+    /**
+     * Creates the instance and gets the reference to DatabaseConn instance connected to the database
+     * @param conn the DatabaseConn instance connected to the database
+     */
     ConsolePrompt(DatabaseConn conn){
         this.conn = conn;
     }
 
+    /**
+     * Prompts the user to either login, signup or exit the program
+     */
     public void start(){
         System.out.println("Welcome to your personal Planner!");
         String[] startMenu = {"Login", "Signup", "Exit"};
@@ -30,6 +42,10 @@ public class ConsolePrompt {
         }
     }
 
+    /**
+     * Prompts the user to input account name and password. If the username and password is valid, it loads the
+     * account details in an Account instance, otherwise, it prompts the user to try again or return to start menu.
+     */
     public void accountLogin(){
         Scanner input = new Scanner(System.in);
         String accountName = "", password = "";
@@ -58,6 +74,11 @@ public class ConsolePrompt {
         }
     }
 
+    /**
+     * Main menu after a user has logged in/signed up successfully.
+     * Prompts the user to view their events, profile, other functionality or logout and redirects them to respective
+     * menu after the user has provided a valid input
+     */
     public void consoleMainMenu(){
         System.out.println("Main Menu");
         String[] mainmenu = {"My Events", "My Profile", "Others", "LogOut"};
@@ -69,9 +90,12 @@ public class ConsolePrompt {
         else if(userInp == mainmenu.length - 1) logout();
     }
 
+    /**
+     * Displays information about the user account and allows them to change name, password or timezone.
+     */
     public void consoleProfileMenu(){
         System.out.println("My Profile");
-        viewProfile();
+        viewProfile(userAccount);
         String[] profileMenu = {"Change Name", "Change Password", "Change TimeZone", "Main Menu"};
         short userInp = validCMDLoop(profileMenu);
         if(userInp == 0)changeAccountName();
@@ -80,6 +104,11 @@ public class ConsolePrompt {
         else if(userInp == profileMenu.length-1) consoleMainMenu();
     }
 
+    /**
+     * Prompts the user to type in current password, new password and confirm the new password. If the cureent
+     * password is correct and new password is typed in correctly, it calls the necessary methods to change the
+     * user password on the database
+     */
     void changeAccountPassword(){
         Scanner input = new Scanner(System.in);
         System.out.print("Enter old password: ");
@@ -102,6 +131,9 @@ public class ConsolePrompt {
         consoleProfileMenu();
     }
 
+    /**
+     * Prompts the user to change their name.
+     */
     void changeAccountName(){
         Scanner input = new Scanner(System.in);
         System.out.print("Enter new name: ");
@@ -116,6 +148,9 @@ public class ConsolePrompt {
         consoleProfileMenu();
     }
 
+    /**
+     * Prompts the user to change their timezone.
+     */
     void changeAccountTimeZone(){
         Scanner input = new Scanner(System.in);
         System.out.print("Enter new timezone: ");
@@ -133,12 +168,20 @@ public class ConsolePrompt {
         consoleProfileMenu();
     }
 
-    void viewProfile(){
-        System.out.println("My Name: " + userAccount.getName() +
-                "\nMy ID: " + userAccount.getID() +
-                "\nMy TimeZone: " + userAccount.getTimeZone());
+    /**
+     * Prints all information of the specified user.
+     * @param account the account to show details of
+     */
+    void viewProfile(Account account){
+        System.out.println("My Name: " + account.getName() +
+                "\nMy ID: " + account.getID() +
+                "\nMy TimeZone: " + account.getTimeZone());
     }
 
+    /**
+     * Prompts the user to use other functionality such as: Timer, Viewing Calender, Setting Alarm or returning
+     * to Main Menu
+     */
     public void consoleOthersMenu(){
         System.out.println("Others Menu");
         String[] otherMenu = {"Timer", "View Calendar", "Main Menu"};
@@ -148,6 +191,10 @@ public class ConsolePrompt {
         else if(cmd == otherMenu.length - 1) consoleMainMenu();
     }
 
+    /**
+     * Shows a month-view calendar starting from current month and allows the user to navigate to previous and
+     * next month
+     */
     void viewCalendar(){
         String[] viewCalendarMenu = {"Previous Month", "Next Month", "Others Menu"};
         long change = 0;
@@ -161,6 +208,10 @@ public class ConsolePrompt {
         }
     }
 
+    /**
+     * Prompts the user to input timer length and starts the timer.
+     * Allows the user to stop the timer at any moment.
+     */
     void startTimer(){
         Scanner input = new Scanner(System.in);
         System.out.print("Enter hour: ");
@@ -186,15 +237,20 @@ public class ConsolePrompt {
         myTimer timer = new myTimer();
         timer.start(hour, min, sec);
         if (input.next().equals("0")) timer.cancel();
-        else System.out.println("didn't work");
         consoleOthersMenu();
     }
 
+    /**
+     * Cancel the creation of the event and returns to Others menu
+     */
     void timerErrorHandle(){
         System.out.print("Invalid input");
         consoleOthersMenu();
     }
 
+    /**
+     * Allows the user to view upcoming events, all events, create an event or return to Main Menu.
+     */
     public void consoleEventMenu(){
         System.out.println("My Events");
         String[] eventMenu = {"Upcoming Events", "All Events", "Create Event", "Main Menu"};
@@ -205,6 +261,9 @@ public class ConsolePrompt {
         else if(userInp == eventMenu.length-1) consoleMainMenu();
     }
 
+    /**
+     * Displays all upcoming events of the user from and allows the user to view any particular event.
+     */
     void upcomingEvents(){
         ArrayList<Event> events = userAccount.getAllEvents().getEvents(LocalDateTime.now());
         if (events.size() == 0) {
@@ -216,6 +275,12 @@ public class ConsolePrompt {
         }
     }
 
+    /**
+     * Takes a list of events and prints the name and start time of each event along with a index allowing user
+     * to input the index of a particular event.
+     * @param events the list of events to display
+     * @return user input of index values printed
+     */
     int eventCMDTemplate(ArrayList<Event> events){
         Scanner input = new Scanner(System.in);
         int cmd = events.size();
@@ -239,8 +304,10 @@ public class ConsolePrompt {
         return cmd;
     }
 
+    /**
+     * Displays every event of the user and allows the user to view any particular event.
+     */
     void allEvents(){
-        Scanner input = new Scanner(System.in);
         ArrayList<Event> events = userAccount.getAllEvents().getEvents(LocalDateTime.now());
         if (events.size() == 0) {
             System.out.println("You have no events!");
@@ -250,6 +317,10 @@ public class ConsolePrompt {
         }
     }
 
+    /**
+     * Prints all information about the given event and allows the user to go back to Event Menu
+     * @param event
+     */
     void eventView(Event event){
         String[] eventViewMenu = {"Name", "Description", "Location"};
         System.out.println(
@@ -259,6 +330,10 @@ public class ConsolePrompt {
         consoleEventMenu();
     }
 
+    /**
+     * Prompts the user to provide all necessary detail needed to create an event and calls the methods to add the
+     * event to the database and the AllEvents instance of the user account.
+     */
     void createEvent(){
         Scanner input = new Scanner(System.in);
         System.out.print("Enter the name of the event: ");
@@ -289,10 +364,17 @@ public class ConsolePrompt {
         consoleEventMenu();
     }
 
+    /**
+     * Logs out the user by removing the reference to user account and takes the user to start menu.
+     */
     void logout(){
         setUserAccount(null); start();
     }
 
+    /**
+     * Prompts the user to input required details for account creation and calls necessary methods to create the
+     * account.
+     */
     public void accountSignUp(){
         Scanner input = new Scanner(System.in);
         String accountName = "", password = "", timezone=""; Account newAccount;
@@ -337,6 +419,10 @@ public class ConsolePrompt {
         }
     }
 
+    /**
+     * Prints a month-view calendar on console of the specified month and highlights today's date
+     * @param dateTime any date of the month to show
+     */
     void printCalender(LocalDateTime dateTime) {
         System.out.format("%s - %s \n", dateTime.getMonth(), dateTime.getYear());
         for (String day2 : DaysofWeek) System.out.format("%5s", day2);
@@ -357,10 +443,20 @@ public class ConsolePrompt {
         }
     }
 
+    /**
+     * Set the account of the logged in user as the instance variable
+     * @param account the account of the logged in user
+     */
     public void setUserAccount(Account account){
-        userAccount = account;
+        if(account != null) userAccount = new Account(account);
     }
 
+    /**
+     * Takes the options of a menu as an array and prints it out with a corresponding index and asks the user to
+     * provide a valid input to return
+     * @param menuList array with all the menu options
+     * @return valid input provided by the user
+     */
     short validCMDLoop(String[] menuList){
         Scanner input = new Scanner(System.in);
         boolean validCMD = false;
@@ -381,6 +477,11 @@ public class ConsolePrompt {
         return cmd;
     }
 
+    /**
+     * Check if the provided string corresponds to a valid timezone
+     * @param stingTZ the timezone to check
+     * @return <code>true</code> if the provided timezone is valid, <code>false</code> otherwise
+     */
     boolean isValidTimeZone(String stingTZ){
         String[] validIDs = TimeZone.getAvailableIDs();
         boolean validZone = false;
