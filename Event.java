@@ -1,6 +1,9 @@
 import java.time.LocalDateTime;
 import java.time.format.*;
 
+/**
+* Event class that creates a new event for one user
+*/
 public class Event  {
     private int ID;
     private int userID;
