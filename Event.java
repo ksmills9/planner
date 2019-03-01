@@ -1,6 +1,9 @@
 import java.time.LocalDateTime;
 import java.time.format.*;
 
+/**
+* Event class that creates a new event for one user
+*/
 public class Event  {
     private int ID;
     private int userID;
@@ -178,12 +181,16 @@ public class Event  {
 
     /**
      * Check if the interval of the event is valid
-     * @return <code>ture</code> if the start time of the event if before end time, <code>false</code> otherwise
+     * @return <code>true</code> if the start time of the event if before end time, <code>false</code> otherwise
      */
     public boolean isValidInterval(){
         return startTime.isBefore(endTime);
     }
 
+    /**
+    * get the user's ID
+    * @return the user's ID number
+    */
     public int getUserID(){
         return userID;
     }

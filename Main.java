@@ -1,11 +1,17 @@
 public class Main {
     private ConsolePrompt prompt;
     private DatabaseConn conn;
-
+    
+    /**
+    * Creates new database connection
+    */
     Main(){
         conn = new DatabaseConn();
     }
-
+    
+    /**
+    * Main method that connects to the database and initiates the prompts
+    */
     public static void main(String[] args){
         Main main = new Main();
         if (main.conn.connected()){
