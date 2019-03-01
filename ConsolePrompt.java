@@ -53,16 +53,16 @@ public class ConsolePrompt {
         accountName = input.next();
         System.out.print("Enter password: ");
         password = input.next();
-        Account userAccount = null;
+        Account logAccount = null;
         try {
-            userAccount = conn.login(accountName, password);
+            logAccount = conn.login(accountName, password);
         } catch (SQLException ex){
             ex.printStackTrace();
         }
 
-        if(userAccount != null) {
+        if(logAccount != null) {
             System.out.println("Login Successful!");
-            setUserAccount(userAccount);
+            setUserAccount(logAccount);
             userAccount.setAllEvents(conn.loadEvents(userAccount));
             consoleMainMenu();
         }
@@ -259,6 +259,7 @@ public class ConsolePrompt {
         if(userInp == 1) allEvents();
         else if(userInp == 2) createEvent();
         else if(userInp == eventMenu.length-1) consoleMainMenu();
+
     }
 
     /**
@@ -308,7 +309,7 @@ public class ConsolePrompt {
      * Displays every event of the user and allows the user to view any particular event.
      */
     void allEvents(){
-        ArrayList<Event> events = userAccount.getAllEvents().getEvents(LocalDateTime.now());
+        ArrayList<Event> events = userAccount.getAllEvents().getEvents();
         if (events.size() == 0) {
             System.out.println("You have no events!");
             consoleEventMenu();

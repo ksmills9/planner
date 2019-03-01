@@ -87,7 +87,7 @@ public class Account {
      * @return a new copy of AllEvents instance
      */
     public AllEvents getAllEvents() {
-        return new AllEvents(allEvents);
+        return allEvents;
     }
 
     /**
