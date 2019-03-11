@@ -24,14 +24,8 @@ public class GUIPrompt extends Application {
 
     void connError(){
         Alert errorAlert = new Alert(AlertType.ERROR);
-    	errorAlert.setHeaderText("Database connection error");
+    	errorAlert.setHeaderText("Cnnection error");
     	errorAlert.setContentText("Could not connect to the database");
         errorAlert.showAndWait();
-        //Label message = new Label("Could not connect to the database");
-        //Pane pane = new Pane();
-        //pane.getChildren().add(message);
-        //Stage errStage = new Stage();
-        //errStage.setScene(new Scene(pane));
-        //errStage.show();
     }
 }
