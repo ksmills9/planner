@@ -11,35 +11,30 @@ import java.util.TimeZone;
  */
 
 public class ConsolePrompt {
-    private DatabaseConn conn;
+    private DatabaseConn conn = new DatabaseConn();
     private Account userAccount;
     private final String[] DaysofWeek = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
-
-    /**
-     * Creates the instance and gets the reference to DatabaseConn instance connected to the database
-     * @param conn the DatabaseConn instance connected to the database
-     */
-    ConsolePrompt(DatabaseConn conn){
-        this.conn = conn;
-    }
 
     /**
      * Prompts the user to either login, signup or exit the program
      */
     public void start(){
-        System.out.println("Welcome to your personal Planner!");
-        String[] startMenu = {"Login", "Signup", "Exit"};
-        short startChoice = validCMDLoop(startMenu);
-        if(startChoice == 0) accountLogin();
-        else if (startChoice == 1) accountSignUp();
-        else if (startChoice == 2) {
-            try {
-                conn.closeConnection();
-            } catch (SQLException ex){
-                ex.printStackTrace();
+        if(conn.connected()){
+            System.out.println("Welcome to your personal Planner!");
+            String[] startMenu = {"Login", "Signup", "Exit"};
+            short startChoice = validCMDLoop(startMenu);
+            if(startChoice == 0) accountLogin();
+            else if (startChoice == 1) accountSignUp();
+            else if (startChoice == 2) {
+                try {
+                    conn.closeConnection();
+                } catch (SQLException ex){
+                    ex.printStackTrace();
+                }
+                System.exit(0);
             }
-            System.exit(0);
         }
+        else System.out.println("Could not connect to the database");
     }
 
     /**
@@ -449,7 +444,7 @@ public class ConsolePrompt {
      * @param account the account of the logged in user
      */
     public void setUserAccount(Account account){
-        if(account != null) userAccount = new Account(account);
+        if(account != null) userAccount = account;
     }
 
     /**

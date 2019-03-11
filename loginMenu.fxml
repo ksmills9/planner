@@ -11,7 +11,7 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane fx:controller="Controller" xmlns:fx="http://javafx.com/fxml" stylesheets="stylesheet.css">
+<BorderPane fx:controller="LoginController" xmlns:fx="http://javafx.com/fxml" stylesheets="stylesheet.css" minHeight="400" maxWidth="400">
         <center>
                 <GridPane  alignment="CENTER" styleClass="container" maxWidth="400" maxHeight="400">
                         <Label text="Planner™" styleClass="banner" alignment="CENTER"
@@ -27,8 +27,8 @@
                                 styleClass="btn-primary" maxWidth="Infinity"/>
                         <Label text="Don't have an account?"
                                GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="2"/>
-                        <Button text="Sign Up" GridPane.rowIndex="5" GridPane.columnIndex="0"
-                                styleClass="btn-secondary" maxWidth="Infinity"/>
+                        <Button fx:id="goToSignUpBtn" text="Sign Up" GridPane.rowIndex="5" GridPane.columnIndex="0"
+                                styleClass="btn-secondary" maxWidth="Infinity" onAction="#loadSignUpMenu"/>
                 </GridPane>
         </center>
 </BorderPane>

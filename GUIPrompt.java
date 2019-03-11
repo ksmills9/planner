@@ -1,35 +1,32 @@
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class GUIPrompt extends Application {
-    DatabaseConn conn;
     private Account userAccount;
+    private SceneController sceneCtrl;
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) {
         primaryStage.setMaximized(true);
         primaryStage.setTitle("Planner");
-//        loginMenu(primaryStage);
-        goToSignUp(primaryStage);
+        sceneCtrl = new SceneController();
+        primaryStage.setScene(sceneCtrl.getMain());
+        primaryStage.show();
+        if (!sceneCtrl.getConn().connected()) {
+            connError();
+            primaryStage.close();
+        }
     }
 
-    public void goToSignUp(Stage stage)throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("signupMenu.fxml"));
-        stage.setScene(new Scene(root));
-        stage.show();
-    }
-
-    public void loginMenu(Stage stage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("loginMenu.fxml"));
-        stage.setScene(new Scene(root));
-        stage.show();
-    }
-
-
-    public static void main(String[] args) {
-        launch(args);
+    void connError(){
+        Label message = new Label("Could not connect to the database");
+        Pane pane = new Pane();
+        pane.getChildren().add(message);
+        Stage errStage = new Stage();
+        errStage.setScene(new Scene(pane));
+        errStage.show();
     }
 }
