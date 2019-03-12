@@ -1,8 +1,5 @@
 import javafx.application.Application;
 import javafx.scene.control.Alert;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class GUIPrompt extends Application {
@@ -23,7 +20,7 @@ public class GUIPrompt extends Application {
     }
 
     void connError(){
-        Alert errorAlert = new Alert(AlertType.ERROR);
+        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
     	errorAlert.setHeaderText("Cnnection error");
     	errorAlert.setContentText("Could not connect to the database");
         errorAlert.showAndWait();

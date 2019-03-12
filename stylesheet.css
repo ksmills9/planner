@@ -68,7 +68,7 @@
 }
 
 .option-btn:hover{
-	-fx-rotate: 30;
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 20, 0, 0, 0);
 	-fx-cursor: hand;
 }
 
@@ -108,4 +108,21 @@
 .sidebar{
 	-fx-background-color: #eee;
 	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 30, 0, 0, 0);
+}
+
+.dayLabel{
+	-fx-padding: 20px 0px;
+	-fx-font-size: 18px;
+	-fx-font-weight: bold;
+	-fx-text-alignment: center;
+	-fx-alignment: center;
+}
+
+.dateLabel{
+	-fx-font-size: 18px;
+}
+
+.calendar-grid{
+	-fx-alignment: center;
+	-fx-font-family: "Source Sans Pro", 'Helvetica Neue', sans-serif;
 }
