@@ -12,6 +12,7 @@ public class SignUpController implements Initializable {
     ComboBox timeZoneCombo;
 
     @Override
+    @SuppressWarnings("unchecked")
     public void initialize(URL url, ResourceBundle resourceBundle) {
         timeZoneCombo.getItems().addAll(TimeZone.getAvailableIDs());
     }

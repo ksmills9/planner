@@ -23,6 +23,12 @@ public class SceneController {
             addScene("signUpMenu", loader.load());
             SignUpController signCtrl = loader.getController();
             signCtrl.setSceneCtrl(this);
+
+            loader = new FXMLLoader(getClass().getResource( "MainUI.fxml" ));
+            addScene("MainUI", loader.load());
+            MainUIController mainCtrl = loader.getController();
+            mainCtrl.setSceneCtrl(this);
+            activate("MainUI");
         } catch (Exception ex){
             ex.printStackTrace();
         }
