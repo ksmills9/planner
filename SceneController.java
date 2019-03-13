@@ -25,11 +25,6 @@ public class SceneController {
             SignUpController signCtrl = loader.getController();
             signCtrl.setSceneCtrl(this);
 
-            loader = new FXMLLoader(getClass().getResource( "MainUI.fxml" ));
-            addScene("MainUI", loader.load());
-            MainUIController mainCtrl = loader.getController();
-            mainCtrl.setSceneCtrl(this);
-            activate("MainUI");
         } catch (Exception ex){
             ex.printStackTrace();
         }
@@ -52,15 +47,27 @@ public class SceneController {
     }
 	
 	public void setUserAccount(Account account, AllEvents allEvents){
-		this.userAccount=account;
+        this.userAccount=account;
 		userAccount.setAllEvents(allEvents);
-		
-		
-	}
-	
-	
-	
-	
-	
+        loadMainUI();
+    }
+
+    public void setUserAccount(Account account){
+        this.userAccount = account;
+        loadMainUI();
+    }
+
+	void loadMainUI(){
+        try {
+            loader = new FXMLLoader(getClass().getResource( "MainUI.fxml" ));
+            addScene("MainUI", loader.load());
+            MainUIController mainCtrl = loader.getController();
+            mainCtrl.setSceneCtrl(this);
+        } catch (Exception ex){}
+    }
+
+	public Account getUserAccount(){
+        return userAccount;
+    }
 	
 }

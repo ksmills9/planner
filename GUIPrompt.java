@@ -21,7 +21,7 @@ public class GUIPrompt extends Application {
 
     void connError(){
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-    	errorAlert.setHeaderText("Cnnection error");
+    	errorAlert.setHeaderText("Connection error");
     	errorAlert.setContentText("Could not connect to the database");
         errorAlert.showAndWait();
     }

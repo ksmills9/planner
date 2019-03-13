@@ -19,16 +19,16 @@
                                GridPane.rowIndex="0" GridPane.columnSpan="2"/>
                         <Label text="Enter your name:"
                                GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                        <TextField
+                        <TextField fx:id="username"
                                 GridPane.columnIndex="1" GridPane.rowIndex="1"/>
                         <Label text="Enter your password:"
                                GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                        <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                        <PasswordField fx:id="password" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
                         <Label text="Enter your timezone:"
                                GridPane.columnIndex="0" GridPane.rowIndex="3"/>
                         <ComboBox fx:id="timeZoneCombo" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-                        <Button text="Sign Up" GridPane.rowIndex="4" GridPane.columnSpan="2"
-                                styleClass="btn-primary" maxWidth="Infinity"/>
+                        <Button fx:id="signupBtn" text="Sign Up" GridPane.rowIndex="4" GridPane.columnSpan="2"
+                                styleClass="btn-primary" maxWidth="Infinity" onAction="#signupAccount"/>
                 </GridPane>
         </center>
 </BorderPane>

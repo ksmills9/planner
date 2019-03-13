@@ -45,8 +45,7 @@ public class LoginController {
 			if(logAccount != null) {
 				//loginSuccessful
 				sceneCtrl.setUserAccount(logAccount, conn.loadEvents(logAccount));
-				System.out.println("Account successful load");
-				
+				sceneCtrl.activate("MainUI");
 			}
 			else {
 				//handle incorrect name/pass
@@ -64,9 +63,7 @@ public class LoginController {
 				errorStage.setScene(scene);
 				errorStage.show();	
 			}
-			
-			
-			
+
 		}
 	}
 
