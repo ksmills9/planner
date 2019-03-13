@@ -8,6 +8,7 @@ public class SceneController {
     private HashMap<String, Pane> sceneMap = new HashMap<>();
     FXMLLoader loader = new FXMLLoader();
     private Scene main;
+	private Account userAccount;
 
     public SceneController(){
         try {
@@ -49,4 +50,17 @@ public class SceneController {
     public DatabaseConn getConn() {
         return conn;
     }
+	
+	public void setUserAccount(Account account, AllEvents allEvents){
+		this.userAccount=account;
+		userAccount.setAllEvents(allEvents);
+		
+		
+	}
+	
+	
+	
+	
+	
+	
 }
