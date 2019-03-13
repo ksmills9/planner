@@ -18,13 +18,14 @@
                                GridPane.rowIndex="0" GridPane.columnSpan="2"/>
                         <Label text="User Name:"
                                GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                        <TextField
+                        <TextField fx:id="nameField"
                                 GridPane.columnIndex="1" GridPane.rowIndex="1"/>
                         <Label text="Password:"
                                GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                        <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                        <PasswordField fx:id="passField"
+								GridPane.columnIndex="1" GridPane.rowIndex="2"/>
                         <Button text="Login" GridPane.rowIndex="3" GridPane.columnSpan="2"
-                                styleClass="btn-primary" maxWidth="Infinity"/>
+                                styleClass="btn-primary" maxWidth="Infinity" onAction="#loadMainMenu"/>
                         <Label text="Don't have an account?"
                                GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="2"/>
                         <Button fx:id="goToSignUpBtn" text="Sign Up" GridPane.rowIndex="5" GridPane.columnIndex="0"
