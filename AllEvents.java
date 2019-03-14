@@ -106,7 +106,7 @@ public class AllEvents {
     public ArrayList<Event> getEvents(LocalDateTime start, LocalDateTime end){
     	ArrayList<Event> retval = new ArrayList<>();
     	for(Event e : eventList){
-    		if (e.getStartTime().isAfter(LocalDateTime.now())){
+    		if (e.getStartTime().isAfter(start) && e.getStartTime().isBefore(end)){
     			retval.add(e);
 			}
 		}

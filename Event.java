@@ -80,7 +80,7 @@ public class Event  {
      * @param start the start time of the event
      * @param end end time of the event
      */
-    public void setDateTime(String start, String end) { 
+    public void setDateTime(String start, String end) throws IllegalArgumentException {
     	startTime = LocalDateTime.parse(start,formatter);
     	endTime = LocalDateTime.parse(end,formatter);
     	
@@ -92,7 +92,7 @@ public class Event  {
      * the end time is set to one hour after the start time by default.
      * @param start the start time of event
      */
-    public void setDateTime(String start) {
+    public void setDateTime(String start) throws IllegalArgumentException {
     	startTime = LocalDateTime.parse(start,formatter);
     	endTime = startTime.plusHours(1);
     }

@@ -23,18 +23,9 @@ For now, only a console version of the program is available. In future, we will 
   ```
   javac -cp .;"path\to\mysql-connector-java-X.X.XX.jar" *.java
   ```
-  for example,
-  ```
-  javac -cp .;"mysql-connector-java-8.0.15.jar" *.java
-  ```
-
   - After the Java is done compiling, type in the following:
   ```
   java -cp .;"path\to\mysql-connector-java-X.X.XX.jar" Main console
-  ```
-  for example,
-  ```
-  java -cp .;"mysql-connector-java-8.0.15.jar" Main console
   ```
   - Make sure to add `console` at the end.
 - **Linux/MacOS**
@@ -43,17 +34,9 @@ For now, only a console version of the program is available. In future, we will 
   ```
   javac -cp .:"path\to\mysql-connector-java-X.X.XX.jar" *.java
   ```
-  for example,
-  ```
-  javac -cp .:"mysql-connector-java-8.0.15.jar" *.java
-  ```
   - After the Java is done compiling, type in the following:
   ```
   java -cp .:"path\to\mysql-connector-java-X.X.XX.jar" Main console
-  ```
-  for example,
-  ```
-  java -cp .:"mysql-connector-java-8.0.15.jar" Main console
   ```
   - Make sure to add `console` at the end.
 
@@ -61,3 +44,32 @@ For now, only a console version of the program is available. In future, we will 
   - Add `mysql-connector-java-X.X.XX.jar` to your project's External Library/Archive.
   - Go to Build → Edit Configurations and type `console` in 'Program arguments' field. (IntelliJ)
   - Go to Run → Run Configurations tab and type `console` in 'Program arguments' section. (Eclipse)
+
+## Running the program (GUI)
+- **Windows**
+  - Open command prompt and move to the same directory where you kept the `.java` files.
+  - Type in the following command 
+  ```
+  javac -cp .;"path\to\mysql-connector-java-X.X.XX.jar" *.java
+  ```
+  - After the Java is done compiling, type in the following:
+  ```
+  java -cp .;"path\to\mysql-connector-java-X.X.XX.jar" Main gui
+  ```
+  - Make sure to add `gui` at the end.
+- **Linux/MacOS**
+  - Open command prompt and move to the same directory where you kept the `.java` files.
+  - Type in the following command 
+  ```
+  javac -cp .:"path\to\mysql-connector-java-X.X.XX.jar" *.java
+  ```
+  - After the Java is done compiling, type in the following:
+  ```
+  java -cp .:"path\to\mysql-connector-java-X.X.XX.jar" Main gui
+  ```
+  - Make sure to add `gui` at the end.
+
+- **Eclipse/IntelliJ**
+  - Add `mysql-connector-java-X.X.XX.jar` to your project's External Library/Archive.
+  - Go to Build → Edit Configurations and type `gui` in 'Program arguments' field. (IntelliJ)
+  - Go to Run → Run Configurations tab and type `gui` in 'Program arguments' section. (Eclipse)

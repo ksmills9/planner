@@ -69,5 +69,4 @@ public class SceneController {
 	public Account getUserAccount(){
         return userAccount;
     }
-	
 }

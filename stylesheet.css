@@ -36,7 +36,6 @@
 
 }
 
-
 .btn-primary:hover {
 	-fx-background-color: #fff;
 	-fx-text-fill: #03c4eb;
@@ -62,7 +61,7 @@
 }
 
 .name-main{
-	-fx-font-size: 20px;
+	-fx-font-size: 24px;
 }
 
 .option-btn{
@@ -127,7 +126,7 @@
 
 .dateLabel{
 	-fx-font-size: 18px;
-	-fx-background-color: rgba(0,0,0,0)
+	-fx-background-color: rgba(0,0,0,0);
 }
 
 .calendar-grid{
@@ -142,4 +141,30 @@
 
 .today{
 	-fx-border-color: #03c4eb;
+}
+
+.viewchange-btn{
+	-fx-font-size: 22px;
+	-fx-background-color: #eee;
+	-fx-font-weight: bold;
+	-fx-background-radius: 100;
+	-fx-padding: 5px 15px;
+}
+
+
+.viewchange-btn:hover{
+	-fx-background-color: #ccc;
+	-fx-cursor: hand;
+}
+
+.has-event{
+	-fx-background-color: #FF3430;
+}
+
+.has-event:focused{
+	-fx-background-color: #E80D0C;
+}
+
+.overlay{
+	
 }
