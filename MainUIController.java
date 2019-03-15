@@ -17,6 +17,7 @@ public class MainUIController {
     private ArrayList<DateButton> dateList = new ArrayList<>();
     private LocalDateTime calendarViewDate = LocalDateTime.now();
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"); //formats String time to LocalDateTime
+    private ArrayList<String> viewModes;
 
     private Stage widget;
     @FXML
@@ -44,6 +45,8 @@ public class MainUIController {
     TextField eventStartTime;
     @FXML
     TextField eventEndTime;
+    @FXML
+    ComboBox viewCombo;
 
     public void setSceneCtrl(SceneController sceneCtrl) {
         this.sceneCtrl = sceneCtrl;
@@ -53,6 +56,10 @@ public class MainUIController {
     void initialize(){
         gotoToday();
         setName(); setDate();
+    }
+
+    void setViewCombo(){
+        viewCombo.getItems().addAll();
     }
 
     void setName(){
@@ -120,6 +127,15 @@ public class MainUIController {
 
     public void closeWidget(){
         widget.close();
+    }
+
+
+    public void viewChange(){
+
+    }
+
+    void showEvents(ArrayList<Event> events, String title){
+
     }
 
     void CreateCalendar(){
