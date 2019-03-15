@@ -75,4 +75,6 @@ For now, only a console version of the program is available. In future, we will 
   - Go to Run → Run Configurations tab and type `gui` in 'Program arguments' section. (Eclipse)
 
 ## References
-  1. 
+  1. https://stackoverflow.com/a/37276108
+  2. https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html
+  3. https://stackoverflow.com/a/26169947

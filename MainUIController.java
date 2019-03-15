@@ -122,6 +122,7 @@ public class MainUIController {
             sceneCtrl.getUserAccount().getAllEvents().addEvent(newEvent);
             errorBox("Event Created Successfully", "", Alert.AlertType.CONFIRMATION);
             closeWidget();
+            CreateCalendar();
         } else errorBox("Invalid Start and End Time", "Start time must be set earlier than end time", Alert.AlertType.ERROR);
     }
 

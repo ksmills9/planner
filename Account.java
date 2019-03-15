@@ -8,7 +8,7 @@ public class Account {
     private int ID;
     private String name;
     private TimeZone timeZone = TimeZone.getDefault();
-    private AllEvents allEvents;
+    private AllEvents allEvents = new AllEvents();
 
     Account(String name){
         this.name = name;
