@@ -73,3 +73,6 @@ For now, only a console version of the program is available. In future, we will 
   - Add `mysql-connector-java-X.X.XX.jar` to your project's External Library/Archive.
   - Go to Build → Edit Configurations and type `gui` in 'Program arguments' field. (IntelliJ)
   - Go to Run → Run Configurations tab and type `gui` in 'Program arguments' section. (Eclipse)
+
+## References
+  1. 
