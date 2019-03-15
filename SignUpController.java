@@ -16,6 +16,9 @@ public class SignUpController {
     @FXML
     Button signupBtn;
 
+    /**
+     * Initialize the UI by adding options to the Timezone combo box with valid IDs
+     */
     @SuppressWarnings("unchecked")
     public void initialize() {
         ArrayList<String> tzList = new ArrayList(Arrays.asList(TimeZone.getAvailableIDs()));
@@ -24,11 +27,18 @@ public class SignUpController {
         timeZoneCombo.getSelectionModel().select(x);
     }
 
+    /**
+     * Set the SceneController reference and initialize the UI
+     * @param sceneCtrl the SceneController this instance was created from
+     */
     public void setSceneCtrl(SceneController sceneCtrl) {
         initialize();
         this.sceneCtrl = sceneCtrl;
     }
 
+    /**
+     * Takes the inputs from respective fields, checks for errors and proceeds to create the the account
+     */
     public void signupAccount(){
         String accountname = username.getText();
         String accountPassword = password.getText();
@@ -45,6 +55,12 @@ public class SignUpController {
         if(!error) proceedToSignUp(accountname, accountPassword, timezone);
     }
 
+    /**
+     * Call methods to create the account and set it as the user account for the SceneController
+     * @param accountname name of the account
+     * @param accountPassword password of the account
+     * @param timezone timezone of the account
+     */
     void proceedToSignUp(String accountname, String accountPassword, String timezone){
         Account newUser = new Account(accountname, timezone);
 
@@ -60,6 +76,12 @@ public class SignUpController {
         }
     }
 
+    /**
+     * Display an alert message in different situation
+     * @param title title of the alert
+     * @param message message of the alert
+     * @param alertType type of the alert
+     */
     void errorBox(String title, String message, Alert.AlertType alertType){
         Alert errorAlert = new Alert(alertType);
         errorAlert.setHeaderText(title);

@@ -21,11 +21,14 @@ public class LoginController {
 	@FXML
 	PasswordField passField;
 
+	/**
+	 * Loads the sign up Menu
+	 * @param event event that was fired
+	 */
     public void loadSignUpMenu(ActionEvent event){
         sceneCtrl.activate("signUpMenu");
-		
     }
-	
+
 	public void loadMainMenu(ActionEvent event){
 		String accountName = "", password = "";
 		

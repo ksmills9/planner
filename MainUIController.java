@@ -11,6 +11,10 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
+
+/**
+ * Manages everything on the Main user interface found after a user logs in or signs up
+ */
 public class MainUIController {
     private SceneController sceneCtrl;
     private final String[] DaysofWeek = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
@@ -20,6 +24,7 @@ public class MainUIController {
     private ArrayList<String> viewModes;
 
     private Stage widget;
+
     @FXML
     VBox calendar_box;
     @FXML
@@ -48,24 +53,40 @@ public class MainUIController {
     @FXML
     ComboBox viewCombo;
 
+    /**
+     * Sets the reference to the central scene controller and initializes the UI
+     * @param sceneCtrl SceneController instance this controller was created from
+     */
     public void setSceneCtrl(SceneController sceneCtrl) {
         this.sceneCtrl = sceneCtrl;
         initialize();
     }
 
+    /**
+     * Calls the necessary methods to initialize the view
+     */
     void initialize(){
         gotoToday();
         setName(); setDate();
     }
 
+    /**
+     * Expected to manage different calendar views - work in progress
+     */
     void setViewCombo(){
         viewCombo.getItems().addAll();
     }
 
+    /**
+     * Update the corresponding Label to username
+     */
     void setName(){
         username.setText(sceneCtrl.getUserAccount().getName());
     }
 
+    /**
+     * Updates the calendar view to show current month
+     */
     public void gotoToday(){
         calendarViewDate = LocalDateTime.now().truncatedTo(ChronoUnit.DAYS);
         CreateCalendar();
@@ -80,6 +101,9 @@ public class MainUIController {
         }
     }
 
+    /**
+     * Updates the corresponding Label with current date
+     */
     void setDate(){
         LocalDateTime today = LocalDateTime.now();
         dateText.setText(today.getDayOfWeek().toString().substring(0,1)+ today.getDayOfWeek().toString().substring(1).toLowerCase() + ", " +
@@ -87,16 +111,25 @@ public class MainUIController {
                 today.getDayOfMonth() + ", " + today.getYear());
     }
 
+    /**
+     * Updates the calendar view with next month
+     */
     public void calendarNext(){
         calendarViewDate = calendarViewDate.plusMonths(1);
         CreateCalendar();
     }
 
+    /**
+     * Updates the calender view with previous month
+     */
     public void calendarPrevious(){
         calendarViewDate = calendarViewDate.minusMonths(1);
         CreateCalendar();
     }
 
+    /**
+     * Opens a new window with necessary input fields to create and event.
+     */
     public void createEventWidget(){
         widget = new Stage();
         try {
@@ -108,10 +141,16 @@ public class MainUIController {
         widget.show();
     }
 
+    /**
+     * Takes the input from the fields of the Create Event window and calls necessary methods to create the event and display
+     * error messages in case of invalid input
+     */
     public void createEvent(){
         String event_name = eventName.getText();
-        String event_desc = eventDescription.getText();
-        String event_location = eventLocation.getText();
+        String event_desc = " ";
+        event_desc = eventDescription.getText();
+        String event_location = " ";
+        event_location = eventLocation.getText();
         String event_start = eventStartDate.getValue() + " " + eventStartTime.getText();
         String event_end = eventEndDate.getValue() + " " + eventEndTime.getText();
         Event newEvent = new Event(0, sceneCtrl.getUserAccount().getID(), event_name, event_desc,
@@ -126,19 +165,33 @@ public class MainUIController {
         } else errorBox("Invalid Start and End Time", "Start time must be set earlier than end time", Alert.AlertType.ERROR);
     }
 
+    /**
+     * Closes the widget
+     */
     public void closeWidget(){
         widget.close();
     }
 
-
+    /**
+     * Manages different views - work in progress
+     */
     public void viewChange(){
 
     }
 
+    /**
+     * Shows all events passed as a parameter - work in prrgress
+     * @param events events to display
+     * @param title the title to display
+     */
     void showEvents(ArrayList<Event> events, String title){
 
     }
 
+    /**
+     * Displays all dates of the month of calendarViewDate in a Calendar format. creates an instance of DateButton class for
+     * every date in the view and appends it to dateList
+     */
     void CreateCalendar(){
         calendar_box.getChildren().clear();
         dateList.clear();
@@ -194,6 +247,11 @@ public class MainUIController {
         styleevents(calendarViewDate.withDayOfMonth(1));
     }
 
+
+    /**
+     * Adds a red background to the dates containing an event
+     * @param start first day of the month of calendarViewDate
+     */
     void styleevents(LocalDateTime start){
         ArrayList<Event> eventsInView = sceneCtrl.getUserAccount().getAllEvents().getEvents(start, start.plusMonths(1));
         for(Event event : eventsInView){
@@ -202,6 +260,12 @@ public class MainUIController {
         }
     }
 
+    /**
+     * Displays alert boxes on different occasion
+     * @param title the title of the alert
+     * @param message the message of the alert
+     * @param alertType type of the alert
+     */
     void errorBox(String title, String message, Alert.AlertType alertType){
         Alert errorAlert = new Alert(alertType);
         errorAlert.setHeaderText(title);
@@ -211,22 +275,44 @@ public class MainUIController {
 
 }
 
+/**
+ * DateButton class represents dates in a calender view
+ */
 class DateButton {
     private Button btnRef;
     private LocalDateTime repDate;
 
+    /**
+     * Creates a DateButton with the Date it represents and calls the method to create a button element
+     * @param repDate the date to represent
+     */
     DateButton(LocalDateTime repDate){
         this.repDate = repDate;
+        createBtn();
+    }
+
+    /**
+     * Create a button and add a blue border to it if the instance current date.
+     */
+    void createBtn(){
         btnRef = new Button("" +repDate.getDayOfMonth());
         btnRef.getStyleClass().add("dateLabel");
         if (repDate.isEqual(LocalDateTime.now().truncatedTo(ChronoUnit.DAYS))) btnRef.getStyleClass().add("today");
         btnRef.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
     }
 
+    /**
+     * Get the reference to the button created
+     * @return the button instance
+     */
     public Button getBtnRef() {
         return btnRef;
     }
 
+    /**
+     * get the date the instance represents
+     * @return the date this instance represents
+     */
     public LocalDateTime getRepDate() {
         return repDate;
     }

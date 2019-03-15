@@ -10,14 +10,30 @@ public class Account {
     private TimeZone timeZone = TimeZone.getDefault();
     private AllEvents allEvents = new AllEvents();
 
+    /**
+     * Create an account with name
+     * @param name name of the user
+     */
     Account(String name){
         this.name = name;
     }
+
+    /**
+     * Create an account with name and timezone
+     * @param name name of the user
+     * @param timezone timezone of the user
+     */
     Account(String name, String timezone){
         this.name = name;
         this.timeZone = TimeZone.getTimeZone(timezone);
     }
 
+    /**
+     * Create an account with name, ID and timezone of the user
+     * @param ID ID of the account
+     * @param name name of the user
+     * @param timezone timezone of the user
+     */
     Account(int ID, String name, String timezone){
         this.name = name;
         this.timeZone = TimeZone.getTimeZone(timezone);
