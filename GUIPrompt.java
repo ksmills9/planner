@@ -5,7 +5,7 @@ import javafx.stage.Stage;
 public class GUIPrompt extends Application {
     private Account userAccount;
     private SceneController sceneCtrl;
-
+    
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setMaximized(true);
