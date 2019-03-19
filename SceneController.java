@@ -7,9 +7,8 @@ import java.util.HashMap;
  * SceneController manages different scenes/UI on the main window for different purposes
  */
 public class SceneController {
-    DatabaseConn conn = new DatabaseConn();
+    private DatabaseConn conn = new DatabaseConn();
     private HashMap<String, Pane> sceneMap = new HashMap<>();
-    FXMLLoader loader = new FXMLLoader();
     private Scene main;
 	private Account userAccount;
 
@@ -18,23 +17,12 @@ public class SceneController {
      * establishes a connection to the database.
      */
     public SceneController(){
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource( "loginMenu.fxml" ));
-            Pane start = loader.load();
-            addScene("loginMenu", start);
-            LoginController logCtrl = loader.getController();
-            logCtrl.setSceneCtrl(this);
+        Pane start = loadFxml("loginMenu.fxml", "loginMenu", new LoginController());
 
-            main = new Scene(start);
+        main = new Scene(start);
+        main.getStylesheets().add("stylesheet.css");
 
-            loader = new FXMLLoader(getClass().getResource( "signupMenu.fxml" ));
-            addScene("signUpMenu", loader.load());
-            SignUpController signCtrl = loader.getController();
-            signCtrl.setSceneCtrl(this);
-
-        } catch (Exception ex){
-            ex.printStackTrace();
-        }
+        loadFxml("signupMenu.fxml", "signUpMenu", new SignUpController());
     }
 
     /**
@@ -76,9 +64,9 @@ public class SceneController {
      * @param allEvents the AllEvents instance to add to user account
      */
 	public void setUserAccount(Account account, AllEvents allEvents){
-        this.userAccount=account;
+        userAccount = account;
 		userAccount.setAllEvents(allEvents);
-        loadMainUI();
+		if(userAccount != null) loadMainUI();
     }
 
     /**
@@ -87,20 +75,8 @@ public class SceneController {
      */
 
     public void setUserAccount(Account account){
-        this.userAccount = account;
+        userAccount = account;
         loadMainUI();
-    }
-
-    /**
-     * Loads the main ui when the user logs in
-     */
-	void loadMainUI(){
-        try {
-            loader = new FXMLLoader(getClass().getResource( "MainUI.fxml" ));
-            addScene("MainUI", loader.load());
-            MainUIController mainCtrl = loader.getController();
-            mainCtrl.setSceneCtrl(this);
-        } catch (Exception ex){}
     }
 
     /**
@@ -109,5 +85,20 @@ public class SceneController {
      */
 	public Account getUserAccount(){
         return userAccount;
+    }
+
+    public void loadMainUI(){
+        loadFxml("mainUI.fxml", "mainUI", new MainUIController());
+    }
+
+    public Pane loadFxml(String url, String hashName, Controller controller){
+	    try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(url));
+            Pane loaded = loader.load();
+            addScene(hashName, loaded);
+            controller = loader.getController();
+            controller.setSceneCtrl(this);
+            return loaded;
+        } catch (Exception ex){ex.printStackTrace(); return null;}
     }
 }

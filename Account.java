@@ -111,6 +111,6 @@ public class Account {
      * @param allEvents the AllEvents instance to copy from
      */
     public void setAllEvents(AllEvents allEvents) {
-        this.allEvents = new AllEvents(allEvents);
+        this.allEvents = allEvents;
     }
 }
