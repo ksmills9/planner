@@ -1,9 +1,13 @@
+package src.prompt.gui;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.TimeZone;
+import src.*;
+
 
 public class SignUpController extends Controller {
     @FXML

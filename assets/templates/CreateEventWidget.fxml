@@ -26,7 +26,7 @@
       <RowConstraints maxHeight="45.0" minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <Label text="Event Name" />
+      <Label text="src.Event Name" />
       <TextField fx:id="eventName" GridPane.columnIndex="1" />
       <Label text="Description" GridPane.rowIndex="1" />
       <TextArea fx:id="eventDescription" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />

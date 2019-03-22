@@ -1,4 +1,6 @@
 import javafx.application.Application;
+import src.prompt.ConsolePrompt;
+import src.prompt.GUIPrompt;
 
 public class Main {
     /**

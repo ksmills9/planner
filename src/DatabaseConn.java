@@ -1,3 +1,5 @@
+package src;
+
 import java.sql.*;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -8,7 +10,6 @@ import java.util.Arrays;
 
 /**
  * DatabaseConn class manages all connection with the externally hosted database.
- *
  */
 
 public class DatabaseConn {
@@ -241,7 +242,7 @@ public class DatabaseConn {
      * @param ofUser the user to load events of
      * @return AllEvents instance loaded with all the events of the specified user.
      */
-    AllEvents loadEvents(Account ofUser){
+    public AllEvents loadEvents(Account ofUser){
         try {
             PreparedStatement preState = connection.prepareStatement("SELECT * FROM events WHERE account_ID = ?");
             preState.setInt(1, ofUser.getID());

@@ -1,10 +1,12 @@
+package src;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
 /**
 * myTimer class used to create a timer for the user
 * has instance variables secondsPassed which is integer to keep track of the seconds passed
-*  and timeInSeconds which is an integer showing how long the timer should run for
+* and timeInSeconds which is an integer showing how long the timer should run for
 */
 public class myTimer{
 

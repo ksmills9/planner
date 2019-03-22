@@ -1,13 +1,13 @@
+package src;
+
+import java.util.ArrayList;
+import java.time.LocalDateTime;
+
 /**
  * The Allevents class represents all events associated with a user.
  * @author Nandy
  *
  */
-
-import java.time.ZoneOffset;
-import java.util.ArrayList;
-import java.time.LocalDateTime;
-
 public class AllEvents {
     private ArrayList<Event> eventList  = new ArrayList<Event>();
 

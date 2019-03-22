@@ -1,3 +1,5 @@
+package src;
+
 import java.time.LocalDateTime;
 import java.time.format.*;
 
@@ -33,7 +35,7 @@ public class Event  {
      * @param start the start time of event
      * @param end end time of the event
      */
-    Event(int ID, int userID, String name, String description, String start, String end, String location){
+    public Event(int ID, int userID, String name, String description, String start, String end, String location){
         this.ID = ID;
     	this.userID = userID;
     	eventName = name;
@@ -114,7 +116,7 @@ public class Event  {
     }
 
     /**
-     * Get the ID of the Event
+     * Get the ID of the event
      * @return the ID of the event
      */
     public int getID() {

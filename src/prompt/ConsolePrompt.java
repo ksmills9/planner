@@ -1,9 +1,13 @@
+package src.prompt;
+
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.TimeZone;
+import src.*;
+
 
 /**
  * ConsolePrompt class manages all prompts and inputs from user and calls necessary methods to carry out the expected

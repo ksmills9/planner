@@ -1,6 +1,9 @@
+package src.prompt.gui;
+
 import java.sql.SQLException;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import src.*;
 
 public class LoginController extends Controller {
 	@FXML

@@ -1,7 +1,10 @@
+package src.prompt.gui;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import java.util.HashMap;
+import src.*;
 
 /**
  * SceneController manages different scenes/UI on the main window for different purposes
@@ -11,18 +14,19 @@ public class SceneController {
     private HashMap<String, Pane> sceneMap = new HashMap<>();
     private Scene main;
 	private Account userAccount;
+	private final String templateDir = "/assets/templates/";
 
     /**
      * Create the SceneController by loading the login and signup menu and displaying the login menu in the beginning, also
      * establishes a connection to the database.
      */
     public SceneController(){
-        Pane start = loadFxml("loginMenu.fxml", "loginMenu", new LoginController());
+        Pane start = loadFxml(templateDir + "loginMenu.fxml", "loginMenu", new LoginController());
 
         main = new Scene(start);
-        main.getStylesheets().add("stylesheet.css");
+        main.getStylesheets().add("/assets/stylesheet.css");
 
-        loadFxml("signupMenu.fxml", "signUpMenu", new SignUpController());
+        loadFxml(templateDir+"signupMenu.fxml", "signUpMenu", new SignUpController());
     }
 
     /**
@@ -91,7 +95,7 @@ public class SceneController {
      * Load the main UI
      */
     public void loadMainUI(){
-        loadFxml("mainUI.fxml", "mainUI", new MainUIController());
+        loadFxml(templateDir+"mainUI.fxml", "mainUI", new MainUIController());
     }
 
     /**

@@ -1,3 +1,5 @@
+package src;
+
 import java.util.TimeZone;
 
 /**
@@ -14,7 +16,7 @@ public class Account {
      * Create an account with name
      * @param name name of the user
      */
-    Account(String name){
+    public Account(String name){
         this.name = name;
     }
 
@@ -23,7 +25,7 @@ public class Account {
      * @param name name of the user
      * @param timezone timezone of the user
      */
-    Account(String name, String timezone){
+    public Account(String name, String timezone){
         this.name = name;
         this.timeZone = TimeZone.getTimeZone(timezone);
     }
@@ -34,7 +36,7 @@ public class Account {
      * @param name name of the user
      * @param timezone timezone of the user
      */
-    Account(int ID, String name, String timezone){
+    public Account(int ID, String name, String timezone){
         this.name = name;
         this.timeZone = TimeZone.getTimeZone(timezone);
         this.ID = ID;
@@ -44,7 +46,7 @@ public class Account {
      * Copy constructor
      * @param toCopy the account to copy
      */
-    Account(Account toCopy){
+    public Account(Account toCopy){
         this.name = toCopy.name;
         this.ID = toCopy.ID;
         this.timeZone = toCopy.timeZone;

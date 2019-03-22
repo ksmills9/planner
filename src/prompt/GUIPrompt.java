@@ -1,9 +1,10 @@
+package src.prompt;
+
+import src.prompt.gui.SceneController;
 import javafx.application.Application;
-import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 public class GUIPrompt extends Application {
-    private Account userAccount;
     private SceneController sceneCtrl;
     
     //credit: https://stackoverflow.com/questions/10121991/javafx-application-icon

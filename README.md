@@ -16,7 +16,7 @@ The program connects you to a MySQL database hosted on an AWS EC2 server. For Ja
 
 ## Running the program (Console)
 - **Windows**
-  - Open command prompt and move to the same directory where you kept the `.java` files.
+  - Open command src.prompt and move to the same directory where you kept the `.java` files.
   - Type in the following command 
   ```
   javac -cp .;"path\to\mysql-connector-java-X.X.XX.jar" *.java
@@ -27,7 +27,7 @@ The program connects you to a MySQL database hosted on an AWS EC2 server. For Ja
   ```
   - Make sure to add `console` at the end.
 - **Linux/MacOS**
-  - Open command prompt and move to the same directory where you kept the `.java` files.
+  - Open command src.prompt and move to the same directory where you kept the `.java` files.
   - Type in the following command 
   ```
   javac -cp .:"path\to\mysql-connector-java-X.X.XX.jar" *.java
@@ -46,36 +46,36 @@ The program connects you to a MySQL database hosted on an AWS EC2 server. For Ja
 ## Running the program (GUI | Java 11)
 To run the GUI version with Java 11, you will need to download [JavaFX 11](https://openjfx.io/) separately. After downloading it, follow the following steps. 
 - **Windows**
-  - Open command prompt and move to the same directory where you kept the `.java` files.
+  - Open command src.prompt and move to the same directory where you kept the `.java` files.
   - Type in the following command 
   ```
   javac --module-path "path\to\javafx-sdk-11.X.X\lib" --add-modules=javafx.controls,javafx.fxml -cp .;"path\to\mysql-connector-java-X.X.XX.jar" *.java
   ```
   - After the Java is done compiling, type in the following:
   ```
-  java --module-path "path\to\javafx-sdk-11.X.X\lib" --add-modules=javafx.controls,javafx.fxml -cp .;"path\to\mysql-connector-java-X.X.XX.jar" Main gui
+  java --module-path "path\to\javafx-sdk-11.X.X\lib" --add-modules=javafx.controls,javafx.fxml -cp .;"path\to\mysql-connector-java-X.X.XX.jar" Main src.prompt.gui
   ```
-  - Make sure to add `gui` at the end.
+  - Make sure to add `src.prompt.gui` at the end.
 - **Linux/MacOS**
-  - Open command prompt and move to the same directory where you kept the `.java` files.
+  - Open command src.prompt and move to the same directory where you kept the `.java` files.
   - Type in the following command 
   ```
   javac --module-path "path\to\javafx-sdk-11.X.X\lib" --add-modules=javafx.controls,javafx.fxml -cp .:"path\to\mysql-connector-java-X.X.XX.jar" *.java
   ```
   - After the Java is done compiling, type in the following:
   ```
-  java --module-path "path\to\javafx-sdk-11.X.X\lib" --add-modules=javafx.controls,javafx.fxml -cp .:"path\to\mysql-connector-java-X.X.XX.jar" Main gui
+  java --module-path "path\to\javafx-sdk-11.X.X\lib" --add-modules=javafx.controls,javafx.fxml -cp .:"path\to\mysql-connector-java-X.X.XX.jar" Main src.prompt.gui
   ```
-  - Make sure to add `gui` at the end.
+  - Make sure to add `src.prompt.gui` at the end.
 
 - **Eclipse/IntelliJ**
   - Add `mysql-connector-java-X.X.XX.jar` to your project's External Library/Archive.
-  - Go to Build → Edit Configurations and type `gui` in 'Program arguments' field. (IntelliJ)
-  - Go to Run → Run Configurations tab and type `gui` in 'Program arguments' section. (Eclipse)
+  - Go to Build → Edit Configurations and type `src.prompt.gui` in 'Program arguments' field. (IntelliJ)
+  - Go to Run → Run Configurations tab and type `src.prompt.gui` in 'Program arguments' section. (Eclipse)
   - Add the following to the VM option field `--module-path "path\to\javafx-sdk-11.X.X\lib" --add-modules=javafx.controls,javafx.fxml`
 
 ## Running the program (GUI | Java 10 and earlier)
-Javafx comes bundled with earlier versions of JDK. Using similar command as the console version and replacing `console` with `gui` as command line argument should suffice.
+Javafx comes bundled with earlier versions of JDK. Using similar command as the console version and replacing `console` with `src.prompt.gui` as command line argument should suffice.
 
 Example:
 ```
@@ -90,7 +90,7 @@ Example:
   ```
   And,
   ```
-  java -cp .;"path\to\mysql-connector-java-X.X.XX.jar";"path/to/jfxrt.jar" Main gui
+  java -cp .;"path\to\mysql-connector-java-X.X.XX.jar";"path/to/jfxrt.jar" Main src.prompt.gui
   ```
 
 ## References

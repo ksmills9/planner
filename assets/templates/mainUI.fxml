@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane xmlns:fx="http://javafx.com/fxml" fx:controller="MainUIController" minHeight="400" minWidth="400">
+<StackPane xmlns:fx="http://javafx.com/fxml" fx:controller="src.prompt.gui.MainUIController" minHeight="400" minWidth="400">
       <GridPane fx:id="root" minHeight="480.0" minWidth="720.0">
           <columnConstraints>
               <ColumnConstraints hgrow="ALWAYS" minWidth="100" percentWidth="20.0" />
@@ -20,7 +20,7 @@
           <VBox fx:id="sidebar" alignment="TOP_CENTER" spacing="16.0" styleClass="sidebar" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
                   <Button mnemonicParsing="false" onAction="#createEventWidget" styleClass="create-other-btn" text="Create" />
                   <Button mnemonicParsing="false" styleClass="create-other-btn" text="Timer" />
-                  <Button mnemonicParsing="false" styleClass="create-other-btn" text="Alarm" />
+                  <Button mnemonicParsing="false" styleClass="create-other-btn" text="src.Alarm" />
                <padding>
                   <Insets top="50.0" />
                </padding>

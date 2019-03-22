@@ -1,3 +1,5 @@
+package src.prompt.gui;
+
 import javafx.scene.control.Button;
 
 import java.time.LocalDateTime;
