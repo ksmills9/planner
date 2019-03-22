@@ -4,7 +4,7 @@ import java.time.format.*;
 /**
 * Event class that creates a new event for one user
 */
-public class Event extends AllEvents() {
+public class Event () {
     private int ID;
     private int userID;
     private String eventName;
@@ -13,9 +13,8 @@ public class Event extends AllEvents() {
     private LocalDateTime endTime;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"); //formats String time to LocalDateTime
     private String location;
-    private String occurrence;
     private String[] occurrenceArray = new String[]{"ONCE","EVERYDAY","WEEK","Month","YEAR"};
-
+    private String occurrence = occurrenceArray[0];
     /**
      * Create an event without end time - the end time will be set to one hour after start time
      * @param name name of the event
@@ -44,7 +43,6 @@ public class Event extends AllEvents() {
     	this.description = description;
     	setDateTime(start, end);
     	this.location = location;
-        occurrence = null;
     }
 
 
@@ -79,6 +77,7 @@ public class Event extends AllEvents() {
     	this.startTime = event.startTime;
     	this.endTime = event.endTime;
     	this.location = event.location;
+        this.occurrence = event.getOccurrence;
     }
     
     
@@ -110,6 +109,11 @@ public class Event extends AllEvents() {
     	endTime = LocalDateTime.parse(end,formatter);
     	
     }
+
+    public void setDateTime(LocalDateTime start, LocalDateTime end){
+        startTime = start;
+        endTime = end;
+    }
     
     
     /**
@@ -139,14 +143,11 @@ public class Event extends AllEvents() {
     }
 
     public void setOccurrence(String occurrence){
-        if (occurrence != null){
-
-
             boolean contains = Arrays.stream(occurrenceArray).anyMatch(occurrence :: equals);
             if (contains){
                 this.occurrence = occurrence;
             }
-        }
+        
         // throw an exception later
     }
 
@@ -218,6 +219,10 @@ public class Event extends AllEvents() {
 
     public String getOccurrence(){
         return occurrence;
+    }
+
+    public String[] getOccurrenceArray(){
+        return occurrenceArray;
     }
 
     /**

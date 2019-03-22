@@ -76,11 +76,33 @@ public class AllEvents {
     }
     
     /**
-	* adds an event to the eventList.
+	* adds an event to the eventList. if the event is reccuring the method will add
+    * the future events aswell.
 	* @param event the event to be added to the eventList
 	 */
     public void addEvent(Event event){
-    	eventList.add(event);
+    	if (event.getOccurrence() == "ONCE")
+            eventList.add(event);
+        else{
+            if (event.getOccurrence() == "EVERYDAY"){
+                addDaily(event);
+            }
+            else if(event.getOccurence() == "WEEK"){
+                addWeekly(event);
+            }
+            else if(event.getOccurrence(event) == "MONTH"){
+                addMonthly(event);
+            }
+            else if(event.getOccurrence(event) == "YEAR"){
+                addYearly(event);
+            }
+        }
+    }
+
+
+    
+    public void addRecurringEvent(Event event){
+
     }
 
     /**
@@ -152,5 +174,48 @@ public class AllEvents {
     	else {
     		return false;
     	}
+    }
+
+    private void addDaily(Event event){
+        int eventsToAdd = 365;
+        for(i=0; i<eventsToAdd; i++){
+            Event toAdd = new Event(event);
+            LocalDateTime start = toAdd.getStartTime().plusDays(i);
+            LocalDateTime end = toAdd.getEndTime().plusDays(i);
+            toAdd.setDateTime(start, end);
+            eventList.add(toAdd);
+        }
+    }
+
+    private void addWeekly(Event event){
+        for(i=0; i<52; i++){
+            Event toAdd = new Event(event);
+            LocalDateTime start = toAdd.getStartTime().plusWeeks(i);
+            LocalDateTime end = toAdd.getEndTime().plusWeeks(i);
+            toAdd.setDateTime(start, end);
+            eventList.add(toAdd);
+        }
+    }
+
+    private void addMonthly(Event event){
+        for(i=0; i<12; i++){
+            Event toAdd = new Event(event);
+            LocalDateTime start = toAdd.getStartTime().plusMonths(i);
+            LocalDateTime end = toAdd.getEndTime().plusMonths(i);
+            toAdd.setDateTime(start, end);
+            eventList.add(toAdd);
+        }
+
+    }
+
+    private void addYearly(){
+        for(i=0; i<4; i++){
+            Event toAdd = new Event(event);
+            LocalDateTime start = toAdd.getStartTime().plusYears(i);
+            LocalDateTime end = toAdd.getEndTime().plusYears(i);
+            toAdd.setDateTime(start, end);
+            eventList.add(toAdd);
+        }
+
     }
 }
