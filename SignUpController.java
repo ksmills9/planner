@@ -20,7 +20,6 @@ public class SignUpController extends Controller {
      */
     @SuppressWarnings("unchecked")
     public void initializeClass() {
-        if(getSceneCtrl() == null) System.out.println("Yeet");
         ArrayList<String> tzList = new ArrayList(Arrays.asList(TimeZone.getAvailableIDs()));
         timeZoneCombo.getItems().setAll(tzList);
         int x = tzList.indexOf(TimeZone.getDefault().getID());

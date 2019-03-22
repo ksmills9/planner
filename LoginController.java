@@ -1,14 +1,6 @@
-import javafx.event.ActionEvent;
 import java.sql.SQLException;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-
 import javafx.scene.control.*;
-import javafx.stage.Stage;
-import javafx.scene.layout.VBox;
-import javafx.scene.Scene;
-
-import javafx.geometry.Pos;
 
 public class LoginController extends Controller {
 	@FXML
@@ -18,13 +10,15 @@ public class LoginController extends Controller {
 
 	/**
 	 * Loads the sign up Menu
-	 * @param event event that was fired
 	 */
-    public void loadSignUpMenu(ActionEvent event){
+    public void loadSignUpMenu(){
         getSceneCtrl().activate("signUpMenu");
     }
 
-	public void loadMainMenu(ActionEvent event){
+    /**
+     * Collects the information from the input fields and attempts to log in the user
+     */
+	public void loadMainMenu(){
 		String accountName = "", password = "";
 		
 		//get accountName & password from textfields
@@ -50,5 +44,13 @@ public class LoginController extends Controller {
 		}
 	}
 
-    public void initializeClass() { }
+    /**
+     * Show an error message and close the program if connection to the database fails
+     */
+    public void initializeClass() {
+        if (!getSceneCtrl().getConn().connected()) {
+            errorBox("Connection error", "Could not connect to the database", Alert.AlertType.ERROR);
+            System.exit(-1);
+        }
+    }
 }

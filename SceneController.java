@@ -87,10 +87,20 @@ public class SceneController {
         return userAccount;
     }
 
+    /**
+     * Load the main UI
+     */
     public void loadMainUI(){
         loadFxml("mainUI.fxml", "mainUI", new MainUIController());
     }
 
+    /**
+     * Load a fxml file and assign it a controller and add it to the hashmap with an appropriate title
+     * @param url path to the fxml file
+     * @param hashName name of the pane
+     * @param controller controller to assign
+     * @return the <code>Pane</code> object the fxml file was loaded to
+     */
     public Pane loadFxml(String url, String hashName, Controller controller){
 	    try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(url));

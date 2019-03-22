@@ -20,9 +20,7 @@ public class DatabaseConn {
     public DatabaseConn(){
         try {
             this.connection = getMySqlConnection();
-        } catch (Exception ex){
-            System.out.println("Could not connect to the database.");
-        }
+        } catch (Exception ex){ }
     }
 
     /**

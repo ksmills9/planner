@@ -17,16 +17,5 @@ public class GUIPrompt extends Application {
         sceneCtrl = new SceneController();
         primaryStage.setScene(sceneCtrl.getMain());
         primaryStage.show();
-        if (!sceneCtrl.getConn().connected()) {
-            connError();
-            primaryStage.close();
-        }
-    }
-
-    void connError(){
-        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-    	errorAlert.setHeaderText("Connection error");
-    	errorAlert.setContentText("Could not connect to the database");
-        errorAlert.showAndWait();
     }
 }
