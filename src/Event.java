@@ -196,4 +196,15 @@ public class Event  {
     public int getUserID(){
         return userID;
     }
+
+    /**
+     * return a String containing information about the event in a proper format
+     * @return string version of the event
+     */
+    @Override
+    public String toString() {
+        return "Name: " + eventName + "\nDescription: " + description +
+                "\nLocation: " + location + "\nStarts at: " + getStartTimeString() +
+                "\nEnds At: " + getEndTimeString();
+    }
 }

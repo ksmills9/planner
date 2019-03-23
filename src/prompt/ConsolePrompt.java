@@ -94,7 +94,7 @@ public class ConsolePrompt {
      */
     public void consoleProfileMenu(){
         System.out.println("My Profile");
-        viewProfile(userAccount);
+        System.out.println(userAccount);
         String[] profileMenu = {"Change Name", "Change Password", "Change TimeZone", "Main Menu"};
         short userInp = validCMDLoop(profileMenu);
         if(userInp == 0)changeAccountName();
@@ -165,16 +165,6 @@ public class ConsolePrompt {
             System.out.println("Successfully changed TimeZone!");
         }
         consoleProfileMenu();
-    }
-
-    /**
-     * Prints all information of the specified user.
-     * @param account the account to show details of
-     */
-    void viewProfile(Account account){
-        System.out.println("My Name: " + account.getName() +
-                "\nMy ID: " + account.getID() +
-                "\nMy TimeZone: " + account.getTimeZone());
     }
 
     /**
@@ -319,14 +309,11 @@ public class ConsolePrompt {
 
     /**
      * Prints all information about the given event and allows the user to go back to Event Menu
-     * @param event
+     * @param event event to
      */
     void eventView(Event event){
         String[] eventViewMenu = {"Name", "Description", "Location"};
-        System.out.println(
-                "Name: " + event.getName() + "\nDescription: " + event.getDescription() +
-                "\nLocation: " + event.getLocation() + "\nStarts at: " + event.getStartTimeString() +
-                "\nEnds At: " + event.getEndTimeString());
+        System.out.println(event);
         consoleEventMenu();
     }
 

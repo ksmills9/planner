@@ -115,4 +115,16 @@ public class Account {
     public void setAllEvents(AllEvents allEvents) {
         this.allEvents = allEvents;
     }
+
+    /**
+     * Returns all information of the user as a string
+     * @return string version of the instance
+     */
+    @Override
+    public String toString() {
+        return "My Name: " + name +
+                "\nMy ID: " + ID +
+                "\nMy TimeZone: " + getTimeZone() +
+                "\nMy Events: " + getAllEvents().getEvents().size();
+    }
 }

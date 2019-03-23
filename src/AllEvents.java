@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
  *
  */
 public class AllEvents {
-    private ArrayList<Event> eventList  = new ArrayList<Event>();
+    private ArrayList<Event> eventList  = new ArrayList<>();
 
 	/**
 	 * Default constructor
@@ -32,13 +32,13 @@ public class AllEvents {
      * @return ArrayList of Event object with the given name.
      */
     public ArrayList<Event> getEventByName(String name) {
-    	ArrayList<Event> eventByName = new ArrayList<Event>();
+    	ArrayList<Event> eventByName = new ArrayList<>();
     	for (Event event : eventList) {
-    		if (name == event.getName()) {
+    		if (name.equals(event.getName())) {
     			eventByName.add(event);
     		}
     	}
-    	return new ArrayList<Event>(eventByName);
+    	return new ArrayList<>(eventByName);
     }
     
     /**
@@ -66,13 +66,13 @@ public class AllEvents {
      * @return Events at that location.
      */
     public ArrayList<Event> getEventbyLocation(String location) {
-    	ArrayList<Event> eventByLocation = new ArrayList<Event>();
+    	ArrayList<Event> eventByLocation = new ArrayList<>();
     	for (Event event : eventList) {
-    		if(location == event.getLocation()) {
+    		if(location.equals(event.getLocation())) {
     			eventByLocation.add(event);
     		}
     	}
-    	return new ArrayList<Event>(eventByLocation);
+    	return new ArrayList<>(eventByLocation);
     }
     
     /**

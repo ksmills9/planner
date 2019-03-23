@@ -24,8 +24,7 @@ public class MainUIController extends Controller {
     private LocalDateTime calendarViewDate = LocalDateTime.now();
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"); //formats String time to LocalDateTime
     private ArrayList<String> viewModes;
-
-    private Stage widget;
+    private WidgetController widget = new WidgetController(this);
 
     @FXML
     VBox calendar_box;
@@ -37,21 +36,6 @@ public class MainUIController extends Controller {
     Label dateText;
     @FXML
     FlowPane overlay;
-
-    @FXML
-    TextField eventName;
-    @FXML
-    TextArea eventDescription;
-    @FXML
-    TextField eventLocation;
-    @FXML
-    DatePicker eventStartDate;
-    @FXML
-    DatePicker eventEndDate;
-    @FXML
-    TextField eventStartTime;
-    @FXML
-    TextField eventEndTime;
     @FXML
     ComboBox viewCombo;
 
@@ -61,6 +45,7 @@ public class MainUIController extends Controller {
     public void initializeClass(){
         gotoToday();
         setName(); setDate();
+        widget.setSceneCtrl(getSceneCtrl());
     }
 
     /**
@@ -121,51 +106,6 @@ public class MainUIController extends Controller {
     }
 
     /**
-     * Opens a new window with necessary input fields to create and event.
-     */
-    public void createEventWidget(){
-        widget = new Stage();
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource( "CreateEventWidget.fxml" ));
-            loader.setController(this);
-            widget.setScene(new Scene(loader.load()));
-        } catch (Exception ex){ex.printStackTrace();}
-        widget.setTitle("Create an Event");
-        widget.show();
-    }
-
-    /**
-     * Takes the input from the fields of the Create Event window and calls necessary methods to create the event and display
-     * error messages in case of invalid input
-     */
-    public void createEvent(){
-        String event_name = eventName.getText();
-        String event_desc = " ";
-        event_desc = eventDescription.getText();
-        String event_location = " ";
-        event_location = eventLocation.getText();
-        String event_start = eventStartDate.getValue() + " " + eventStartTime.getText();
-        String event_end = eventEndDate.getValue() + " " + eventEndTime.getText();
-        Event newEvent = new Event(0, getSceneCtrl().getUserAccount().getID(), event_name, event_desc,
-                event_start, event_end, event_location);
-        if (newEvent.isValidInterval()) {
-            int event_ID = getSceneCtrl().getConn().addEvent(newEvent);
-            newEvent.setID(event_ID);
-            getSceneCtrl().getUserAccount().getAllEvents().addEvent(newEvent);
-            errorBox("Event Created Successfully", "", Alert.AlertType.CONFIRMATION);
-            closeWidget();
-            CreateCalendar();
-        } else errorBox("Invalid Start and End Time", "Start time must be set earlier than end time", Alert.AlertType.ERROR);
-    }
-
-    /**
-     * Closes the widget
-     */
-    public void closeWidget(){
-        widget.close();
-    }
-
-    /**
      * Manages different views - work in progress
      */
     public void viewChange(){
@@ -179,6 +119,10 @@ public class MainUIController extends Controller {
      */
     void showEvents(ArrayList<Event> events, String title){
 
+    }
+
+    public void createEventWidget(){
+        widget.loadEventCreation();
     }
 
     /**
@@ -227,7 +171,7 @@ public class MainUIController extends Controller {
             for (int j = 1; j < 8 && !monthIterator.isAfter(nextMonth); j++) {
                 padding--;
                 if (padding < 0) {
-                    DateButton db = new DateButton(monthIterator);
+                    DateButton db = new DateButton(monthIterator, this);
                     monthIterator = monthIterator.plusDays(1);
                     dateList.add(db);
                     table.add(db.getBtnRef(), j-1, i+2);
@@ -248,7 +192,12 @@ public class MainUIController extends Controller {
         ArrayList<Event> eventsInView = getSceneCtrl().getUserAccount().getAllEvents().getEvents(start, start.plusMonths(1));
         for(Event event : eventsInView){
             DateButton db = dateList.get(event.getStartTime().getDayOfMonth()-1);
+            db.addEventOnDate(event);
             if(db.getBtnRef().getStyleClass().indexOf("has-event") == -1) db.getBtnRef().getStyleClass().add("has-event");
         }
+    }
+
+    public WidgetController getWidget() {
+        return widget;
     }
 }

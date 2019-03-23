@@ -10,7 +10,7 @@ public abstract class Controller {
 
     /**
      * Sets the SceneController to the specified reference and invokes the initialize method
-     * @param sceneCtrl
+     * @param sceneCtrl reference of the SceneController instance
      */
     public void setSceneCtrl(SceneController sceneCtrl){
         this.sceneCtrl = sceneCtrl;

@@ -1,20 +1,28 @@
 package src.prompt.gui;
 
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
+
+import src.Event;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 
 public class DateButton {
     private Button btnRef;
+    private MainUIController mainUICtrl;
     private LocalDateTime repDate;
+    private ArrayList<Event> onThisDay = new ArrayList<>();
 
     /**
      * Creates a DateButton with the Date it represents and calls the method to create a button element
      * @param repDate the date to represent
      */
-    DateButton(LocalDateTime repDate){
+    DateButton(LocalDateTime repDate, MainUIController mainUICtrl){
         this.repDate = repDate;
+        this.mainUICtrl = mainUICtrl;
         createBtn();
     }
 
@@ -26,7 +34,22 @@ public class DateButton {
         btnRef.getStyleClass().add("dateLabel");
         if (repDate.isEqual(LocalDateTime.now().truncatedTo(ChronoUnit.DAYS))) btnRef.getStyleClass().add("today");
         btnRef.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        btnRef.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if(mouseEvent.getClickCount() == 2 && onThisDay.size() > 0) showEventsOnDate();
+            }
+        });
     }
+
+    /**
+     * Displays a widget with all events of a particular date listed
+     */
+    public void showEventsOnDate(){
+        mainUICtrl.getWidget().loadEventsOnDate(onThisDay, repDate.toLocalDate());
+    }
+
+
 
     /**
      * Get the reference to the button created
@@ -42,5 +65,9 @@ public class DateButton {
      */
     public LocalDateTime getRepDate() {
         return repDate;
+    }
+
+    public void addEventOnDate(Event event){
+        onThisDay.add(event);
     }
 }

@@ -168,3 +168,29 @@
 .overlay{
 	
 }
+
+.on-date-widget{
+}
+
+.event-name{
+	-fx-text-fill: #03c4eb;
+	-fx-font-weight: bold;
+	-fx-font-size: 18px;
+}
+
+.event-grid{
+	-fx-padding: 15px 25px;
+	-fx-hgap: 2px;
+	-fx-border-insets: 0 0 1px 0;
+	-fx-border-color: #ccc;
+	-fx-cursor: hand;
+	-fx-text-origin: bottom;
+}
+
+.event-grid:hover{
+	-fx-background-color: #eee;
+}
+
+.event-time{
+	-fx-text-fill: #333;
+}
