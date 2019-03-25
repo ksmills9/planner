@@ -1,12 +1,11 @@
-package src;
-
 import java.time.LocalDateTime;
 import java.time.format.*;
+import java.util.*;
 
 /**
 * Event class that creates a new event for one user
 */
-public class Event  {
+public class Event{
     private int ID;
     private int userID;
     private String eventName;
@@ -15,7 +14,8 @@ public class Event  {
     private LocalDateTime endTime;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"); //formats String time to LocalDateTime
     private String location;
-
+    private String[] occurrenceArray = new String[]{"ONCE","EVERYDAY","WEEK","Month","YEAR"};
+    private String occurrence = occurrenceArray[0];
     /**
      * Create an event without end time - the end time will be set to one hour after start time
      * @param name name of the event
@@ -35,15 +35,37 @@ public class Event  {
      * @param start the start time of event
      * @param end end time of the event
      */
-    public Event(int ID, int userID, String name, String description, String start, String end, String location){
+    Event(int ID, int userID, String eventName, String description, String start, String end, 
+        String location){
+        
         this.ID = ID;
     	this.userID = userID;
-    	eventName = name;
+    	this.eventName = eventName;
     	this.description = description;
     	setDateTime(start, end);
     	this.location = location;
     }
 
+
+    /**
+     * Create an event will all the details provided
+     * @param eventName Name of the event
+     * @param description details about the event
+     * @param start the start time of event
+     * @param end end time of the event in string format
+     * @param location the location of the event in string format
+     * @param occurrence how often the event occurs. legal arguments: ONCE, EVERYDAY, WEEK, MONTH, YEAR. By default it is ONCE.
+     */
+    Event(int id, int userID, String eventName, String description, String start, String end, 
+        String location, String occurrence) {
+        this.ID = ID;
+        this.userID = userID;
+        this.eventName = eventName;
+        this.description = description;
+        setDateTime(start, end);
+        this.location = location;
+        setOccurrence(occurrence);
+    }
     /**
      * Copy Constructor;
      * @param event
@@ -56,6 +78,7 @@ public class Event  {
     	this.startTime = event.startTime;
     	this.endTime = event.endTime;
     	this.location = event.location;
+        this.occurrence = event.getOccurrence();
     }
     
     
@@ -87,6 +110,11 @@ public class Event  {
     	endTime = LocalDateTime.parse(end,formatter);
     	
     }
+
+    public void setDateTime(LocalDateTime start, LocalDateTime end){
+        startTime = start;
+        endTime = end;
+    }
     
     
     /**
@@ -115,8 +143,17 @@ public class Event  {
     	this.location = location;
     }
 
+    public void setOccurrence(String occurrence){
+            boolean contains = Arrays.stream(occurrenceArray).anyMatch(occurrence :: equals);
+            if (contains){
+                this.occurrence = occurrence;
+            }
+        
+        // throw an exception later
+    }
+
     /**
-     * Get the ID of the event
+     * Get the ID of the Event
      * @return the ID of the event
      */
     public int getID() {
@@ -181,6 +218,14 @@ public class Event  {
         return formatter.format(endTime);
     }
 
+    public String getOccurrence(){
+        return occurrence;
+    }
+
+    public String[] getOccurrenceArray(){
+        return occurrenceArray;
+    }
+
     /**
      * Check if the interval of the event is valid
      * @return <code>true</code> if the start time of the event if before end time, <code>false</code> otherwise
@@ -195,16 +240,5 @@ public class Event  {
     */
     public int getUserID(){
         return userID;
-    }
-
-    /**
-     * return a String containing information about the event in a proper format
-     * @return string version of the event
-     */
-    @Override
-    public String toString() {
-        return "Name: " + eventName + "\nDescription: " + description +
-                "\nLocation: " + location + "\nStarts at: " + getStartTimeString() +
-                "\nEnds At: " + getEndTimeString();
     }
 }
