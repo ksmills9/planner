@@ -87,13 +87,13 @@ public class AllEvents {
             if (event.getOccurrence() == "EVERYDAY"){
                 addDaily(event);
             }
-            else if(event.getOccurence() == "WEEK"){
+            else if(event.getOccurrence() == "WEEK"){
                 addWeekly(event);
             }
-            else if(event.getOccurrence(event) == "MONTH"){
+            else if(event.getOccurrence() == "MONTH"){
                 addMonthly(event);
             }
-            else if(event.getOccurrence(event) == "YEAR"){
+            else if(event.getOccurrence() == "YEAR"){
                 addYearly(event);
             }
         }
@@ -178,7 +178,7 @@ public class AllEvents {
 
     private void addDaily(Event event){
         int eventsToAdd = 365;
-        for(i=0; i<eventsToAdd; i++){
+        for(int i=0; i<eventsToAdd; i++){
             Event toAdd = new Event(event);
             LocalDateTime start = toAdd.getStartTime().plusDays(i);
             LocalDateTime end = toAdd.getEndTime().plusDays(i);
@@ -188,7 +188,7 @@ public class AllEvents {
     }
 
     private void addWeekly(Event event){
-        for(i=0; i<52; i++){
+        for(int i=0; i<52; i++){
             Event toAdd = new Event(event);
             LocalDateTime start = toAdd.getStartTime().plusWeeks(i);
             LocalDateTime end = toAdd.getEndTime().plusWeeks(i);
@@ -198,7 +198,7 @@ public class AllEvents {
     }
 
     private void addMonthly(Event event){
-        for(i=0; i<12; i++){
+        for(int i=0; i<12; i++){
             Event toAdd = new Event(event);
             LocalDateTime start = toAdd.getStartTime().plusMonths(i);
             LocalDateTime end = toAdd.getEndTime().plusMonths(i);
@@ -208,8 +208,8 @@ public class AllEvents {
 
     }
 
-    private void addYearly(){
-        for(i=0; i<4; i++){
+    private void addYearly(Event event){
+        for(int i=0; i<4; i++){
             Event toAdd = new Event(event);
             LocalDateTime start = toAdd.getStartTime().plusYears(i);
             LocalDateTime end = toAdd.getEndTime().plusYears(i);

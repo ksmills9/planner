@@ -1,10 +1,11 @@
 import java.time.LocalDateTime;
 import java.time.format.*;
+import java.util.*;
 
 /**
 * Event class that creates a new event for one user
 */
-public class Event () {
+public class Event{
     private int ID;
     private int userID;
     private String eventName;
@@ -56,15 +57,15 @@ public class Event () {
      * @param occurrence how often the event occurs. legal arguments: ONCE, EVERYDAY, WEEK, MONTH, YEAR. By default it is ONCE.
      */
     Event(int id, int userID, String eventName, String description, String start, String end, 
-        String location, String occurrence)
+        String location, String occurrence) {
         this.ID = ID;
         this.userID = userID;
         this.eventName = eventName;
-        this.description = description
+        this.description = description;
         setDateTime(start, end);
         this.location = location;
         setOccurrence(occurrence);
-
+    }
     /**
      * Copy Constructor;
      * @param event
@@ -77,7 +78,7 @@ public class Event () {
     	this.startTime = event.startTime;
     	this.endTime = event.endTime;
     	this.location = event.location;
-        this.occurrence = event.getOccurrence;
+        this.occurrence = event.getOccurrence();
     }
     
     
