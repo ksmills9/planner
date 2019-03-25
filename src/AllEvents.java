@@ -1,15 +1,15 @@
-package src;
-
-import java.util.ArrayList;
-import java.time.LocalDateTime;
-
 /**
  * The Allevents class represents all events associated with a user.
  * @author Nandy
  *
  */
+
+import java.time.ZoneOffset;
+import java.util.ArrayList;
+import java.time.LocalDateTime;
+
 public class AllEvents {
-    private ArrayList<Event> eventList  = new ArrayList<>();
+    private ArrayList<Event> eventList  = new ArrayList<Event>();
 
 	/**
 	 * Default constructor
@@ -32,13 +32,13 @@ public class AllEvents {
      * @return ArrayList of Event object with the given name.
      */
     public ArrayList<Event> getEventByName(String name) {
-    	ArrayList<Event> eventByName = new ArrayList<>();
+    	ArrayList<Event> eventByName = new ArrayList<Event>();
     	for (Event event : eventList) {
-    		if (name.equals(event.getName())) {
+    		if (name == event.getName()) {
     			eventByName.add(event);
     		}
     	}
-    	return new ArrayList<>(eventByName);
+    	return new ArrayList<Event>(eventByName);
     }
     
     /**
@@ -66,21 +66,43 @@ public class AllEvents {
      * @return Events at that location.
      */
     public ArrayList<Event> getEventbyLocation(String location) {
-    	ArrayList<Event> eventByLocation = new ArrayList<>();
+    	ArrayList<Event> eventByLocation = new ArrayList<Event>();
     	for (Event event : eventList) {
-    		if(location.equals(event.getLocation())) {
+    		if(location == event.getLocation()) {
     			eventByLocation.add(event);
     		}
     	}
-    	return new ArrayList<>(eventByLocation);
+    	return new ArrayList<Event>(eventByLocation);
     }
     
     /**
-	* adds an event to the eventList.
+	* adds an event to the eventList. if the event is reccuring the method will add
+    * the future events aswell.
 	* @param event the event to be added to the eventList
 	 */
     public void addEvent(Event event){
-    	eventList.add(event);
+    	if (event.getOccurrence() == "ONCE")
+            eventList.add(event);
+        else{
+            if (event.getOccurrence() == "EVERYDAY"){
+                addDaily(event);
+            }
+            else if(event.getOccurrence() == "WEEK"){
+                addWeekly(event);
+            }
+            else if(event.getOccurrence() == "MONTH"){
+                addMonthly(event);
+            }
+            else if(event.getOccurrence() == "YEAR"){
+                addYearly(event);
+            }
+        }
+    }
+
+
+    
+    public void addRecurringEvent(Event event){
+
     }
 
     /**
@@ -152,5 +174,48 @@ public class AllEvents {
     	else {
     		return false;
     	}
+    }
+
+    private void addDaily(Event event){
+        int eventsToAdd = 365;
+        for(int i=0; i<eventsToAdd; i++){
+            Event toAdd = new Event(event);
+            LocalDateTime start = toAdd.getStartTime().plusDays(i);
+            LocalDateTime end = toAdd.getEndTime().plusDays(i);
+            toAdd.setDateTime(start, end);
+            eventList.add(toAdd);
+        }
+    }
+
+    private void addWeekly(Event event){
+        for(int i=0; i<52; i++){
+            Event toAdd = new Event(event);
+            LocalDateTime start = toAdd.getStartTime().plusWeeks(i);
+            LocalDateTime end = toAdd.getEndTime().plusWeeks(i);
+            toAdd.setDateTime(start, end);
+            eventList.add(toAdd);
+        }
+    }
+
+    private void addMonthly(Event event){
+        for(int i=0; i<12; i++){
+            Event toAdd = new Event(event);
+            LocalDateTime start = toAdd.getStartTime().plusMonths(i);
+            LocalDateTime end = toAdd.getEndTime().plusMonths(i);
+            toAdd.setDateTime(start, end);
+            eventList.add(toAdd);
+        }
+
+    }
+
+    private void addYearly(Event event){
+        for(int i=0; i<4; i++){
+            Event toAdd = new Event(event);
+            LocalDateTime start = toAdd.getStartTime().plusYears(i);
+            LocalDateTime end = toAdd.getEndTime().plusYears(i);
+            toAdd.setDateTime(start, end);
+            eventList.add(toAdd);
+        }
+
     }
 }
