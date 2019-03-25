@@ -1,12 +1,9 @@
 package src.prompt.gui;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.stage.Stage;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -35,7 +32,7 @@ public class MainUIController extends Controller {
     @FXML
     Label dateText;
     @FXML
-    FlowPane overlay;
+    BorderPane overlay;
     @FXML
     ComboBox viewCombo;
 
@@ -164,7 +161,7 @@ public class MainUIController extends Controller {
         LocalDateTime monthIterator = calendarViewDate.withDayOfMonth(1);
         LocalDateTime nextMonth = monthIterator.plusMonths(1).minusDays(1);
         int DaysInMonth = nextMonth.compareTo(monthIterator) + 1;
-        int padding = monthIterator.getDayOfWeek().getValue();
+        int padding = monthIterator.getDayOfWeek().getValue()%7;
         double rows = Math.ceil((DaysInMonth + padding) / 7.0);
         row_2.setPercentHeight(70/rows);
         for (int i = 0; i < rows; i++) {
@@ -199,5 +196,13 @@ public class MainUIController extends Controller {
 
     public WidgetController getWidget() {
         return widget;
+    }
+
+    public void showOverlay(){
+        overlay.toFront();
+    }
+
+    public void hideOverlay(){
+        overlay.toBack();
     }
 }

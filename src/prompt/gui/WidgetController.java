@@ -8,6 +8,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import src.Event;
 
 import java.time.LocalDate;
@@ -43,6 +44,10 @@ public class WidgetController extends Controller {
         widget.setAlwaysOnTop(true);
         widget.setScene(widgetScene);
         widgetScene.getStylesheets().add("/assets/stylesheet.css");
+        widget.initStyle(StageStyle.UNDECORATED);
+        widget.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
+            if (!isNowFocused) closeWidget();
+        });
     }
 
     public void loadEventCreation(){
@@ -61,10 +66,10 @@ public class WidgetController extends Controller {
      */
     public void createEvent(){
         String event_name = eventName.getText();
-        String event_desc = " ";
-        event_desc = eventDescription.getText();
-        String event_location = " ";
-        event_location = eventLocation.getText();
+        String event_desc = "";
+        event_desc += eventDescription.getText();
+        String event_location = "";
+        event_location += eventLocation.getText();
         String event_start = eventStartDate.getValue() + " " + eventStartTime.getText();
         String event_end = eventEndDate.getValue() + " " + eventEndTime.getText();
         Event newEvent = new Event(0, getSceneCtrl().getUserAccount().getID(), event_name, event_desc,
@@ -76,14 +81,17 @@ public class WidgetController extends Controller {
             errorBox("Event Created Successfully", "", Alert.AlertType.CONFIRMATION);
             mainUICtrl.CreateCalendar();
         } else errorBox("Invalid Start and End Time", "Start time must be set earlier than end time", Alert.AlertType.ERROR);
+        closeWidget();
     }
     public void closeWidget(){
         widget.close();
+        mainUICtrl.hideOverlay();
     }
 
     public void showWidget(){
         if(widget.isShowing()) widget.close();
-        widget.showAndWait();
+        widget.show();
+        mainUICtrl.showOverlay();
     }
 
     public void loadEventsOnDate(ArrayList<Event> onThisDay, LocalDate repDate){

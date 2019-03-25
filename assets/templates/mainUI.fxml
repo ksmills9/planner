@@ -9,7 +9,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.layout.BorderPane?>
 <StackPane xmlns:fx="http://javafx.com/fxml" fx:controller="src.prompt.gui.MainUIController" minHeight="400" minWidth="400">
+    <BorderPane fx:id="overlay" styleClass="overlay"/>
       <GridPane fx:id="root" minHeight="480.0" minWidth="720.0">
           <columnConstraints>
               <ColumnConstraints hgrow="ALWAYS" minWidth="100" percentWidth="20.0" />
