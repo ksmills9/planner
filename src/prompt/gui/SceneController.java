@@ -27,6 +27,8 @@ public class SceneController {
         main.getStylesheets().add("/assets/stylesheet.css");
 
         loadFxml(templateDir+"signupMenu.fxml", "signUpMenu", new SignUpController());
+        
+        loadFxml(templateDir+"TimerView.fxml", "TimerView", new TimerController());
     }
 
     /**
