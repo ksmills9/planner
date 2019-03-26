@@ -38,7 +38,7 @@ public class WidgetController extends Controller {
     @FXML
     TextField eventEndTime;
     @FXML
-    ComboBox freqCombo
+    ComboBox freqCombo;
 
     @Override
     public void initializeClass() {

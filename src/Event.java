@@ -222,6 +222,9 @@ public class Event{
         return frequency;
     }
 
+    public String getDefaultFrequency(){
+        return "ONCE";
+    }
 
     public String[] getFreqArray(){
         return freqArray;
