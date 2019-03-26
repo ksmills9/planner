@@ -78,7 +78,7 @@ public class WidgetController extends Controller {
         event_location += eventLocation.getText();
         String event_start = eventStartDate.getValue() + " " + eventStartTime.getText();
         String event_end = eventEndDate.getValue() + " " + eventEndTime.getText();
-        String frequency = freqCombo.getSelectionModel().getSelectedItem();
+        String frequency = eventFreqCombo.getSelectionModel().getSelectedItem();
         Event newEvent = new Event(0, getSceneCtrl().getUserAccount().getID(), event_name, event_desc,
                 event_start, event_end, event_location);
         if (newEvent.isValidInterval()) {
