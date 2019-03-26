@@ -37,6 +37,8 @@ public class WidgetController extends Controller {
     TextField eventStartTime;
     @FXML
     TextField eventEndTime;
+    @FXML
+    ComboBox freqCombo
 
     @Override
     public void initializeClass() {
@@ -48,6 +50,9 @@ public class WidgetController extends Controller {
         widget.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
             if (!isNowFocused) closeWidget();
         });
+        Event tempEvent = new Event();
+        freqCombo.getItems().setAll(tempEvent.getFreqArray());
+
     }
 
     public void loadEventCreation(){
@@ -72,8 +77,9 @@ public class WidgetController extends Controller {
         event_location += eventLocation.getText();
         String event_start = eventStartDate.getValue() + " " + eventStartTime.getText();
         String event_end = eventEndDate.getValue() + " " + eventEndTime.getText();
+        String frequency = freqCombo.getSelectionModel().getSelectedItem();
         Event newEvent = new Event(0, getSceneCtrl().getUserAccount().getID(), event_name, event_desc,
-                event_start, event_end, event_location);
+                event_start, event_end, event_location, frequency);
         if (newEvent.isValidInterval()) {
             int event_ID = getSceneCtrl().getConn().addEvent(newEvent);
             newEvent.setID(event_ID);
