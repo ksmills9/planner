@@ -14,8 +14,8 @@ public class Event{
     private LocalDateTime endTime;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"); //formats String time to LocalDateTime
     private String location;
-    private String[] occurrenceArray = new String[]{"ONCE","EVERYDAY","WEEK","Month","YEAR"};
-    private String occurrence = occurrenceArray[0];
+    private String[] freqArray = new String[]{"ONCE","EVERYDAY","WEEK","Month","YEAR"};
+    private String frequency = freqArray[0];
     /**
      * Create an event without end time - the end time will be set to one hour after start time
      * @param name name of the event
@@ -64,7 +64,7 @@ public class Event{
         this.description = description;
         setDateTime(start, end);
         this.location = location;
-        setOccurrence(occurrence);
+        setFrequency(occurrence);
     }
     /**
      * Copy Constructor;
@@ -143,10 +143,10 @@ public class Event{
     	this.location = location;
     }
 
-    public void setOccurrence(String occurrence){
+    public void setFrequency(String occurrence){
             boolean contains = Arrays.stream(occurrenceArray).anyMatch(occurrence :: equals);
             if (contains){
-                this.occurrence = occurrence;
+                this.frequency = occurrence;
             }
         
         // throw an exception later
@@ -218,12 +218,12 @@ public class Event{
         return formatter.format(endTime);
     }
 
-    public String getOccurrence(){
-        return occurrence;
+    public String getFrequency(){
+        return frequency;
     }
 
-    public String[] getOccurrenceArray(){
-        return occurrenceArray;
+    public String[] getFreqArray(){
+        return freqArray;
     }
 
     /**

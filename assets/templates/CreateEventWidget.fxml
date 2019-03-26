@@ -34,6 +34,10 @@
       <TextField fx:id="eventLocation" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <Label text="Start" GridPane.rowIndex="3" alignment="BASELINE_RIGHT"/>
       <Label text="End" GridPane.rowIndex="4" alignment="BASELINE_RIGHT"/>
+      <label text="How often?" GridPan.rowIndex='5' alignment="BASELINE_RIGHT"/>
+      <ComboBox fx:id="eventFreqCombo" GridPan.rowIndex="5" 
+         GridPane.columnIndex="1"/>
+
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnSpan="2" GridPane.rowIndex="5">
          <children>
             <Button mnemonicParsing="false" onAction="#createEvent" styleClass="btn-primary" text="Create" />
