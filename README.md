@@ -97,3 +97,4 @@ Example:
   1. https://stackoverflow.com/a/37276108
   2. https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html
   3. https://stackoverflow.com/a/26169947
+  4. https://stackoverflow.com/questions/10121991/javafx-application-icon
