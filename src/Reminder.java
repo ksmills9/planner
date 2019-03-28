@@ -3,7 +3,6 @@ import java.time.LocalDateTime;
 import java.time.format.*;
 import java.util.*;
 
-
 public class Reminder{
 	
 	private int id;
@@ -17,7 +16,6 @@ public class Reminder{
 		this.userID = userID;
 		this.reminderName = reminderName;
 		setDateTime(startTime);
-
 	}
 
 	Reminder(Reminder reminder){
@@ -28,7 +26,7 @@ public class Reminder{
 	}
 
 	public void setID(int id){
-		this.id = id
+		this.id = id;
 	}
 
 	public void setUserID(int userID){
@@ -58,8 +56,5 @@ public class Reminder{
     public LocalDateTime getStartTime(){
     	return startTime;
     }
-
-
-
 
 }

@@ -15,9 +15,9 @@ public class Event{
     private String description;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"); //formats String time to LocalDateTime
+    public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"); //formats String time to LocalDateTime
     private String location;
-    private static final String[] freqArray = new String[]{"Once","Everyday","Week","Month","Year"};
+    public static final String[] freqArray = new String[]{"Once","Everyday","Week","Month","Year"};
     private String frequency = freqArray[0];
     /**
      * Create an event without end time - the end time will be set to one hour after start time

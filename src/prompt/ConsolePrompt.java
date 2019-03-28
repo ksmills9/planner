@@ -17,8 +17,7 @@ import src.*;
 public class ConsolePrompt {
     private DatabaseConn conn = new DatabaseConn();
     private Account userAccount;
-    private final String[] DaysofWeek = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
-    private final String[] freqArray = new String[]{"Once","Everyday","Week","Month","Year"};
+    public static final String[] DaysofWeek = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
 
     /**
      * Prompts the user to either login, signup or exit the program
@@ -339,11 +338,11 @@ public class ConsolePrompt {
         System.out.print("Enter the location of the event: ");
         String eventLocation = input.nextLine();
         System.out.println("Enter the occurrence of the event: ");
-        short freqIndex = validCMDLoop(freqArray);
+        short freqIndex = validCMDLoop(Event.freqArray);
 
         Event newEvent = new Event(0, userAccount.getID(), eventName, eventDesc,
                 eventStartDate + " " + eventStartTime, eventEndDate + " " + eventEndTime,
-                eventLocation, freqArray[freqIndex]);
+                eventLocation, Event.freqArray[freqIndex]);
         if (newEvent.isValidInterval()){
             int event_ID = conn.addEvent(newEvent);
             newEvent.setID(event_ID);

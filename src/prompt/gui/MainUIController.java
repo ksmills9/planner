@@ -12,13 +12,13 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import src.*;
+import src.prompt.ConsolePrompt;
 
 
 /**
  * Manages everything on the Main user interface found after a user logs in or signs up
  */
 public class MainUIController extends Controller {
-    private final String[] DaysofWeek = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
     private ArrayList<DateButton> dateList = new ArrayList<>();
     private LocalDateTime calendarViewDate = LocalDateTime.now();
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"); //formats String time to LocalDateTime
@@ -153,7 +153,7 @@ public class MainUIController extends Controller {
         table.setHalignment(viewMonth, HPos.CENTER);
         table.getRowConstraints().add(row_1);
         for(int i = 0; i < 7; i++){
-            Label weekday = new Label(DaysofWeek[i]);
+            Label weekday = new Label(ConsolePrompt.DaysofWeek[i]);
             weekday.getStyleClass().add("dayLabel");
             table.add(weekday, i, 1);
             table.getColumnConstraints().add(column);
