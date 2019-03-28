@@ -3,7 +3,7 @@
  * @author Nandy
  *
  */
-
+package src;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
@@ -159,6 +159,7 @@ public class AllEvents {
 		for(Event e : eventList) retval.add(new Event(e));
 		return retval;
 	}
+
 
 
 	/**

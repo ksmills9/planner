@@ -1,3 +1,4 @@
+package src;
 import java.time.LocalDateTime;
 import java.time.format.*;
 import java.util.*;
@@ -8,6 +9,7 @@ import java.util.*;
 public class Event{
     private int ID;
     private int userID;
+    private String eventType = "event";
     private String eventName;
     private String description;
     private LocalDateTime startTime;
@@ -218,8 +220,12 @@ public class Event{
         return formatter.format(endTime);
     }
 
-    public String getFrequency(){
+    public String getOccurrence(){
         return frequency;
+    }
+
+    public String getDefaultFrequency(){
+        return "ONCE";
     }
 
     public String[] getFreqArray(){
