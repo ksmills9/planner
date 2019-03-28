@@ -11,7 +11,6 @@ public class Account {
     private String name;
     private TimeZone timeZone = TimeZone.getDefault();
     private AllEvents allEvents = new AllEvents();
-    private AllReminders allReminders = new AllReminders();
 
     /**
      * Create an account with name
@@ -109,20 +108,12 @@ public class Account {
         return allEvents;
     }
 
-    public AllReminders getAllReminders(){
-        return allReminders;
-    }
-
     /**
      * set a new AllEvents instance to the account
      * @param allEvents the AllEvents instance to copy from
      */
     public void setAllEvents(AllEvents allEvents) {
         this.allEvents = allEvents;
-    }
-
-    public void setAllReminders(All Reminders allReminders){
-        this.allReminders = allReminders;
     }
 
     /**

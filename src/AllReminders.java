@@ -1,41 +1,44 @@
+package src;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
 
-
-public class AllReminders(){
-
+public class AllReminders{
 	private ArrayList<Reminder> allReminders = new ArrayList<Reminder>();
 
 
 	AllReminders(){
 
-	} 
-
+	}
 
 	AllReminders(AllReminders reminders){
-		for(AllReminders reminder : reminders){
-			allReminders.add(new Reminder())
+		for(Reminder reminder : reminders.getReminders()){
+			allReminders.add(new Reminder(reminder));
 		}
 	}
 
-
-	public ArrayList<Reminder> getReminders(){
-		ArrayList<Reminder> retval = new ArrayList<Reminder>(allReminders);
-		return retval;
-	}
 
 	public void addReminder(Reminder reminder){
-		LocalDateTime now = LocalDateTime.now();
-		if(reminder.getStart().isafter(now)){
-			allReminders.add(reminder);
-		}
+		allReminders.add(reminder);
 	}
 
 	public void removeReminder(Reminder reminder){
-		if(allReminders.contains(reminder)){
-			allReminders.remove(reminder);
-		}
+		allReminders.remove(reminder);
 	}
 
+	public ArrayList<Reminder> getUpcomingReminders(){
+		ArrayList<Reminder> upcoming = new ArrayList<Reminder>;
+
+		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime cutOff = now.plusDays(1);
+		
+
+		for(Reminder reminder : allReminders){
+			if(reminder.getStartTime().isAfter(now) && reminder.getStartTime.isBefore(cutOff)){
+				upcoming.add(reminder);
+			}
+		}
+
+		return upcoming;
+	}
 
 }

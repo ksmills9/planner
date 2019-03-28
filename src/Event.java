@@ -1,3 +1,4 @@
+package src;
 import java.time.LocalDateTime;
 import java.time.format.*;
 import java.util.*;
@@ -45,18 +46,6 @@ public class Event{
     	this.description = description;
     	setDateTime(start, end);
     	this.location = location;
-    }
-
-    Event(int ID, int userID, String eventName, String description, String start, String end, 
-        String location, String eventType){
-        
-        this.ID = ID;
-        this.userID = userID;
-        this.eventName = eventName;
-        this.description = description;
-        setDateTime(start, end);
-        this.location = location;
-        this.eventType = eventType;
     }
 
 
@@ -231,7 +220,7 @@ public class Event{
         return formatter.format(endTime);
     }
 
-    public String getFrequency(){
+    public String getOccurrence(){
         return frequency;
     }
 

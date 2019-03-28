@@ -7,7 +7,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.layout.ComboBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import src.Event;
@@ -39,7 +38,11 @@ public class WidgetController extends Controller {
     @FXML
     TextField eventEndTime;
     @FXML
-    ComboBox eventFreqCombo;
+    TextField reminderName;
+    @FXML
+    DatePicker reminderDate;
+    @FXML 
+    TextField reminderTime;
 
     @Override
     public void initializeClass() {
@@ -51,9 +54,6 @@ public class WidgetController extends Controller {
         widget.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
             if (!isNowFocused) closeWidget();
         });
-        
-        eventFreqCombo.getItems().setAll("Does not repeat", "Every day", "Every week", "Month");
-
     }
 
     public void loadEventCreation(){
@@ -78,7 +78,6 @@ public class WidgetController extends Controller {
         event_location += eventLocation.getText();
         String event_start = eventStartDate.getValue() + " " + eventStartTime.getText();
         String event_end = eventEndDate.getValue() + " " + eventEndTime.getText();
-        String frequency = eventFreqCombo.getSelectionModel().getSelectedItem();
         Event newEvent = new Event(0, getSceneCtrl().getUserAccount().getID(), event_name, event_desc,
                 event_start, event_end, event_location);
         if (newEvent.isValidInterval()) {
@@ -89,6 +88,10 @@ public class WidgetController extends Controller {
             mainUICtrl.CreateCalendar();
         } else errorBox("Invalid Start and End Time", "Start time must be set earlier than end time", Alert.AlertType.ERROR);
         closeWidget();
+    }
+
+    public void createReminder(){
+        
     }
     public void closeWidget(){
         widget.close();

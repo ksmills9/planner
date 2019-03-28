@@ -1,38 +1,50 @@
+package src;
 import java.time.LocalDateTime;
 import java.time.format.*;
 import java.util.*;
 
 
-public class Reminder extends Event(){
-	private int ID;
+public class Reminder{
+	
+	private int id;
 	private int userID;
-	private String name;
-	private LocalDateTime start;
+	private String reminderName;
+	private LocalDateTime startTime;
 	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
+	Reminder(int id, int userID, String reminderName, String startTime){
+		this.id = id;
+		this.userID = userID;
+		this.reminderName = reminderName;
+		setDateTime(startTime);
 
-	Reminder(int id, int userID, String name, String start){
-		this.ID = id;
-		this.ID = userID;
-		this.name = name;
-		setDateTime(start);
 	}
 
+	Reminder(Reminder reminder){
+		this.id = reminder.getID();
+		this.userID = reminder.getUserID();
+		this.reminderName = reminder.getReminderName();
+		this.startTime = reminder.get
+	}
 
 	public void setID(int id){
-		this.ID = id;
+		this.id = id
 	}
 
-	public void setName(String name){
-		this.name = name;
+	public void setUserID(int userID){
+		this.userID = userID;
+	}
+
+	public void setReminderName(String name){
+		reminderName = name;
 	}
 
 	public void setDateTime(String start) throws IllegalArgumentException {
-    	this.start = LocalDateTime.parse(start,formatter);
+    	startTime = LocalDateTime.parse(start,formatter);
     }
 
     public int getID(){
-    	return ID;
+    	return id;
     }
 
     public int getUserID(){
@@ -40,21 +52,12 @@ public class Reminder extends Event(){
     }
 
     public String getName(){
-    	return name
+    	return reminderName;
     }
 
-    public LocalDateTime getStart(){
-    	return start;
+    public LocalDateTime getStartTime(){
+    	return startTime;
     }
-
-    public boolean isUpcoming(){
-    	LocalDateTime currentTime = LocalDateTime.now();
-    	if (currentTime.plusDays(1) == start){
-    		return true;
-    	}
-    	else return false;
-    }
-
 
 
 
