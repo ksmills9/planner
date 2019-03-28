@@ -8,6 +8,7 @@ import java.util.*;
 public class Event{
     private int ID;
     private int userID;
+    private String eventType = "event";
     private String eventName;
     private String description;
     private LocalDateTime startTime;
@@ -44,6 +45,18 @@ public class Event{
     	this.description = description;
     	setDateTime(start, end);
     	this.location = location;
+    }
+
+    Event(int ID, int userID, String eventName, String description, String start, String end, 
+        String location, String eventType){
+        
+        this.ID = ID;
+        this.userID = userID;
+        this.eventName = eventName;
+        this.description = description;
+        setDateTime(start, end);
+        this.location = location;
+        this.eventType = eventType;
     }
 
 
