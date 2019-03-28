@@ -209,12 +209,6 @@ public class MainUIController extends Controller {
     }
     
     public void loadTimer() {
-//    	getSceneCtrl().activate("TimerView");
-    	Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Button");
-		alert.setHeaderText(null);
-		alert.setContentText("You clicked the timer button");
-
-		alert.showAndWait();
+    	getSceneCtrl().activate("TimerView");
     }
 }
