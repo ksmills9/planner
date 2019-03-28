@@ -1,5 +1,6 @@
 package src.prompt.gui;
 
+// imports
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Timer;
@@ -18,8 +19,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+
 public class TimerController extends Controller implements Initializable {
 	
+	/**
+	* Creates myTimer and Timer objects to work timer
+	*/
 	myTimer t = new myTimer();
 	Timer timer = new Timer();
 	
@@ -53,7 +58,9 @@ public class TimerController extends Controller implements Initializable {
 	@FXML
 	private Button backtoHomeBtn;
 	
-	//Timer task object for starting the timer
+	/**
+	* Timer task object for starting the timer
+	*/
 	TimerTask task = new TimerTask() {
 		public void run() {
 			int[] timeLeft =new int[3];
@@ -76,8 +83,14 @@ public class TimerController extends Controller implements Initializable {
 	
 	private SceneController sceneCtrl;
 	
+	/*
+	* Initialize the class
+	*/
 	public void initializeClass() {};
 	
+	/*
+	* Initialize the fxml with the necessary values and states
+	*/
 	@Override
 	public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
 		hoursCombo.getItems().addAll(0,1,2,3,4,5,6,7,8,9);
@@ -98,6 +111,10 @@ public class TimerController extends Controller implements Initializable {
 		resetTimerBtn.setDisable(true);
 	}
 	
+	/**
+	* Method to start the timer
+	* @param ActionEvent event
+	*/
 	public void startTimer(ActionEvent event) {
 		if(hoursCombo.getValue()==null || minsCombo.getValue()==null || secondsCombo.getValue()==null) {
 			//pop up to show to choose a time
@@ -118,6 +135,9 @@ public class TimerController extends Controller implements Initializable {
 		}
 	}
 	
+	/**
+	* Method to cancel the timer at any given time in operation
+	*/
 	public void cancelTimer(ActionEvent event){
 		t.cancel();
 		task.cancel();
@@ -129,6 +149,9 @@ public class TimerController extends Controller implements Initializable {
 		cancelTimerBtn.setDisable(true);
 	}
 	
+	/**
+	* Reset timer timer method to create a new Timer
+	*/
 	public void resetTimer(ActionEvent event) {
 //		Stage stage = (Stage) resetTimerBtn.getScene().getWindow();
 //		stage.close();
@@ -137,6 +160,9 @@ public class TimerController extends Controller implements Initializable {
 		//needs work, needs to close myTimer instance and make a new one
 	}
 	
+	/*
+	* Method to return back to the user's home screen
+	*/
 	public void backToHome(ActionEvent event) {
 		getSceneCtrl().activate("mainUI");
 	}
