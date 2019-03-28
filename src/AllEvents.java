@@ -1,13 +1,13 @@
+package src;
+
+import java.util.ArrayList;
+import java.time.LocalDateTime;
+
 /**
  * The Allevents class represents all events associated with a user.
  * @author Nandy
  *
  */
-
-import java.time.ZoneOffset;
-import java.util.ArrayList;
-import java.time.LocalDateTime;
-
 public class AllEvents {
     private ArrayList<Event> eventList  = new ArrayList<Event>();
 
@@ -81,22 +81,20 @@ public class AllEvents {
 	* @param event the event to be added to the eventList
 	 */
     public void addEvent(Event event){
-    	if (event.getOccurrence() == "ONCE")
+    	if (event.getFrequency().equals("Once"))
             eventList.add(event);
-        else{
-            if (event.getOccurrence() == "EVERYDAY"){
-                addDaily(event);
-            }
-            else if(event.getOccurrence() == "WEEK"){
-                addWeekly(event);
-            }
-            else if(event.getOccurrence() == "MONTH"){
-                addMonthly(event);
-            }
-            else if(event.getOccurrence() == "YEAR"){
-                addYearly(event);
-            }
-        }
+    	else if (event.getFrequency().equals("Everyday")){
+    		addDaily(event);
+    	}
+		else if(event.getFrequency().equals("Week")){
+			addWeekly(event);
+		}
+		else if(event.getFrequency().equals("Month")){
+			addMonthly(event);
+		}
+		else if(event.getFrequency().equals("Year")) {
+			addYearly(event);
+		}
     }
 
 
@@ -216,6 +214,5 @@ public class AllEvents {
             toAdd.setDateTime(start, end);
             eventList.add(toAdd);
         }
-
     }
 }

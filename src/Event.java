@@ -1,3 +1,5 @@
+package src;
+
 import java.time.LocalDateTime;
 import java.time.format.*;
 import java.util.*;
@@ -14,7 +16,7 @@ public class Event{
     private LocalDateTime endTime;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"); //formats String time to LocalDateTime
     private String location;
-    private String[] freqArray = new String[]{"ONCE","EVERYDAY","WEEK","Month","YEAR"};
+    private final String[] freqArray = new String[]{"Once","Everyday","Week","Month","Year"};
     private String frequency = freqArray[0];
     /**
      * Create an event without end time - the end time will be set to one hour after start time
@@ -30,12 +32,12 @@ public class Event{
     
     /**
      * Create an event will all the details provided
-     * @param name Name of the event
+     * @param eventName Name of the event
      * @param description details about the event
      * @param start the start time of event
      * @param end end time of the event
      */
-    Event(int ID, int userID, String eventName, String description, String start, String end, 
+    public Event(int ID, int userID, String eventName, String description, String start, String end,
         String location){
         
         this.ID = ID;
@@ -56,9 +58,9 @@ public class Event{
      * @param location the location of the event in string format
      * @param occurrence how often the event occurs. legal arguments: ONCE, EVERYDAY, WEEK, MONTH, YEAR. By default it is ONCE.
      */
-    Event(int id, int userID, String eventName, String description, String start, String end, 
+    public Event(int id, int userID, String eventName, String description, String start, String end,
         String location, String occurrence) {
-        this.ID = ID;
+        this.ID = id;
         this.userID = userID;
         this.eventName = eventName;
         this.description = description;
@@ -66,19 +68,20 @@ public class Event{
         this.location = location;
         setFrequency(occurrence);
     }
+
     /**
-     * Copy Constructor;
-     * @param event
+     * Copy Constructor
+     * @param event the event to copy
      */
     Event(Event event){
     	this.ID = event.getID();
-    	this.userID = event.userID;
+    	this.userID = event.getUserID();
     	this.eventName = event.getName();
-    	this.description = event.description;
-    	this.startTime = event.startTime;
-    	this.endTime = event.endTime;
-    	this.location = event.location;
-        this.occurrence = event.getOccurrence();
+    	this.description = event.getDescription();
+    	this.startTime = event.getStartTime();
+    	this.endTime = event.getEndTime();
+    	this.location = event.getLocation();
+        this.frequency = event.getFrequency();
     }
     
     
@@ -144,14 +147,13 @@ public class Event{
     }
 
     public void setFrequency(String occurrence){
-            boolean contains = Arrays.stream(occurrenceArray).anyMatch(occurrence :: equals);
+            boolean contains = Arrays.stream(freqArray).anyMatch(occurrence :: equals);
             if (contains){
                 this.frequency = occurrence;
             }
         
         // throw an exception later
     }
-
     /**
      * Get the ID of the Event
      * @return the ID of the event
@@ -240,5 +242,15 @@ public class Event{
     */
     public int getUserID(){
         return userID;
+    }
+
+    @Override
+    public String toString() {
+        return "Event name: " + eventName + "\n" +
+                "Description: " + description + "\n" +
+                "Event Location: " + location + "\n" +
+                "Starts at: " + getStartTimeString() + "\n" +
+                "Ends at: " + getEndTimeString() + "\n" +
+                "Occurrence: " + frequency + "\n";
     }
 }
