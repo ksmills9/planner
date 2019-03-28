@@ -37,6 +37,12 @@ public class WidgetController extends Controller {
     TextField eventStartTime;
     @FXML
     TextField eventEndTime;
+    @FXML
+    TextField reminderName;
+    @FXML
+    DatePicker reminderDate;
+    @FXML 
+    TextField reminderTime;
 
     @Override
     public void initializeClass() {
@@ -82,6 +88,10 @@ public class WidgetController extends Controller {
             mainUICtrl.CreateCalendar();
         } else errorBox("Invalid Start and End Time", "Start time must be set earlier than end time", Alert.AlertType.ERROR);
         closeWidget();
+    }
+
+    public void createReminder(){
+        
     }
     public void closeWidget(){
         widget.close();

@@ -158,7 +158,6 @@ public class AllEvents {
 		return retval;
 	}
 
-
 	/**
      * Removes event from the eventList
      * @param event The event to be removed.
