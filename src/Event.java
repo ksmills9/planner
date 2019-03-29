@@ -103,7 +103,7 @@ public class Event{
     
     
     /**
-     * This method converts a start and end time of type String of the event time
+     * Convert a start and end time of type String and set it as the event time
      * to a LocalDateTime type.
      * @param start the start time of the event
      * @param end end time of the event
@@ -111,7 +111,6 @@ public class Event{
     public void setDateTime(String start, String end) throws IllegalArgumentException {
     	startTime = LocalDateTime.parse(start,formatter);
     	endTime = LocalDateTime.parse(end,formatter);
-    	
     }
 
     public void setDateTime(LocalDateTime start, LocalDateTime end){
@@ -146,6 +145,10 @@ public class Event{
     	this.location = location;
     }
 
+    /**
+     * Set the frequency of the event of a certain type
+     * @param occurrence the type of frequency
+     */
     public void setFrequency(String occurrence){
             boolean contains = Arrays.stream(freqArray).anyMatch(occurrence :: equals);
             if (contains){
@@ -167,7 +170,6 @@ public class Event{
      * Get the name of the event
      * @return eventName 
      */
-
     public String getName() {
     	return eventName;
     }
@@ -179,8 +181,7 @@ public class Event{
     public String getDescription() {
     	return description;
     }
-    
-    
+
     /**
      * Get the location of the event
      * @return location
@@ -221,16 +222,12 @@ public class Event{
         return formatter.format(endTime);
     }
 
+    /**
+     * Get the frequency of the event
+     * @return frequency of the event
+     */
     public String getFrequency(){
         return frequency;
-    }
-
-    public String getDefaultFrequency(){
-        return "ONCE";
-    }
-
-    public String[] getFreqArray(){
-        return freqArray;
     }
 
     /**
@@ -249,6 +246,10 @@ public class Event{
         return userID;
     }
 
+    /**
+     * Get all information about the event as a string
+     * @return String containing information of the instance
+     */
     @Override
     public String toString() {
         return "Event name: " + eventName + "\n" +

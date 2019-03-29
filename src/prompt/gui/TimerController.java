@@ -1,32 +1,24 @@
 package src.prompt.gui;
 
 // imports
-import java.net.URL;
-import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 import src.*;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
-
-public class TimerController extends Controller implements Initializable {
+public class TimerController extends Controller {
 	
 	/**
 	* Creates myTimer and Timer objects to work timer
 	*/
-	myTimer t = new myTimer();
-	Timer timer = new Timer();
+	private myTimer t = new myTimer();
+	private Timer timer = new Timer();
 	
 	@FXML
 	private ComboBox<Integer> hoursCombo;
@@ -80,26 +72,18 @@ public class TimerController extends Controller implements Initializable {
 			}
 		}
 	};
-	
-	private SceneController sceneCtrl;
-	
-	/*
+
+	/**
 	* Initialize the class
 	*/
-	public void initializeClass() {};
-	
-	/*
-	* Initialize the fxml with the necessary values and states
-	*/
-	@Override
-	public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
+	public void initializeClass() {
 		hoursCombo.getItems().addAll(0,1,2,3,4,5,6,7,8,9);
 		minsCombo.getItems().addAll(0,1,2,3,4, 5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,
 				20,21,22,23,24,25,26,27,28,29,
 				30,31,32,33,34,35,36,37,38,39,
 				40,41,42,43,44,45,46,47,48,49,
 				50,51,52,53,54,55,56,57,58,59,60
-				);
+		);
 		secondsCombo.getItems().addAll(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,
 				20,21,22,23,24,25,26,27,28,29,
 				30,31,32,33,34,35,36,37,38,39,
@@ -109,21 +93,16 @@ public class TimerController extends Controller implements Initializable {
 		minsText.setEditable(false);
 		secondsText.setEditable(false);
 		resetTimerBtn.setDisable(true);
+		hoursCombo.requestFocus();
 	}
 	
 	/**
 	* Method to start the timer
-	* @param ActionEvent event
 	*/
-	public void startTimer(ActionEvent event) {
+	public void startTimer() {
 		if(hoursCombo.getValue()==null || minsCombo.getValue()==null || secondsCombo.getValue()==null) {
 			//pop up to show to choose a time
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Empty Time");
-			alert.setHeaderText(null);
-			alert.setContentText("Please enter a time for the timer.");
-
-			alert.showAndWait();
+			errorBox("Empty Time", "Please enter a time for the timer.", AlertType.INFORMATION);
 		}
 		else {
 			hoursText.setText(String.valueOf(hoursCombo.getValue()));
@@ -138,7 +117,7 @@ public class TimerController extends Controller implements Initializable {
 	/**
 	* Method to cancel the timer at any given time in operation
 	*/
-	public void cancelTimer(ActionEvent event){
+	public void cancelTimer(){
 		t.cancel();
 		task.cancel();
 		timer.purge();
@@ -152,7 +131,7 @@ public class TimerController extends Controller implements Initializable {
 	/**
 	* Reset timer timer method to create a new Timer
 	*/
-	public void resetTimer(ActionEvent event) {
+	public void resetTimer() {
 //		Stage stage = (Stage) resetTimerBtn.getScene().getWindow();
 //		stage.close();
 //		sceneCtrl.activate("loginMenu");
@@ -160,12 +139,10 @@ public class TimerController extends Controller implements Initializable {
 		//needs work, needs to close myTimer instance and make a new one
 	}
 	
-	/*
+	/**
 	* Method to return back to the user's home screen
 	*/
-	public void backToHome(ActionEvent event) {
+	public void backToHome() {
 		getSceneCtrl().activate("mainUI");
 	}
-	
-
 }

@@ -208,7 +208,7 @@ public class DatabaseConn {
     public int addEvent(Event toAdd){
         PreparedStatement preStat = null, preStat2 = null;
         String insert = "INSERT INTO `events`(`account_ID`, `event_name`, `event_desc`, `start_time`, `end_time`, " +
-                "`event_location`) VALUES(?,?,?,?,?,?)";
+                "`event_location`, `event_frq`) VALUES(?,?,?,?,?,?,?)";
         try {
             preStat = connection.prepareStatement(insert);
             preStat.setInt(1, toAdd.getUserID());
@@ -217,6 +217,7 @@ public class DatabaseConn {
             preStat.setString(4, toAdd.getStartTimeString());
             preStat.setString(5, toAdd.getEndTimeString());
             preStat.setString(6, toAdd.getLocation());
+            preStat.setString(7, toAdd.getFrequency());
             insertInDB(preStat);
 
             preStat2 = connection.prepareStatement("SELECT LAST_INSERT_ID()\n");

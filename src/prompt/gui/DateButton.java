@@ -46,10 +46,8 @@ public class DateButton {
      * Displays a widget with all events of a particular date listed
      */
     public void showEventsOnDate(){
-        mainUICtrl.getWidget().loadEventsOnDate(onThisDay, repDate.toLocalDate());
+        mainUICtrl.getWidget().loadEventsOnDate(onThisDay);
     }
-
-
 
     /**
      * Get the reference to the button created
@@ -67,6 +65,10 @@ public class DateButton {
         return repDate;
     }
 
+    /**
+     * Add an event to the list of all events on the date it represents
+     * @param event the event to add
+     */
     public void addEventOnDate(Event event){
         onThisDay.add(event);
     }

@@ -5,7 +5,6 @@ import java.util.TimeZone;
 /**
  * Account class stores the necessary information about the user.
  */
-
 public class Account {
     private int ID;
     private String name;

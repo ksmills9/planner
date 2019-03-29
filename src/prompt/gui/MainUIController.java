@@ -1,16 +1,17 @@
 package src.prompt.gui;
 
-import javafx.event.ActionEvent;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.scene.control.*;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.*;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Arrays;
+
 import src.*;
 import src.prompt.ConsolePrompt;
 
@@ -21,8 +22,7 @@ import src.prompt.ConsolePrompt;
 public class MainUIController extends Controller {
     private ArrayList<DateButton> dateList = new ArrayList<>();
     private LocalDateTime calendarViewDate = LocalDateTime.now();
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"); //formats String time to LocalDateTime
-    private ArrayList<String> viewModes;
+    private final String[] viewModes = {"Month", "All Events", "Upcoming Events"};
     private WidgetController widget = new WidgetController(this);
 
     @FXML
@@ -43,15 +43,35 @@ public class MainUIController extends Controller {
      */
     public void initializeClass(){
         gotoToday();
-        setName(); setDate();
+        setName();
+        setDate();
+        setViewCombo();
         widget.setSceneCtrl(getSceneCtrl());
     }
 
     /**
      * Expected to manage different calendar views - work in progress
      */
+    @SuppressWarnings("unchecked")
     void setViewCombo(){
-        viewCombo.getItems().addAll();
+        viewCombo.getItems().addAll(Arrays.asList(viewModes));
+        viewCombo.getSelectionModel().selectFirst();
+        viewCombo.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue observableValue, String o, String t1) {
+                viewChanged();
+            }
+        });
+    }
+
+    /**
+     * Manages different views - work in progress
+     */
+    void viewChanged(){
+        int newVal = viewCombo.getSelectionModel().getSelectedIndex();
+        if(newVal == 0) gotoToday();
+        else if (newVal == 1) showEvents(getSceneCtrl().getUserAccount().getAllEvents().getEvents(), "All Events");
+        else if (newVal == 2) showEvents(getSceneCtrl().getUserAccount().getAllEvents().getEvents(LocalDateTime.now()), "Upcoming Events");
     }
 
     /**
@@ -105,21 +125,26 @@ public class MainUIController extends Controller {
     }
 
     /**
-     * Manages different views - work in progress
-     */
-    public void viewChange(){
-
-    }
-
-    /**
-     * Shows all events passed as a parameter - work in prrgress
+     * Shows all events passed as a parameter
      * @param events events to display
      * @param title the title to display
      */
     void showEvents(ArrayList<Event> events, String title){
-
+        calendar_box.getChildren().clear();
+        VBox root = new VBox();
+        root.setFillWidth(true);
+        for(Event event: events){
+            root.getChildren().add(WidgetController.generateEventGrid(event));
+        }
+        ScrollPane container = new ScrollPane(root);
+        container.setFitToHeight(true);
+        container.setFitToWidth(true);
+        calendar_box.getChildren().add(container);
     }
 
+    /**
+     * Loads the event creation widget
+     */
     public void createEventWidget(){
         widget.loadEventCreation();
     }
@@ -196,18 +221,31 @@ public class MainUIController extends Controller {
         }
     }
 
+    /**
+     * Get a reference to the WidgetController of this instance
+     * @return reference to the WidgetController
+     */
     public WidgetController getWidget() {
         return widget;
     }
 
+    /**
+     * Darken the foreground of the UI by bringing a semi-transparent layer to the front.
+     */
     public void showOverlay(){
         overlay.toFront();
     }
 
+    /**
+     * Hide the overlay by moving the semi-transparent layer to the back.
+     */
     public void hideOverlay(){
         overlay.toBack();
     }
-    
+
+    /**
+     * Load the timer panel onto the UI when the button is clicked
+     */
     public void loadTimer() {
     	getSceneCtrl().activate("TimerView");
     }

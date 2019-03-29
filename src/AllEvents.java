@@ -97,8 +97,6 @@ public class AllEvents {
 		}
     }
 
-
-    
     public void addRecurringEvent(Event event){
 
     }
@@ -118,7 +116,6 @@ public class AllEvents {
 		return retval;
 	}
 
-	
     /**
      * Get events that are upcoming.
      * @return ArrayList of events that are upcoming.
@@ -141,7 +138,7 @@ public class AllEvents {
 	public ArrayList<Event> getEvents(LocalDateTime start){
 		ArrayList<Event> retval = new ArrayList<>();
 		for(Event e : eventList){
-			if (e.getStartTime().isAfter(LocalDateTime.now())){
+			if (e.getStartTime().isAfter(start)){
 				retval.add(e);
 			}
 		}
@@ -149,7 +146,7 @@ public class AllEvents {
 	}
 
 	/**
-	 * Get a list of all events
+	 * Get a list of all events associated with the instance
 	 * @return a list containing all events
 	 */
 	public ArrayList<Event> getEvents(){
@@ -168,12 +165,14 @@ public class AllEvents {
     		eventList.remove(event);
     		return true;
     	}
-    	else {
-    		return false;
-    	}
+    	else return false;
     }
 
-    private void addDaily(Event event){
+	/**
+	 * Copy and add an event by incrementing the start and end time by a day over the span of 365 days
+	 * @param event the event to add daily
+	 */
+	private void addDaily(Event event){
         int eventsToAdd = 365;
         for(int i=0; i<eventsToAdd; i++){
             Event toAdd = new Event(event);
@@ -184,7 +183,11 @@ public class AllEvents {
         }
     }
 
-    private void addWeekly(Event event){
+	/**
+	 * Copy and add an event by incrementing the start and end time by a week over the span of 52 weeks
+	 * @param event the event to add weekly
+	 */
+	private void addWeekly(Event event){
         for(int i=0; i<52; i++){
             Event toAdd = new Event(event);
             LocalDateTime start = toAdd.getStartTime().plusWeeks(i);
@@ -194,6 +197,10 @@ public class AllEvents {
         }
     }
 
+	/**
+	 * Copy and add an event by incrementing the start and end time by a month over the span of 52 months
+	 * @param event the event to add monthly
+	 */
     private void addMonthly(Event event){
         for(int i=0; i<12; i++){
             Event toAdd = new Event(event);
@@ -202,9 +209,12 @@ public class AllEvents {
             toAdd.setDateTime(start, end);
             eventList.add(toAdd);
         }
-
     }
 
+	/**
+	 * Copy and add an event by incrementing the start and end time by a year over the span of 4 years
+	 * @param event the event to add yearly
+	 */
     private void addYearly(Event event){
         for(int i=0; i<4; i++){
             Event toAdd = new Event(event);

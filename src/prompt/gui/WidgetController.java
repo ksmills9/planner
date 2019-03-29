@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -13,12 +14,20 @@ import src.Event;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 
+/**
+ * WidgetController manages different utility UI windows
+ */
 public class WidgetController extends Controller {
     private Stage widget = new Stage();
     private Scene widgetScene = new Scene(new Pane());
     private MainUIController mainUICtrl;
 
+    /**
+     * Create the WidgetController with a reference back to the MainUIController it was created from
+     * @param mainUICtrl reference to MainUIController
+     */
     WidgetController(MainUIController mainUICtrl){
         this.mainUICtrl = mainUICtrl;
     }
@@ -38,12 +47,17 @@ public class WidgetController extends Controller {
     @FXML
     TextField eventEndTime;
     @FXML
+    ComboBox frequencyCombo;
+    @FXML
     TextField reminderName;
     @FXML
     DatePicker reminderDate;
     @FXML 
     TextField reminderTime;
 
+    /**
+     * Initialize the class by creating a stage to display all the widgets
+     */
     @Override
     public void initializeClass() {
         widget.setWidth(500);
@@ -56,6 +70,10 @@ public class WidgetController extends Controller {
         });
     }
 
+    /**
+     * Load the event and reminder creation UI onto the widget window and display it
+     */
+    @SuppressWarnings("unchecked")
     public void loadEventCreation(){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource( "/assets/templates/CreateEventWidget.fxml" ));
@@ -63,6 +81,8 @@ public class WidgetController extends Controller {
             widgetScene.setRoot(loader.load());
         } catch (Exception ex){ex.printStackTrace();}
         widget.setTitle("Create an Event");
+        frequencyCombo.getItems().addAll(Arrays.asList(Event.freqArray));
+        frequencyCombo.getSelectionModel().select(0);
         showWidget();
     }
 
@@ -76,10 +96,11 @@ public class WidgetController extends Controller {
         event_desc += eventDescription.getText();
         String event_location = "";
         event_location += eventLocation.getText();
+        String event_freq = frequencyCombo.getSelectionModel().getSelectedItem().toString();
         String event_start = eventStartDate.getValue() + " " + eventStartTime.getText();
         String event_end = eventEndDate.getValue() + " " + eventEndTime.getText();
         Event newEvent = new Event(0, getSceneCtrl().getUserAccount().getID(), event_name, event_desc,
-                event_start, event_end, event_location);
+                event_start, event_end, event_location, event_freq);
         if (newEvent.isValidInterval()) {
             int event_ID = getSceneCtrl().getConn().addEvent(newEvent);
             newEvent.setID(event_ID);
@@ -93,40 +114,55 @@ public class WidgetController extends Controller {
     public void createReminder(){
         
     }
+
+    /**
+     * Close the widget window and remove the overlay from the main window
+     */
     public void closeWidget(){
         widget.close();
         mainUICtrl.hideOverlay();
     }
 
+    /**
+     * Display the widget window and cast an overlay on the main window
+     */
     public void showWidget(){
         if(widget.isShowing()) widget.close();
         widget.show();
         mainUICtrl.showOverlay();
     }
 
-    public void loadEventsOnDate(ArrayList<Event> onThisDay, LocalDate repDate){
+    /**
+     * Display information about all events on a particular date when double clicked
+     * @param onThisDay List of all events to show
+     */
+    public void loadEventsOnDate(ArrayList<Event> onThisDay){
         VBox root = new VBox();
         root.getStylesheets().add("/assets/stylesheet.css");
         root.setFillWidth(true);
         for(Event event: onThisDay){
-            GridPane layout = new GridPane();
-            layout.getStyleClass().add("event-grid");
-            Label eventName = new Label(event.getName());
-            eventName.getStyleClass().add("event-name");
-            Label description = new Label(event.getDescription());
-            Label location = new Label(" at " + event.getLocation());
-            Label startTime = new Label("From: " + event.getStartTimeString());
-            Label endTime = new Label("To: " + event.getEndTimeString());
-            startTime.getStyleClass().add("event-time");
-            endTime.getStyleClass().add("event-time");
-            layout.addRow(0, eventName, location);
-            layout.add(description, 0, 1, 2, 1);
-            layout.add(startTime, 0, 2, 2, 1);
-            layout.add(endTime, 0, 3, 2, 1);
-            root.getChildren().add(layout);
+            root.getChildren().add(generateEventGrid(event));
         }
         widgetScene.setRoot(root);
-        widget.setTitle("Events on " + repDate.toString());
         showWidget();
     }
+
+    public static GridPane generateEventGrid(Event event){
+        GridPane layout = new GridPane();
+        layout.getStyleClass().add("event-grid");
+        Label eventName = new Label(event.getName());
+        eventName.getStyleClass().add("event-name");
+        Label description = new Label(event.getDescription());
+        Label location = new Label(" at " + event.getLocation());
+        Label startTime = new Label("From: " + event.getStartTimeString());
+        Label endTime = new Label("To: " + event.getEndTimeString());
+        startTime.getStyleClass().add("event-time");
+        endTime.getStyleClass().add("event-time");
+        layout.addRow(0, eventName, location);
+        layout.add(description, 0, 1, 2, 1);
+        layout.add(startTime, 0, 2, 2, 1);
+        layout.add(endTime, 0, 3, 2, 1);
+        return layout;
+    }
+
 }

@@ -13,7 +13,6 @@ import src.*;
  * ConsolePrompt class manages all prompts and inputs from user and calls necessary methods to carry out the expected
  * functionality
  */
-
 public class ConsolePrompt {
     private DatabaseConn conn = new DatabaseConn();
     private Account userAccount;

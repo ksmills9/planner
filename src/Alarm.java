@@ -11,9 +11,6 @@ import java.util.TimerTask;
  *
  */
 public class Alarm {
-	/**
-	 * instance variables
-	 */
 	private int currHour;
 	private String currMin;
 	

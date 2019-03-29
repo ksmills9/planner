@@ -22,7 +22,7 @@ public class Reminder{
 		this.id = reminder.getID();
 		this.userID = reminder.getUserID();
 		this.reminderName = reminder.getReminderName();
-		this.startTime = reminder.get
+		this.startTime = reminder.getStartTime();
 	}
 
 	public void setID(int id){
@@ -57,4 +57,7 @@ public class Reminder{
     	return startTime;
     }
 
+	public String getReminderName() {
+		return reminderName;
+	}
 }

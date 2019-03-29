@@ -11,7 +11,7 @@ public class AllReminders{
 	}
 
 	AllReminders(AllReminders reminders){
-		for(Reminder reminder : reminders.getReminders()){
+		for(Reminder reminder : reminders.getAllReminders()){
 			allReminders.add(new Reminder(reminder));
 		}
 	}
@@ -26,14 +26,14 @@ public class AllReminders{
 	}
 
 	public ArrayList<Reminder> getUpcomingReminders(){
-		ArrayList<Reminder> upcoming = new ArrayList<Reminder>;
+		ArrayList<Reminder> upcoming = new ArrayList<>();
 
 		LocalDateTime now = LocalDateTime.now();
 		LocalDateTime cutOff = now.plusDays(1);
 		
 
 		for(Reminder reminder : allReminders){
-			if(reminder.getStartTime().isAfter(now) && reminder.getStartTime.isBefore(cutOff)){
+			if(reminder.getStartTime().isAfter(now) && reminder.getStartTime().isBefore(cutOff)){
 				upcoming.add(reminder);
 			}
 		}
@@ -41,4 +41,7 @@ public class AllReminders{
 		return upcoming;
 	}
 
+	public ArrayList<Reminder> getAllReminders() {
+		return allReminders;
+	}
 }
