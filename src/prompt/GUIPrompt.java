@@ -2,6 +2,7 @@ package src.prompt;
 
 import src.prompt.gui.SceneController;
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class GUIPrompt extends Application {
