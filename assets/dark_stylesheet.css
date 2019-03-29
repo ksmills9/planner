@@ -1,0 +1,203 @@
+.background {
+	-fx-background-color: #ddd;
+}
+.banner{
+	-fx-font-family: "Consolas";
+	-fx-font-size: 24px;
+	-fx-alignment: center;
+	-fx-text-alignment: center;
+	-fx-text-fill: bfbfbf;
+}
+
+.top-container{
+	-fx-padding: 15px 25px;
+	-fx-spacing: 25px;
+	-fx-color: #bfbfbf;
+	-fx-background-color: #606060;
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 30, 0, 0, 0);
+}
+
+.container {
+	-fx-background-color: #fff;
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 30, 0, 0, 0);
+	-fx-vgap: 10px;
+	-fx-hgap: 10px;
+}
+
+.btn-primary {
+	-fx-background-color: #02697e;
+	-fx-text-fill: #bfbfbf;
+	-fx-font-weight: bold;
+	-fx-scale-shape: true;
+	-fx-background-radius: 0;
+	-fx-border-color: #02697e;
+}
+
+.btn-today{
+	-fx-font-size: 20px;
+
+}
+
+.btn-primary:hover {
+	-fx-background-color: #bfbfbf;
+	-fx-text-fill: #02697e;
+	-fx-cursor: hand;
+}
+
+.btn-secondary {
+	-fx-background-radius: 0;
+	-fx-background-color: #fff;
+	-fx-border-color: #333;
+	-fx-scale-shape: true;
+}
+
+.btn-secondary:hover {
+	-fx-background-color: #333;
+	-fx-border-color: #333;
+	-fx-text-fill: #fff;
+	-fx-cursor: hand;
+}
+
+.date-main{
+	-fx-font-size: 20px;
+	-fx-text-fill: #bfbfbf;
+}
+
+.name-main{
+	-fx-font-size: 24px;
+	-fx-text-fill: #bfbfbf;
+}
+
+.option-btn{
+	-fx-border: none;
+	-fx-background-color: rgba(0,0,0,0);
+	-fx-background-image: url("images/options.png");
+	-fx-background-repeat: no-repeat;
+	-fx-text-fill: #bfbfbf;
+}
+
+.option-btn:hover{
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 0);
+	-fx-cursor: hand;
+	-fx-rotate: 30;
+}
+
+.create-event-btn{
+	-fx-padding: 10px 25px;
+	-fx-background-color: #fff;
+	-fx-border-color: #aaa;
+	-fx-border-radius: 50;
+	-fx-background-radius: 50;
+	-fx-font-size: 16px;
+}
+
+.create-event-btn:hover{
+	-fx-background-color: #333;
+	-fx-text-fill: #fff;
+	-fx-cursor: hand;
+	-fx-border-color: #fff;
+}
+
+.create-other-btn{
+	-fx-padding: 10px 25px;
+	-fx-background-color: #333;
+	-fx-border-color: #bfbfbf;
+	-fx-border-radius: 50;
+	-fx-background-radius: 50;
+	-fx-font-size: 16px;
+	-fx-text-fill: #bfbfbf;
+}
+
+.create-other-btn:hover{
+	-fx-background-color: #bfbfbf;
+	-fx-border-color: #333;
+	-fx-font-size: 16px;
+	-fx-text-fill: #333;
+	-fx-cursor: hand;
+}
+
+.sidebar{
+	-fx-background-color: #a6a6a6;
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 30, 0, 0, 0);
+}
+
+.dayLabel{
+	-fx-padding: 20px 0px;
+	-fx-font-size: 18px;
+	-fx-font-weight: bold;
+	-fx-text-alignment: center;
+	-fx-alignment: center;
+}
+
+.dateLabel{
+	-fx-font-size: 18px;
+	-fx-background-color: rgba(0,0,0,0);
+}
+
+.calendar-grid{
+	-fx-background-color: #fff;
+	-fx-alignment: center;
+	-fx-font-family: "Source Sans Pro", 'Helvetica Neue', sans-serif;
+}
+
+.dateLabel:focused{
+	-fx-background-color: #ddd;
+}
+
+.today{
+	-fx-border-color: #03c4eb;
+}
+
+.viewchange-btn{
+	-fx-font-size: 22px;
+	-fx-background-color: #818181;
+	-fx-font-weight: bold;
+	-fx-background-radius: 100;
+	-fx-padding: 5px 15px;
+	-fx-text-fill: #bfbfbf;
+}
+
+
+.viewchange-btn:hover{
+	-fx-background-color: #bfbfbf;
+	-fx-text-fill: #818181;
+	-fx-cursor: hand;
+}
+
+.has-event{
+	-fx-background-color: #FF3430;
+}
+
+.has-event:focused{
+	-fx-background-color: #E80D0C;
+}
+
+.overlay{
+	-fx-background-color: rgba(0,0,0,.6);
+}
+
+.on-date-widget{
+}
+
+.event-name{
+	-fx-text-fill: #03c4eb;
+	-fx-font-weight: bold;
+	-fx-font-size: 18px;
+}
+
+.event-grid{
+	-fx-padding: 15px 25px;
+	-fx-hgap: 2px;
+	-fx-border-insets: 0 0 1px 0;
+	-fx-border-color: #ccc;
+	-fx-cursor: hand;
+	-fx-text-origin: bottom;
+}
+
+.event-grid:hover{
+	-fx-background-color: #eee;
+}
+
+.event-time{
+	-fx-text-fill: #333;
+}
