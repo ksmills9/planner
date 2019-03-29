@@ -118,6 +118,8 @@ public class AllEvents {
 
     /**
      * Get events that are upcoming.
+     * @param start Starting date of range
+     * @param end Ending date of range
      * @return ArrayList of events that are upcoming.
      */
     public ArrayList<Event> getEvents(LocalDateTime start, LocalDateTime end){

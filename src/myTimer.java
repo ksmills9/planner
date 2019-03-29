@@ -36,6 +36,7 @@ public class myTimer{
 
 	/**
 	* checker method to see if the timer is done
+	* @param end A number in seconds that represents when the timer ends
 	*/
 	private void stopCheck(int end) {
 		if(secondsPassed == end) {
@@ -49,6 +50,9 @@ public class myTimer{
 
 	/**
 	* method to initiate the timer with all the necessary variables
+	* @param hours Hours for the timer
+	* @param minutes Minutes for the timer
+	* @param seconds Seconds for the timer
 	*/
 	public void start(int hours, int minutes, int seconds) {
 		running = true;
@@ -57,7 +61,7 @@ public class myTimer{
 	}
 	
 	/**
-	 * method to get the remaining time array
+	 * @return returns the time left in an array
 	 */
 	public int[] getTimeLeft() {
 		int[] time = new int[3];
@@ -68,6 +72,9 @@ public class myTimer{
 		return time;
 	}
 	
+	/**
+	 * @return returns the value of whether the timer is running
+	 */
 	public boolean isRunning() {
 		return this.running;
 	}
