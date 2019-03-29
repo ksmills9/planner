@@ -37,6 +37,9 @@ public class Event{
      * @param description details about the event
      * @param start the start time of event
      * @param end end time of the event
+     * @param ID the Id of the event
+     * @param userID The ID of the user who created the event
+     * @param location The location of the Event
      */
     public Event(int ID, int userID, String eventName, String description, String start, String end,
         String location){
@@ -57,6 +60,8 @@ public class Event{
      * @param end end time of the event in string format
      * @param location the location of the event in string format
      * @param occurrence how often the event occurs. legal arguments: ONCE, EVERYDAY, WEEK, MONTH, YEAR. By default it is ONCE.
+     * @param id The id of the event
+     * @param userID The id of the user that created the event
      */
     public Event(int id, int userID, String eventName, String description, String start, String end,
         String location, String occurrence) {
