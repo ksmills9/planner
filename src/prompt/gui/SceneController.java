@@ -13,6 +13,7 @@ public class SceneController {
     private DatabaseConn conn = new DatabaseConn();
     private HashMap<String, Pane> sceneMap = new HashMap<>();
     private Scene main;
+    private boolean isDark = true;
 	private Account userAccount;
 	private final String templateDir = "/assets/templates/";
 
@@ -24,7 +25,7 @@ public class SceneController {
         Pane start = loadFxml(templateDir + "loginMenu.fxml", "loginMenu", new LoginController());
 
         main = new Scene(start);
-        main.getStylesheets().add("/assets/stylesheet.css");
+        toggleStyleSheet();
 
         loadFxml(templateDir+"signupMenu.fxml", "signUpMenu", new SignUpController());
         
@@ -116,5 +117,11 @@ public class SceneController {
             controller.setSceneCtrl(this);
             return loaded;
         } catch (Exception ex){ex.printStackTrace(); return null;}
+    }
+
+    public void toggleStyleSheet(){
+        main.getStylesheets().clear();
+        isDark = !isDark;
+        main.getStylesheets().add((isDark) ? "/assets/dark_stylesheet.css": "/assets/stylesheet.css");
     }
 }

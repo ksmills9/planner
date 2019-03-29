@@ -45,7 +45,7 @@
             </HBox>
             <Region layoutX="451.0" layoutY="25.0" />
                   <Label fx:id="username" alignment="CENTER" contentDisplay="CENTER" styleClass="name-main" text="Name" HBox.hgrow="ALWAYS" />
-                  <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" minHeight="60.0" minWidth="60.0" mnemonicParsing="false" styleClass="option-btn" HBox.hgrow="ALWAYS" />
+                  <Button onAction="#changeCss" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" minHeight="60.0" minWidth="60.0" mnemonicParsing="false" styleClass="option-btn" HBox.hgrow="ALWAYS" />
             </HBox>
          <rowConstraints>
             <RowConstraints />

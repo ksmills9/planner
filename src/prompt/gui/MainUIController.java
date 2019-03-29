@@ -249,4 +249,8 @@ public class MainUIController extends Controller {
     public void loadTimer() {
     	getSceneCtrl().activate("TimerView");
     }
+
+    public void changeCss(){
+        getSceneCtrl().toggleStyleSheet();
+    }
 }
