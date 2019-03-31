@@ -58,37 +58,41 @@ public class Reminder{
 	
 	
 	/**
-	*@PARAM start the start time of the reminder in String format. converts the string to LocalDateTime format.
+	*@param start the start time of the reminder in String format. converts the string to LocalDateTime format.
 	*/
 	public void setDateTime(String start) throws IllegalArgumentException {
     	startTime = LocalDateTime.parse(start,formatter);
-    	}
+	}
 	
 	/**
 	*@return the id of the event as an integer.  
 	*/
-    	public int getID(){
+	public int getID(){
     	      return id;
     	}
 	
 	/**
 	*@return the userID of the event as an integer.
 	*/
-    	public int getUserID(){
+	public int getUserID(){
     		return userID;
     	}
 	
 	/**
 	*@return the name of the event as a String.
 	*/
-    	public String getName(){
+	public String getName(){
     		return reminderName;
     	}
 	
 	/**
 	*@return startTime of the reminder in LocalDateTime format.
 	*/
-    	public LocalDateTime getStartTime(){
+	public LocalDateTime getStartTime(){
     		return startTime;
     	}
+
+	public String getReminderName() {
+		return reminderName;
+	}
 }

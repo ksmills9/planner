@@ -154,6 +154,7 @@ public class MainUIController extends Controller {
      * every date in the view and appends it to dateList
      */
     void CreateCalendar(){
+        viewCombo.getSelectionModel().selectFirst();
         calendar_box.getChildren().clear();
         dateList.clear();
         GridPane table = new GridPane();
