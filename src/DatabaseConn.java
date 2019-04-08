@@ -115,6 +115,17 @@ public class DatabaseConn {
         return -1;
     }
 
+    public boolean uniqueAccountName(String name){
+        boolean retval = true;
+        try {
+            PreparedStatement preStat = connection.prepareStatement("SELECT account_name FROM accounts WHERE account_name = ?");
+            preStat.setString(1, name);
+            ResultSet rs = queryFromDB(preStat);
+            retval = rs.next();
+        } catch (SQLException ex){}
+        return !retval;
+    }
+
     /**
      * Loads the details of the user in an Account instance based on user name and password,
      * @param accName name of the account

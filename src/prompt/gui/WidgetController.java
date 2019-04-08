@@ -6,13 +6,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import src.Event;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -54,6 +52,14 @@ public class WidgetController extends Controller {
     DatePicker reminderDate;
     @FXML 
     TextField reminderTime;
+    @FXML
+    Label acc_name;
+    @FXML
+    Label acc_id;
+    @FXML
+    Label acc_timezone;
+    @FXML
+    Button theme_toggle;
 
     /**
      * Initialize the class by creating a stage to display all the widgets
@@ -164,5 +170,27 @@ public class WidgetController extends Controller {
         layout.add(endTime, 0, 3, 2, 1);
         return layout;
     }
+    public void displayUserPanel(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource( "/assets/templates/profileMenu.fxml" ));
+            loader.setController(this);
+            widgetScene.setRoot(loader.load());
+        } catch (Exception ex){ex.printStackTrace();}
+        widget.setTitle("My account");
+        acc_id.setText(""+getSceneCtrl().getUserAccount().getID());
+        acc_name.setText(getSceneCtrl().getUserAccount().getName());
+        acc_timezone.setText(getSceneCtrl().getUserAccount().getTimeZone());
+        theme_toggle.setText(!(getSceneCtrl().getIsDark()) ? "Dark theme" : "Light theme");
+        showWidget();
+    }
 
+    public void changeCSS(){
+        getSceneCtrl().toggleStyleSheet();
+        theme_toggle.setText(!(getSceneCtrl().getIsDark()) ? "Dark theme" : "Light theme");
+    }
+
+    public void logoutclicked(){
+        closeWidget();
+        getSceneCtrl().logoutUser();
+    }
 }

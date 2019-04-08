@@ -370,9 +370,11 @@ public class ConsolePrompt {
         while (notValideName){
             System.out.print("Enter your Name: ");
             accountName = input.next();
-            if(accountName.length() < 3 ) System.out.println("Name must be longer than 2 characters.");
-            else if(accountName.length() > 25) System.out.println("Name should not exceed 25 characters.");
-            else notValideName = false;
+            if(accountName.length() < 3 || accountName.length() > 25) System.out.println("Name must be between 3-25 characters.");
+            else {
+                if(conn.uniqueAccountName(accountName)) notValideName = false;
+                else System.out.println("There is already an account with that name");
+            }
         }
 
         while (notValidPass){

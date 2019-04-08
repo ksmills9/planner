@@ -251,7 +251,7 @@ public class MainUIController extends Controller {
     	getSceneCtrl().activate("TimerView");
     }
 
-    public void changeCss(){
-        getSceneCtrl().toggleStyleSheet();
+    public void userPanelDisplay(){
+        widget.displayUserPanel();
     }
 }

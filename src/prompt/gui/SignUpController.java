@@ -46,7 +46,10 @@ public class SignUpController extends Controller {
             error = true;
             errorBox("Account password", "Account password must be within 8-24 characters", Alert.AlertType.INFORMATION);
         }
-        if(!error) proceedToSignUp(accountname, accountPassword, timezone);
+        if(!error)
+            if(getSceneCtrl().getConn().uniqueAccountName(accountname))
+                proceedToSignUp(accountname, accountPassword, timezone);
+            else errorBox("Duplicate username", "There already an account with that name", Alert.AlertType.ERROR);
     }
 
     /**

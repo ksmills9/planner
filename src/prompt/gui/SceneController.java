@@ -124,4 +124,14 @@ public class SceneController {
         isDark = !isDark;
         main.getStylesheets().add((isDark) ? "/assets/dark_stylesheet.css": "/assets/stylesheet.css");
     }
+
+    public boolean getIsDark(){
+        return isDark;
+    }
+
+    public void logoutUser(){
+        userAccount = null;
+        sceneMap.remove("mainUI");
+        activate("loginMenu");
+    }
 }
