@@ -36,6 +36,28 @@ public class Event{
      * @param eventName Name of the event
      * @param description details about the event
      * @param start the start time of event
+     * @param ID the Id of the event
+     * @param userID The ID of the user who created the event
+     * @param occurence How often the event will occur. 
+     */
+    Event(int ID, int userID, String eventName, String description, 
+        String start, String occurence){
+
+        this.ID = ID;
+        this.userID = userID;
+        this.eventName = eventName;
+        this.description = description;
+        setDateTime(start);
+        setFrequency(occurence);
+
+    }
+
+
+    /**
+     * Create an event will all the details provided
+     * @param eventName Name of the event
+     * @param description details about the event
+     * @param start the start time of event
      * @param end end time of the event
      * @param ID the Id of the event
      * @param userID The ID of the user who created the event
