@@ -17,4 +17,10 @@ public class GUIPrompt extends Application {
         primaryStage.setScene(sceneCtrl.getMain());
         primaryStage.show();
     }
+
+    @Override
+    public void stop() throws Exception{
+	super.stop();
+	System.exit(0);
+    }
 }
