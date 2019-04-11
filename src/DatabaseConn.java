@@ -297,6 +297,57 @@ public class DatabaseConn {
             return null;
         }
     }
+    
+    /**
+     * 
+     * @param accountID
+     * @param alarmName
+     * @param aHours
+     * @param aMins
+     * @param amOrPm
+     * @param shouldRepeat
+     * @param daysRepeating
+     */
+    public void addAlarm(int accountID,String alarmName, String aHours, String aMins, String amOrPm, boolean shouldRepeat, ArrayList<String> daysRepeating) {
+    	PreparedStatement preStat = null;
+    	String insert = "INSERT INTO `alarm`(`account_id`, `alarm_name`, `days_of_week`, `time_of_day`, `is_active`)"+
+    	"VALUES (?,?,?,?,?)";
+    	String days="";
+    	for(int i=0; i<daysRepeating.size();i++) {
+    		days+=daysRepeating.get(i);
+    		if(i!=daysRepeating.size()-1) {
+    			days+=",";
+    		}
+    	}
+    	String time="";
+    	if(amOrPm.equalsIgnoreCase("pm")) {
+    		time = String.valueOf(Integer.valueOf(aHours)+12);	
+    	}
+    	else {
+    		time = aHours;
+    	}
+    	time+=":"+aMins;
+    	int isActive = 1;
+    	
+    	try {
+    		preStat = connection.prepareStatement(insert);
+    		preStat.setInt(1, accountID);
+    		preStat.setString(2, alarmName);
+    		preStat.setString(3, days);
+    		preStat.setString(4, time);
+    		preStat.setInt(5, isActive);
+    		insertInDB(preStat);
+    		
+    	}catch (SQLException ex){
+            ex.printStackTrace();
+        }finally {
+            try {
+                preStat.close();
+            } catch (SQLException ex){
+                ex.printStackTrace();
+            }
+        }
+    }
 
     /**
      * Returns a hashed-version of the given password with a given salt, used to verify password given at login and
