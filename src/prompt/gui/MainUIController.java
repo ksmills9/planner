@@ -148,6 +148,13 @@ public class MainUIController extends Controller {
     public void createEventWidget(){
         widget.loadEventCreation();
     }
+    
+    /**
+     * Loads the alarm view widget
+     */
+    public void createAlarmWidget() {
+    	widget.loadAlarms();
+    }
 
     /**
      * Displays all dates of the month of calendarViewDate in a Calendar format. creates an instance of DateButton class for
