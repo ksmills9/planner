@@ -1,18 +1,24 @@
 package src.prompt.gui;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import src.Event;
 
+import java.awt.event.ActionEvent;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.TimeZone;
 
 /**
  * WidgetController manages different utility UI windows
@@ -60,6 +66,8 @@ public class WidgetController extends Controller {
     Label acc_timezone;
     @FXML
     Button theme_toggle;
+    @FXML
+    HBox change_box;
 
     /**
      * Initialize the class by creating a stage to display all the widgets
@@ -192,5 +200,66 @@ public class WidgetController extends Controller {
     public void logoutclicked(){
         closeWidget();
         getSceneCtrl().logoutUser();
+    }
+
+    @SuppressWarnings("unchecked")
+    public void changeTMZSub(){
+        Label label = new Label("New Timezone: ");
+        ArrayList<String> tzList = new ArrayList(Arrays.asList(TimeZone.getAvailableIDs()));
+        ComboBox timeZoneCombo = new ComboBox();
+        timeZoneCombo.getItems().setAll(tzList);
+        int x = tzList.indexOf(TimeZone.getDefault().getID());
+        timeZoneCombo.getSelectionModel().select(x);
+        Button btn = new Button("Change");
+        btn.getStyleClass().add("btn-primary");
+        btn.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                change_box.getChildren().clear();
+                String newtmz = timeZoneCombo.getSelectionModel().getSelectedItem().toString();
+                try {
+                    getSceneCtrl().getConn().changeUser(getSceneCtrl().getUserAccount().getName(),
+                            newtmz, "account_timezone");
+                    errorBox("Time Zone Changed", "Timezone changed to " + newtmz, Alert.AlertType.CONFIRMATION);
+                } catch (SQLException ex) {ex.printStackTrace();}
+            }
+        });
+        change_box.getChildren().addAll(label, timeZoneCombo, btn);
+    }
+
+    public void changePassSub(){
+        VBox root = new VBox();
+        Button btn = new Button("Change");
+        HBox oldpassbox = new HBox();
+        HBox newpassbox = new HBox();
+        HBox retypebox = new HBox();
+        Label oldpassprompt = new Label("Enter old password: ");
+        Label newpassprompt = new Label("Enter new password: ");
+        Label retypePrompt = new Label("Retype new password: ");
+        PasswordField oldpass = new PasswordField();
+        PasswordField newpass = new PasswordField();
+        PasswordField retypepass = new PasswordField();
+        oldpassbox.getChildren().addAll(oldpassprompt, oldpass);
+        newpassbox.getChildren().addAll(newpassprompt, newpass);
+        retypebox.getChildren().addAll(retypePrompt, retypepass);
+        root.getChildren().addAll(oldpassbox, newpassbox, retypebox, btn);
+        change_box.getChildren().add(root);
+        btn.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                change_box.getChildren().clear();
+                try {
+                    if(!newpass.getText().equals(retypepass.getText())){
+                        errorBox("Try again!", "Passwords do not match", Alert.AlertType.ERROR);
+                    }
+                    else if(getSceneCtrl().getConn().changeUserPass(getSceneCtrl().getUserAccount().getName(),
+                            oldpass.getText(), newpass.getText())) {
+                        errorBox("Password changed successfully", "", Alert.AlertType.CONFIRMATION);
+                    }
+                } catch (SQLException ex){
+                    errorBox("An error occured", "Please try again", Alert.AlertType.ERROR);
+                }
+            }
+        });
     }
 }

@@ -9,8 +9,6 @@ public class Reminder{
 	private int userID;
 	private String reminderName;
 	private LocalDateTime startTime;
-	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-	
 	
 	/**
 	*@PARAM id the id assigned to this instance of reminder.
@@ -61,7 +59,7 @@ public class Reminder{
 	*@param start the start time of the reminder in String format. converts the string to LocalDateTime format.
 	*/
 	public void setDateTime(String start) throws IllegalArgumentException {
-    	startTime = LocalDateTime.parse(start,formatter);
+    	startTime = LocalDateTime.parse(start,Event.formatter);
 	}
 	
 	/**

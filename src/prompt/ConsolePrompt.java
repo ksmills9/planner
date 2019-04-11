@@ -94,11 +94,10 @@ public class ConsolePrompt {
     public void consoleProfileMenu(){
         System.out.println("My Profile");
         System.out.println(userAccount);
-        String[] profileMenu = {"Change Name", "Change Password", "Change TimeZone", "Main Menu"};
+        String[] profileMenu = {"Change Password", "Change TimeZone", "Main Menu"};
         short userInp = validCMDLoop(profileMenu);
-        if(userInp == 0)changeAccountName();
-        else if(userInp == 1) changeAccountPassword();
-        else if(userInp == 2) changeAccountTimeZone();
+        if(userInp == 0) changeAccountPassword();
+        else if(userInp == 1) changeAccountTimeZone();
         else if(userInp == profileMenu.length-1) consoleMainMenu();
     }
 
