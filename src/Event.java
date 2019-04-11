@@ -48,7 +48,7 @@ public class Event{
         this.eventName = eventName;
         this.description = description;
         setDateTime(start);
-        setFrequency(occurence);
+        setFrequency(frequency);
 
     }
 
