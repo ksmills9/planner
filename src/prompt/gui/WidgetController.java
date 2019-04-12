@@ -68,6 +68,30 @@ public class WidgetController extends Controller {
     Button theme_toggle;
     @FXML
     HBox change_box;
+    @FXML
+    ComboBox<String> hoursCombo;
+    @FXML
+    ComboBox<String> minutesCombo;
+    @FXML
+    ComboBox<String> amPmCombo;
+    @FXML
+    ToggleButton repeatToggleBtn;
+    @FXML
+    RadioButton monRadio;
+    @FXML
+    RadioButton tueRadio;
+    @FXML
+    RadioButton wedRadio;
+    @FXML
+    RadioButton thurRadio;
+    @FXML
+    RadioButton friRadio;
+    @FXML
+    RadioButton satRadio;
+    @FXML
+    RadioButton sunRadio;
+    @FXML
+    TextField alarmNameTxt;
 
     /**
      * Initialize the class by creating a stage to display all the widgets
@@ -82,6 +106,21 @@ public class WidgetController extends Controller {
         widget.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
             if (!isNowFocused) closeWidget();
         });
+    }
+    
+    public void initialize() {
+    	//hour Combo
+    	hoursCombo.getItems().addAll("01","02","03","04","05","06","07","08","09","10","11","12");
+    	
+    	//minutes Combo
+    	minutesCombo.getItems().addAll("00","01","02","03","04","05","06","07","08","09","10",
+    			"11","12","13","14","15","16","17","18","19","20",
+    			"21","22","23","24","25","26","27","28","29","30",
+    			"31","32","33","34","35","36","37","38","39","40",
+    			"41","42","43","44","45","46","47","48","49","50",
+    			"51","52","53","54","55","56","57","58","59");
+    	//amPm Combo
+    	amPmCombo.getItems().addAll("AM","PM");
     }
 
     /**
@@ -124,7 +163,57 @@ public class WidgetController extends Controller {
         } else errorBox("Invalid Start and End Time", "Start time must be set earlier than end time", Alert.AlertType.ERROR);
         closeWidget();
     }
-
+    
+    public void loadAlarms() {
+    	try {
+    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/assets/templates/CreateAlarmWidget.fxml"));
+    		loader.setController(this);
+    		widgetScene.setRoot(loader.load());
+    	}catch(Exception ex) {ex.printStackTrace();}
+    	widget.setTitle("Manage Alarms");
+    	widget.setWidth(600);
+    	showWidget();
+    }
+    
+    public void createAlarm() {
+    	String aHour = hoursCombo.getValue();
+    	String aMin = minutesCombo.getValue();
+    	String amOrPm = amPmCombo.getValue();
+    	String alName = alarmNameTxt.getText();
+    	Boolean shouldRepeat;
+    	if (repeatToggleBtn.isSelected()) {
+    		shouldRepeat = true;
+    	}
+    	else {
+    		shouldRepeat = false;
+    	}
+    	ArrayList<String> daysRepeating  = new ArrayList<String>();
+    	if(monRadio.isSelected()) {
+    		daysRepeating.add("Mon");
+    	}
+    	if(tueRadio.isSelected()) {
+    		daysRepeating.add("Tue");
+    	}
+    	if(wedRadio.isSelected()) {
+    		daysRepeating.add("Wed");
+    	}
+    	if(thurRadio.isSelected()) {
+    		daysRepeating.add("Thu");
+    	}
+    	if(friRadio.isSelected()) {
+    		daysRepeating.add("Fri");
+    	}
+    	if(satRadio.isSelected()) {
+    		daysRepeating.add("Sat");
+    	}
+    	if(sunRadio.isSelected()) {
+    		daysRepeating.add("Sun");
+    	}
+    	int accID = getSceneCtrl().getUserAccount().getID();
+    	getSceneCtrl().getConn().addAlarm(accID,alName,aHour,aMin,amOrPm,shouldRepeat,daysRepeating);
+    	errorBox("Alarm Created Successfully", "", Alert.AlertType.CONFIRMATION);
+    }
+    
     public void createReminder(){
         
     }
