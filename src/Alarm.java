@@ -5,6 +5,11 @@ import java.util.GregorianCalendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.swing.JOptionPane;
+
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+
 /**
  * Alarm class to create new alarms for the user
  * @author sunkwa-mills
@@ -48,6 +53,19 @@ public class Alarm {
 		if(this.alarmHour==this.currHour && this.alarmMin==Integer.valueOf(this.currMin)) {
 			timer.cancel();
 			System.out.println(this.alarmMsg+"\nThe time is "+this.currHour+":"+this.currMin);
+			String time;
+			if(String.valueOf(alarmHour).length()==1) {
+				time= "0"+alarmHour+":";
+			}
+			else {
+				time=alarmHour+":";
+			}
+			if(String.valueOf(alarmMin).length()==1) {
+				time+="0"+alarmMin;
+			}else {
+				time+=alarmMin;
+			}
+			JOptionPane.showMessageDialog(null, alarmMsg + " - "+ time+"\n"+"The time is "+ time);
 		}
 	}
 	/**
