@@ -25,7 +25,7 @@
           <VBox fx:id="sidebar" alignment="TOP_CENTER" spacing="16.0" styleClass="sidebar" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
                   <Button mnemonicParsing="false" onAction="#createEventWidget" styleClass="create-other-btn" text="Create" />
                   <Button mnemonicParsing="false" onAction="#loadTimer" styleClass="create-other-btn" text="Timer" />
-                  <Button mnemonicParsing="false" styleClass="create-other-btn" text="Alarm" />
+                  <Button mnemonicParsing="false" onAction="#createAlarmWidget" styleClass="create-other-btn" text="Alarm" />
                <padding>
                   <Insets top="50.0" />
                </padding>

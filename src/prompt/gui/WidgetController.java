@@ -107,21 +107,6 @@ public class WidgetController extends Controller {
             if (!isNowFocused) closeWidget();
         });
     }
-    
-    public void initialize() {
-    	//hour Combo
-    	hoursCombo.getItems().addAll("01","02","03","04","05","06","07","08","09","10","11","12");
-    	
-    	//minutes Combo
-    	minutesCombo.getItems().addAll("00","01","02","03","04","05","06","07","08","09","10",
-    			"11","12","13","14","15","16","17","18","19","20",
-    			"21","22","23","24","25","26","27","28","29","30",
-    			"31","32","33","34","35","36","37","38","39","40",
-    			"41","42","43","44","45","46","47","48","49","50",
-    			"51","52","53","54","55","56","57","58","59");
-    	//amPm Combo
-    	amPmCombo.getItems().addAll("AM","PM");
-    }
 
     /**
      * Load the event and reminder creation UI onto the widget window and display it
@@ -164,6 +149,9 @@ public class WidgetController extends Controller {
         closeWidget();
     }
     
+    /**
+     * loads the alarm widget
+     */
     public void loadAlarms() {
     	try {
     		FXMLLoader loader = new FXMLLoader(getClass().getResource("/assets/templates/CreateAlarmWidget.fxml"));
@@ -172,6 +160,18 @@ public class WidgetController extends Controller {
     	}catch(Exception ex) {ex.printStackTrace();}
     	widget.setTitle("Manage Alarms");
     	widget.setWidth(600);
+    	//hour Combo
+    	hoursCombo.getItems().addAll("01","02","03","04","05","06","07","08","09","10","11","12");
+    	
+    	//minutes Combo
+    	minutesCombo.getItems().addAll("00","01","02","03","04","05","06","07","08","09","10",
+    			"11","12","13","14","15","16","17","18","19","20",
+    			"21","22","23","24","25","26","27","28","29","30",
+    			"31","32","33","34","35","36","37","38","39","40",
+    			"41","42","43","44","45","46","47","48","49","50",
+    			"51","52","53","54","55","56","57","58","59");
+    	//amPm Combo
+    	amPmCombo.getItems().addAll("AM","PM");
     	showWidget();
     }
     
