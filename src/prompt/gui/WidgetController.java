@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import src.Event;
+import src.userAlarm;
 
 import java.awt.event.ActionEvent;
 import java.sql.SQLException;
@@ -92,6 +93,8 @@ public class WidgetController extends Controller {
     RadioButton sunRadio;
     @FXML
     TextField alarmNameTxt;
+    @FXML
+    VBox alarmsVBox;
 
     /**
      * Initialize the class by creating a stage to display all the widgets
@@ -160,6 +163,21 @@ public class WidgetController extends Controller {
     	}catch(Exception ex) {ex.printStackTrace();}
     	widget.setTitle("Manage Alarms");
     	widget.setWidth(600);
+    	
+    	//loads the user's alarms into the widget
+    	VBox root = new VBox();
+    	root.setFillWidth(true);
+    	int accID = getSceneCtrl().getUserAccount().getID();
+    	ArrayList<userAlarm> alarmList = new ArrayList<userAlarm>();
+    	alarmList=getSceneCtrl().getConn().loadAlarmsFromDB(accID);
+    	for(userAlarm alarm: alarmList) {
+    		root.getChildren().add(generateAlarmGrid(alarm));
+    	}
+    	ScrollPane container = new ScrollPane(root);
+    	container.setFitToHeight(true);
+        container.setFitToWidth(true);
+        alarmsVBox.getChildren().add(container);
+    	
     	//hour Combo
     	hoursCombo.getItems().addAll("01","02","03","04","05","06","07","08","09","10","11","12");
     	
@@ -211,7 +229,25 @@ public class WidgetController extends Controller {
     	}
     	int accID = getSceneCtrl().getUserAccount().getID();
     	getSceneCtrl().getConn().addAlarm(accID,alName,aHour,aMin,amOrPm,shouldRepeat,daysRepeating);
+    	String time="";
+    	if(amOrPm.equalsIgnoreCase("pm")) {
+    		time = String.valueOf(Integer.valueOf(aHour)+12);	
+    	}
+    	else {
+    		time = aHour;
+    	}
+    	time+=":"+aMin;
+    	String days="";
+    	for(int i=0; i<daysRepeating.size();i++) {
+    		days+=daysRepeating.get(i);
+    		if(i!=daysRepeating.size()-1) {
+    			days+=",";
+    		}
+    	}
+    	userAlarm al = new userAlarm(alName, time, days,1);
+    	MainUIController.activateAlarm(al);
     	errorBox("Alarm Created Successfully", "", Alert.AlertType.CONFIRMATION);
+    	
     }
     
     public void createReminder(){
@@ -267,6 +303,29 @@ public class WidgetController extends Controller {
         layout.add(endTime, 0, 3, 2, 1);
         return layout;
     }
+    
+    public static GridPane generateAlarmGrid(userAlarm alarm) {
+    	GridPane layout = new GridPane();
+    	layout.getStyleClass().add("event-grid");
+    	Label alarmName = new Label(alarm.getAName());
+    	alarmName.getStyleClass().add("event-name");
+    	Label alarmTime = new Label("Time: "+alarm.getATime());
+    	Label repeatDays = new Label("Repeat: "+alarm.getDays());
+    	Button delAlarm = new Button("Delete Alarm");
+
+    	alarmTime.getStyleClass().add("event-time");
+    	repeatDays.getStyleClass().add("event-time");
+    	layout.addRow(0, alarmName);
+    	layout.addRow(1, alarmTime);
+    	layout.addRow(2, repeatDays);
+    	layout.addRow(3, delAlarm);
+    	
+    	return layout;
+    }
+    
+    //delete button handler
+    
+    
     public void displayUserPanel(){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource( "/assets/templates/profileMenu.fxml" ));
