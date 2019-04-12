@@ -12,7 +12,7 @@ public class AllReminders{
 
 	AllReminders(AllReminders reminders){
 		for(Reminder reminder : reminders.getAllReminders()){
-			allReminders.add(new Reminder(reminder));
+			allReminders.add(reminder);
 		}
 	}
 
