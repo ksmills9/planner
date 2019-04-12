@@ -7,10 +7,13 @@ import javafx.geometry.HPos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 import src.*;
 import src.prompt.ConsolePrompt;
@@ -46,10 +49,11 @@ public class MainUIController extends Controller {
         setName();
         setDate();
         setViewCombo();
+        activateCurrentAlarms();
         widget.setSceneCtrl(getSceneCtrl());
     }
 
-    /**
+	/**
      * Expected to manage different calendar views - work in progress
      */
     @SuppressWarnings("unchecked")
@@ -154,6 +158,42 @@ public class MainUIController extends Controller {
      */
     public void createAlarmWidget() {
     	widget.loadAlarms();
+    }
+    
+    private void activateCurrentAlarms() {
+    	int accID = getSceneCtrl().getUserAccount().getID();
+    	ArrayList<userAlarm> alarmList = new ArrayList<userAlarm>();
+    	alarmList=getSceneCtrl().getConn().loadAlarmsFromDB(accID);
+    	for(userAlarm ua: alarmList) {
+    		activateAlarm(ua);
+    	}
+	}
+    
+    public static String charRemoveAt(String str, int p) {  
+        return str.substring(0, p) + str.substring(p + 1);  
+     }  
+    
+    public static void activateAlarm(userAlarm ua) {
+    	Date now = new Date();
+		SimpleDateFormat simpleDateformat = new SimpleDateFormat("E");
+		String currDay = simpleDateformat.format(now);
+		currDay = charRemoveAt(currDay, 3);
+		
+		boolean activeToday = false;
+		String[] days = ua.getDays().split(",");
+		for(String day: days) {
+			
+			if(day.equals(currDay)) {
+				activeToday = true;
+			}
+			
+		}
+		if(activeToday) {
+			String[] timeArr = ua.getATime().split(":");
+			Alarm a = new Alarm();
+			
+			a.start(Integer.valueOf(timeArr[0]), Integer.valueOf(timeArr[1]), ua.getAName());
+		}
     }
 
     /**
