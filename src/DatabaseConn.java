@@ -272,6 +272,24 @@ public class DatabaseConn {
         }
         return null;
     }
+    
+    public ArrayList<userAlarm> loadAlarmsFromDB(int userID){
+    	try {
+    		PreparedStatement preState = connection.prepareStatement("SELECT * FROM alarm WHERE account_ID = ?");
+    		preState.setInt(1, userID);
+    		
+    		ResultSet rs = queryFromDB(preState);
+    		ArrayList<userAlarm> al = new ArrayList<userAlarm>();
+    		while(rs.next()) {
+    			userAlarm ua =  new userAlarm(rs.getString(3),rs.getString(5),rs.getString(4),rs.getInt(6));
+    			al.add(ua);
+    		}
+    		return al;
+    	}catch (SQLException ex){
+            ex.printStackTrace();
+        }
+    	return null;
+    }
 
     /**
      * Creates and returns a hashed version of the provided string along with the randomly generated salt used to
@@ -328,7 +346,7 @@ public class DatabaseConn {
     	}
     	time+=":"+aMins;
     	int isActive = 1;
-    	
+    	if(alarmName.equals(""))alarmName = "Alarm";
     	try {
     		preStat = connection.prepareStatement(insert);
     		preStat.setInt(1, accountID);
