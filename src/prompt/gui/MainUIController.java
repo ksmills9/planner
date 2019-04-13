@@ -169,16 +169,12 @@ public class MainUIController extends Controller {
     	}
 	}
     
-    public static String charRemoveAt(String str, int p) {  
-        return str.substring(0, p) + str.substring(p + 1);  
-     }  
-    
+
     public static void activateAlarm(userAlarm ua) {
     	Date now = new Date();
 		SimpleDateFormat simpleDateformat = new SimpleDateFormat("E");
 		String currDay = simpleDateformat.format(now);
-		currDay = charRemoveAt(currDay, 3);
-		
+
 		boolean activeToday = false;
 		String[] days = ua.getDays().split(",");
 		for(String day: days) {

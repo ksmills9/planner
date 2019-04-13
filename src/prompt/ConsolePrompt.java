@@ -7,6 +7,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.TimeZone;
 import src.*;
+import src.prompt.gui.MainUIController;
 
 
 /**
@@ -175,6 +176,7 @@ public class ConsolePrompt {
         short cmd = validCMDLoop(otherMenu);
         if(cmd == 0) startTimer();
         else if(cmd == 1) viewCalendar();
+        else if(cmd == 2) createAlarm();
         else if(cmd == otherMenu.length - 1) consoleMainMenu();
     }
 
@@ -193,6 +195,18 @@ public class ConsolePrompt {
             else if(cmd == 1) change++;
             else if(cmd == viewCalendarMenu.length-1) consoleOthersMenu();
         }
+    }
+
+    void createAlarm(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the name of the alarm: ");
+        String alarmname = scanner.nextLine();
+        System.out.print("Enter the time of the alarm: ");
+        String alarmtime = scanner.nextLine();
+        System.out.print("Enter the days to repeat the alarm: ");
+        for(int i = 0; i < 7; i++) System.out.print("[" + i + "] " + DaysofWeek[i] + "\t");
+        String freq = scanner.nextLine();
+    //    conn.addAlarm(userAccount.getID(),alarmname,aHour,aMin,amOrPm,shouldRepeat,daysRepeating);
     }
 
     /**

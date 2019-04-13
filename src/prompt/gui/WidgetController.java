@@ -110,6 +110,28 @@ public class WidgetController extends Controller {
             if (!isNowFocused) closeWidget();
         });
     }
+    
+    public void alarmIni() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource( "/assets/templates/CreateAlarmWidget.fxml" ));
+            loader.setController(this);
+            widgetScene.setRoot(loader.load());
+        } catch (Exception ex){ex.printStackTrace();}
+        widget.setTitle("Create an Event");
+    	//hour Combo
+    	hoursCombo.getItems().addAll("01","02","03","04","05","06","07","08","09","10","11","12");
+
+    	//minutes Combo
+    	minutesCombo.getItems().addAll("00","01","02","03","04","05","06","07","08","09","10",
+    			"11","12","13","14","15","16","17","18","19","20",
+    			"21","22","23","24","25","26","27","28","29","30",
+    			"31","32","33","34","35","36","37","38","39","40",
+    			"41","42","43","44","45","46","47","48","49","50",
+    			"51","52","53","54","55","56","57","58","59");
+    	//amPm Combo
+    	amPmCombo.getItems().addAll("AM","PM");
+    	showWidget();
+    }
 
     /**
      * Load the event and reminder creation UI onto the widget window and display it
@@ -163,7 +185,7 @@ public class WidgetController extends Controller {
     	}catch(Exception ex) {ex.printStackTrace();}
     	widget.setTitle("Manage Alarms");
     	widget.setWidth(600);
-    	
+
     	//loads the user's alarms into the widget
     	VBox root = new VBox();
     	root.setFillWidth(true);
@@ -177,10 +199,10 @@ public class WidgetController extends Controller {
     	container.setFitToHeight(true);
         container.setFitToWidth(true);
         alarmsVBox.getChildren().add(container);
-    	
+
     	//hour Combo
     	hoursCombo.getItems().addAll("01","02","03","04","05","06","07","08","09","10","11","12");
-    	
+
     	//minutes Combo
     	minutesCombo.getItems().addAll("00","01","02","03","04","05","06","07","08","09","10",
     			"11","12","13","14","15","16","17","18","19","20",
@@ -231,7 +253,7 @@ public class WidgetController extends Controller {
     	getSceneCtrl().getConn().addAlarm(accID,alName,aHour,aMin,amOrPm,shouldRepeat,daysRepeating);
     	String time="";
     	if(amOrPm.equalsIgnoreCase("pm")) {
-    		time = String.valueOf(Integer.valueOf(aHour)+12);	
+    		time = String.valueOf(Integer.valueOf(aHour)+12);
     	}
     	else {
     		time = aHour;
@@ -247,7 +269,7 @@ public class WidgetController extends Controller {
     	userAlarm al = new userAlarm(alName, time, days,1);
     	MainUIController.activateAlarm(al);
     	errorBox("Alarm Created Successfully", "", Alert.AlertType.CONFIRMATION);
-    	
+
     }
     
     public void createReminder(){
@@ -303,7 +325,7 @@ public class WidgetController extends Controller {
         layout.add(endTime, 0, 3, 2, 1);
         return layout;
     }
-    
+
     public static GridPane generateAlarmGrid(userAlarm alarm) {
     	GridPane layout = new GridPane();
     	layout.getStyleClass().add("event-grid");
@@ -319,13 +341,13 @@ public class WidgetController extends Controller {
     	layout.addRow(1, alarmTime);
     	layout.addRow(2, repeatDays);
     	layout.addRow(3, delAlarm);
-    	
+
     	return layout;
     }
-    
+
     //delete button handler
-    
-    
+
+
     public void displayUserPanel(){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource( "/assets/templates/profileMenu.fxml" ));
